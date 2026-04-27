@@ -1,0 +1,78 @@
+# =========================================================
+# Monorepo: CodeIgniter 4 + React (Vite + TypeScript)
+# =========================================================
+
+# -------------------------
+# Global
+# -------------------------
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# =========================================================
+# Backend - CodeIgniter 4
+# =========================================================
+
+backend/vendor/
+backend/writable/cache/*
+!backend/writable/cache/index.html
+backend/writable/debugbar/*
+!backend/writable/debugbar/index.html
+backend/writable/logs/*
+!backend/writable/logs/index.html
+backend/writable/session/*
+!backend/writable/session/index.html
+backend/writable/uploads/*
+!backend/writable/uploads/index.html
+
+# Environment files
+backend/.env
+
+# Optional: if you generate encryption keys or custom local config
+backend/app/Config/Boot/development.php
+
+# =========================================================
+# Frontend - React / Vite
+# =========================================================
+
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/coverage/
+
+# Environment files
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# TypeScript build info
+frontend/*.tsbuildinfo
+
+# Package manager logs
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+
+# =========================================================
+# Testing / Coverage
+# =========================================================
+
+coverage/
+.nyc_output/
+
+# =========================================================
+# Misc
+# =========================================================
+
+*.sqlite
+*.sqlite3
+*.db
