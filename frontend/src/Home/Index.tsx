@@ -5,7 +5,8 @@ export default function Index()
 {
 	const [message, setMessage] = useState("");
 
-	useEffect(() => {
+	useEffect(() => 
+	{
 		api.get("/home").then((res) =>
 		{
 			setMessage(res.data.message);
