@@ -1,12 +1,14 @@
-import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./Home/Index";
 
-function App()
-{
-	return (
-		<>
-		<p>kutas</p>
-		</>
-	)
+function App() {
+  return (
+	<BrowserRouter>
+	  <Routes>
+		<Route path="/" element={<Home />} />
+	  </Routes>
+	</BrowserRouter>
+  );
 }
 
-export default App
+export default App;

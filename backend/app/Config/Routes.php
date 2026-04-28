@@ -1,8 +1,11 @@
 <?php
 
+use App\Controllers\HomeController;
 use CodeIgniter\Router\RouteCollection;
 
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Home::index');
+$routes->group('api', function ($routes) {
+	$routes->get('home', 'HomeController::index');
+});
