@@ -12,4 +12,12 @@ class HomeController extends BaseController
 			'status'  => 'ok'
 		]);
 	}
+
+	public function register()
+	{
+		return $this->response->setJSON
+		([
+			'error' => false,
+		]);
+	}
 }
