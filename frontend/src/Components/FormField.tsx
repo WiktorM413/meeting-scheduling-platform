@@ -1,4 +1,12 @@
-export default function FormField(label: string, value: string|number, setter: any, inputType: string = "text")
+type FormFieldProps =
+{
+	label:      string;
+	value:      string|number;
+	setter:     any;
+	inputType?: string;
+};
+
+export default function FormField({ label, value, setter, inputType = "text" }: FormFieldProps)
 {
 	return (
 		<div className="msp-form-field">
