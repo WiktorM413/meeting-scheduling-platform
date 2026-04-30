@@ -40,7 +40,7 @@ export default function Register()
 				<button className="msp-register-submit" onClick={SubmitData}>Register</button>
 
 				<div className="msp-small-text">
-					<p color={response?.type === "error" ? "msp-success" : "msp-error"}>{response?.message}</p>
+					<p className={response?.type === "error" ? "msp-error" : "msp-success"}>{response?.message}</p>
 				</div>
 			</div>
 		</div>
