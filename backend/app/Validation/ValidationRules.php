@@ -5,18 +5,18 @@ namespace App\Validation;
 class ValidationRules
 {
 	public const array firstname = [
-		'rules' => 'required'
+		'firstname' => 'required'
 	];
 
 	public const array lastname = [
-		'rules' => 'required'
+		'lastname' => 'required'
 	];
 
 	public const array email = [
-		'rules' => 'required|valid_email|is_unique[users.email]'
+		'email' => 'required|valid_email|is_unique[users.email]'
 	];
 
 	public const array password = [
-		'rules' => 'required|min_length[8]'
+		'password' => 'required|min_length[8]'
 	];
 }
