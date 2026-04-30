@@ -9,6 +9,7 @@ export default function Register()
 {
 	const [firstname, setFirstname] = useState("");
 	const [lastname,  setLastName]  = useState("");
+	const [email,     setEmail]     = useState("");
 	const [password,  setPassword]  = useState("");
 	const [response,   setResponse] = useState<ResponseType|null>(null);
 
@@ -36,7 +37,8 @@ export default function Register()
 			<div className="msp-register-form">
 				<FormField label="First Name" value={firstname} setter={setFirstname}/>
 				<FormField label="Last Name"  value={lastname}  setter={setLastName}/>
-				<FormField label="Password"   value={password}  setter={setPassword}/>
+				<FormField label="Email"       value={email}    setter={setEmail}    inputType="email"/>
+				<FormField label="Password"   value={password}  setter={setPassword} inputType="password"/>
 				<button className="msp-button msp-register-submit" onClick={SubmitData}>Register</button>
 
 				<div className="msp-small-text">
