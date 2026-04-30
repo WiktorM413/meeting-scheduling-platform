@@ -1,4 +1,4 @@
-import "./style.css";
+import "./style.scss";
 import { useState } from "react";
 import { api } from "../api/client";
 import FormField from "../Components/FormField";
@@ -31,7 +31,7 @@ export default function Register()
 	}
 
 	return (
-		<>
+		<div className="msp-register">
 			<h1>Register</h1>
 			<div className="msp-register-form">
 				<FormField label="First Name" value={firstname} setter={setFirstname}/>
@@ -40,9 +40,9 @@ export default function Register()
 				<button className="msp-register-submit" onClick={SubmitData}>Register</button>
 
 				<div className="msp-small-text">
-					<p color={response?.type === "error" ? "red" : "green"}>{response?.message}</p>
+					<p color={response?.type === "error" ? "msp-success" : "msp-error"}>{response?.message}</p>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }
