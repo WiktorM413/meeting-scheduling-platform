@@ -15,7 +15,7 @@ class CreateUserTable extends Migration
 				`last_name`  varchar(255) NOT NULL,
 				`email`      varchar(255) NOT NULL,
 				`password`   text         NOT NULL,
-				`group`      smallint(2)  NOT NULL
+				`user_group` smallint(2)  NOT NULL
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 		");
 
