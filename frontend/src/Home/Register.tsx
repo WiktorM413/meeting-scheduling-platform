@@ -37,7 +37,7 @@ export default function Register()
 				<FormField label="First Name" value={firstname} setter={setFirstname}/>
 				<FormField label="Last Name"  value={lastname}  setter={setLastName}/>
 				<FormField label="Password"   value={password}  setter={setPassword}/>
-				<button className="msp-register-submit" onClick={SubmitData}>Register</button>
+				<button className="msp-button msp-register-submit" onClick={SubmitData}>Register</button>
 
 				<div className="msp-small-text">
 					<p className={response?.type === "error" ? "msp-error" : "msp-success"}>{response?.message}</p>
