@@ -36,7 +36,7 @@ export default function Register()
 
 	if (response?.type === "success")
 	{
-		navigate("/home");
+		setTimeout(() => navigate("/home"), 100);
 	}
 
 	return (
