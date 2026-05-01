@@ -1,5 +1,10 @@
 @import "./variables.scss";
 
+*
+{
+	color: $font-light;
+}
+
 body
 {
 	font-family: $global-font-family;
@@ -25,4 +30,14 @@ body
 {
 	background-color: $button-color-normal;
 	font-weight: 500;
+}
+
+.msp-standard-color
+{
+	color: $font-light;
+}
+
+.msp-font-light
+{
+	color: $font-light;
 }

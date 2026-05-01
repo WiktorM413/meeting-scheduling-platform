@@ -4,11 +4,12 @@ import type { ResponseType } from "../api/ResponseType";
 import { api } from "../api/client";
 import HandleResponse from "../api/HandleResponse";
 import FormField from "../Components/FormField";
+import Anchor from "../Components/Anchor";
 
 
 export default function Login()
 {
-	const naviagte                = useNavigate();
+	const navigate                = useNavigate();
 	const [email,    setEmail]    = useState("");
 	const [password, setPassword] = useState("");
 	const [response, setResponse] = useState<ResponseType|null>(null);
@@ -32,7 +33,7 @@ export default function Login()
 
 	if (response?.type === "success")
 	{
-		setTimeout(() => naviagte("/home"), 1000);
+		setTimeout(() => navigate("/home"), 1000);
 	}
 
 	return (
@@ -47,6 +48,10 @@ export default function Login()
 
 				<div className="msp-small-text">
 					<p className={response?.type === "error" ? "msp-error" : "msp-success"}>{response?.message}</p>
+				</div>
+
+				<div className="msp-small-text">
+					<p>Don't have an account? <Anchor navigator={navigate} to={"/register"} label="Register here."/></p>
 				</div>
 			</div>
 		</div>
