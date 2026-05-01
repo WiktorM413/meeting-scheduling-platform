@@ -14,14 +14,9 @@ class HomeService
 		$this->homeModel = model(HomeModel::class);
 	}
 
-	public function userExists($email): bool
+	public function register($firstname, $lastname, $email, $password, $userGroup = 0)
 	{
-		return count($this->homeModel->getUserByEmail($email)) > 0;
-	}
-
-	public function register($firstname, $lastname, $email, $password)
-	{
-		
+		$this->homeModel->createUser($firstname, $lastname, $email, $password, $userGroup);
 	}
 
 	public function constructRegisterRules()
@@ -34,5 +29,10 @@ class HomeService
 		);
 
 		return $mergedRules;
+	}
+
+	public function hashPassword($password)
+	{
+		return password_hash($password, PASSWORD_DEFAULT);
 	}
 }

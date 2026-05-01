@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class HomeModel extends Model
 {
-	public function createUser($firstname, $lastname, $email, $password, $userGroup = 0)
+	public function createUser($firstname, $lastname, $email, $password, $userGroup)
 	{
 		$params = [
 			"first_name" => $firstname,

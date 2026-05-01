@@ -24,10 +24,14 @@ class HomeController extends BaseController
 
 		if (! $this->validateData($data, $homeService->constructRegisterRules()))
 		{
+			$errors     = $this->validator->getErrors();
+			$firstField = array_key_first($errors);
+			$firstError = $errors[$firstField];
+
 			return $this->response->setJSON
 			([
 				'error'   => true,
-				'message' => $this->validator->getErrors(),
+				'message' => "Error: $firstError",
 			]);
 		}
 
@@ -36,20 +40,12 @@ class HomeController extends BaseController
 		$email     = $data['email']     ?? '';
 		$password  = $data['password']  ?? '';
 
-		if ($homeService->userExists($email))
-		{
-			return $this->response->setJSON
-			([
-				'error'   => true,
-				'message' => 'Account already exists',
-			]);
-		}
-			
+		$password = $homeService->hashPassword($password);
 		$homeService->register($firstname, $lastname, $email, $password);
 		
 		return $this->response->setJSON
 		([
-			'error' =>  false,
+			'error' => false,
 		]);
 	}
 }
