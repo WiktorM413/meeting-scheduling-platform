@@ -16,6 +16,15 @@ class HomeService
 
 	public function register($firstname, $lastname, $email, $password, $userGroup = 0)
 	{
+		if ($this->userExists($email))
+		{
+			return
+			[
+				'error'   => true,
+				'message' => 'User already exists.'
+			];
+		}
+
 		$this->homeModel->createUser($firstname, $lastname, $email, $password, $userGroup);
 
 		return
@@ -90,5 +99,12 @@ class HomeService
 			'error'   => true,
 			'message' => "Error: $firstError",
 		];
+	}
+
+	public function userExists($email)
+	{
+		$user = $this->homeModel->getUserByEmail($email);
+		
+		return isset($user);
 	}
 }

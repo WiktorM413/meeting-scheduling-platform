@@ -24,10 +24,7 @@ class ValidationRules
 
 	public const email = [
 		'email' => [
-			'rules'  => 'required|valid_email|is_unique[users.email]',
-			'errors' => [
-				'is_unique' => 'Account with that email already exists.',
-			],
+			'rules'  => 'required|valid_email',
 		]
 	];
 
