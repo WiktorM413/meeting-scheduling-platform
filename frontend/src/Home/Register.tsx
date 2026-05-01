@@ -4,14 +4,16 @@ import { api } from "../api/client";
 import FormField from "../Components/FormField";
 import HandleResponse from "../api/HandleResponse";
 import type { ResponseType } from "../api/ResponseType";
+import { useNavigate } from "react-router-dom";
 
 export default function Register()
 {
+	const navigate                  = useNavigate();
 	const [firstname, setFirstname] = useState("");
 	const [lastname,  setLastName]  = useState("");
 	const [email,     setEmail]     = useState("");
 	const [password,  setPassword]  = useState("");
-	const [response,   setResponse] = useState<ResponseType|null>(null);
+	const [response,  setResponse]  = useState<ResponseType|null>(null);
 
 	const SubmitData = async () =>
 	{
@@ -30,6 +32,11 @@ export default function Register()
 		{
 			console.error("Error submitting data: ", error);
 		}
+	}
+
+	if (response?.type === "success")
+	{
+		navigate("/home");
 	}
 
 	return (
