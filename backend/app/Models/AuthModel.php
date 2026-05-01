@@ -23,7 +23,7 @@ class AuthModel extends Model
 				(:first_name:, :last_name:, :email:, :password:, :user_group:)
 		", $params);
 
-		return $this->db->affectedRows();
+		return $this->getInsertID();
 	}
 
 	public function getUserByEmail($email)
