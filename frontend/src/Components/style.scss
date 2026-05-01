@@ -1,0 +1,27 @@
+@import "../variables.scss";
+
+.msp-form-field
+{
+	input
+	{
+		background-color: rgb(66, 66, 66);
+		color: rgb(137, 137, 137);
+		border: none;
+		border-radius: 7px;
+		height: 4vh;
+		width: 40vh;
+		font-size: 2vh;
+		padding: 10px;
+	}
+	
+	p
+	{
+		color:   rgb(162, 162, 162);
+		font-size: 2vh;
+	}
+
+	:focus
+	{
+		outline: none;
+	}
+}
