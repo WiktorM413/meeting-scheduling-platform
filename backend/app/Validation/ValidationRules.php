@@ -4,19 +4,39 @@ namespace App\Validation;
 
 class ValidationRules
 {
-	public const array firstname = [
-		'firstname' => 'required'
+	public const firstname = [
+		'firstname' => [
+			'rules'  => 'required|min_length[2]',
+			'errors' => [
+				'min_length' => 'First name must be at least 2 characters.',
+			],
+		]
 	];
 
-	public const array lastname = [
-		'lastname' => 'required'
+	public const lastname = [
+		'lastname' => [
+			'rules'  => 'required|min_length[2]',
+			'errors' => [
+				'min_length' => 'Last name must be at least 2 characters.',
+			],
+		]
 	];
 
-	public const array email = [
-		'email' => 'required|valid_email|is_unique[users.email]'
+	public const email = [
+		'email' => [
+			'rules'  => 'required|valid_email|is_unique[users.email]',
+			'errors' => [
+				'is_unique' => 'Account with that email already exists.',
+			],
+		]
 	];
 
-	public const array password = [
-		'password' => 'required|min_length[8]'
+	public const password = [
+		'password' => [
+			'rules'  => 'required|min_length[8]',
+			'errors' => [
+				'min_length' => 'Password must be at least 8 characters',
+			],
+		]
 	];
 }
