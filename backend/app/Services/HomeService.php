@@ -17,6 +17,40 @@ class HomeService
 	public function register($firstname, $lastname, $email, $password, $userGroup = 0)
 	{
 		$this->homeModel->createUser($firstname, $lastname, $email, $password, $userGroup);
+
+		return
+		[
+			'error'   => false,
+			'message' => 'Successfully registered.'
+		];
+	}
+
+	public function login($email, $password)
+	{
+		$user = $this->homeModel->getUserByEmail($email);
+		if (! isset($user))
+		{
+			return
+			[
+				'error'   => true,
+				'message' => 'User with that email doesn\'t exist'
+			];
+		}
+
+		if (! password_verify($password, $user['password']))
+		{
+			return
+			[
+				'error'   => true,
+				'message' => 'Wrong password'
+			];
+		}
+
+		return
+		[
+			'error'   => false,
+			'message' => 'Successfully logged in.'
+		];
 	}
 
 	public function constructRegisterRules()
@@ -31,8 +65,30 @@ class HomeService
 		return $mergedRules;
 	}
 
+	public function constructLoginRules()
+	{
+		$mergedRules = array_merge(
+			ValidationRUles::email,
+			ValidationRules::password,
+		);
+
+		return $mergedRules;
+	}
+
 	public function hashPassword($password)
 	{
 		return password_hash($password, PASSWORD_DEFAULT);
+	}
+
+	public function validationErrorsToJSON($errors)
+	{
+		$firstField = array_key_first($errors);
+		$firstError = $errors[$firstField];
+
+		return
+		[
+			'error'   => true,
+			'message' => "Error: $firstError",
+		];
 	}
 }

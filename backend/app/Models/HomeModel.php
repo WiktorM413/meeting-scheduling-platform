@@ -34,6 +34,6 @@ class HomeModel extends Model
 			LIMIT 1
 		", [$email]);
 
-		return $result->getResultArray();
+		return count($result->getResultArray()) > 0 ? $result->getResultArray()[0] : null;
 	}
 }
