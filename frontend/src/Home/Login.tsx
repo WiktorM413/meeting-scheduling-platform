@@ -51,7 +51,8 @@ export default function Login()
 				</div>
 
 				<div className="msp-small-text">
-					<p>Don't have an account? <Anchor navigator={navigate} to={"/register"} label="Register here."/></p>
+					<p>Don't have an account?</p>
+					<Anchor navigator={navigate} to={"/register"} label="Register here."/>
 				</div>
 			</div>
 		</div>
