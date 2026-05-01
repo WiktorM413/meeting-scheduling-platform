@@ -25,4 +25,15 @@ class HomeModel extends Model
 
 		return $this->db->affectedRows();
 	}
+
+	public function getUserByEmail($email)
+	{
+		$result = $this->db->query("
+			SELECT * FROM users
+			WHERE email = ?
+			LIMIT 1
+		", [$email]);
+
+		return $result->getResultArray();
+	}
 }
