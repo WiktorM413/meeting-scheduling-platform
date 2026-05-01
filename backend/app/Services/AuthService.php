@@ -25,7 +25,9 @@ class AuthService
 			];
 		}
 
-		$this->authModel->createUser($firstname, $lastname, $email, $password, $userGroup);
+		$userId = $$this->authModel->createUser($firstname, $lastname, $email, $password, $userGroup);
+
+		$this->setSession($userId, $email);
 
 		return
 		[
@@ -55,6 +57,8 @@ class AuthService
 				'message' => 'Wrong password'
 			];
 		}
+
+		$this->setSession($user['id'], $user['email']);
 
 		return
 		[
@@ -107,5 +111,24 @@ class AuthService
 		$user = $this->authModel->getUserByEmail($email);
 		
 		return isset($user);
+	}
+
+	public function setSession($userId, $email)
+	{
+		$session = session();
+
+		$session->set
+		([
+			'user_id'   => $userId,
+			'email'     => $email,
+			'logged_in' => true
+		]);
+	}
+
+	public function getSession(string|null $key = null)
+	{
+		$session = session();
+
+		return $session->get($key);
 	}
 }

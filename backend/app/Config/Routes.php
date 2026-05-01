@@ -11,4 +11,5 @@ $routes->group('api', function ($routes) {
 	$routes->get ('home',     [HomeController::class, 'index']);
 	$routes->post('register', [AuthController::class, 'register']);
 	$routes->post('login',    [AuthController::class, 'login']);
+	$routes->get  ('me',      [AuthController::class, 'me']);
 });
