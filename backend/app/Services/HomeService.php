@@ -36,8 +36,7 @@ class HomeService
 
 	public function login($email, $password)
 	{
-		$user = $this->homeModel->getUserByEmail($email);
-		if (! isset($user))
+		if (! $this->userExists($email))
 		{
 			return
 			[
@@ -45,6 +44,8 @@ class HomeService
 				'message' => 'User with that email doesn\'t exist'
 			];
 		}
+
+		$user = $this->homeModel->getUserByEmail($email);		
 
 		if (! password_verify($password, $user['password']))
 		{
