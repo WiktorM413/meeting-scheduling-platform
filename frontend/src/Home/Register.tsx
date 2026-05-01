@@ -5,6 +5,7 @@ import FormField from "../Components/FormField";
 import HandleResponse from "../api/HandleResponse";
 import type { ResponseType } from "../api/ResponseType";
 import { useNavigate } from "react-router-dom";
+import Anchor from "../Components/Anchor";
 
 export default function Register()
 {
@@ -51,6 +52,10 @@ export default function Register()
 
 				<div className="msp-small-text">
 					<p className={response?.type === "error" ? "msp-error" : "msp-success"}>{response?.message}</p>
+				</div>
+
+				<div className="msp-small-text">
+					<p>Already have an account? <Anchor navigator={navigate} to="/login" label="Log in here."/></p>
 				</div>
 			</div>
 		</div>
