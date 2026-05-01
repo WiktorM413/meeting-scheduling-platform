@@ -2,17 +2,24 @@
 
 namespace App\Controllers;
 
+use App\Services\AuthService;
+
 class AuthController extends BaseController
 {
+	protected AuthService $authService;
+
+	public function __construct()
+	{
+		$authService = service('authService');
+	}
+
 	public function register()
 	{
-		/** @var \App\Services\authService $authService */
-		$authService = service('authService');
-		$data        = $this->request->getJSON(true);
+		$data = $this->request->getJSON(true);
 
-		if (! $this->validateData($data, $authService->constructRegisterRules()))
+		if (! $this->validateData($data, $this->authService->constructRegisterRules()))
 		{
-			return $this->response->setJSON($authService->validationErrorsToJSON($this->validator->getErrors()));
+			return $this->response->setJSON($this->authService->validationErrorsToJSON($this->validator->getErrors()));
 		}
 
 		$firstname = $data['firstname'] ?? '';
@@ -20,28 +27,36 @@ class AuthController extends BaseController
 		$email     = $data['email']     ?? '';
 		$password  = $data['password']  ?? '';
 
-		$password = $authService->hashPassword($password);
-		$response = $authService->register($firstname, $lastname, $email, $password);
+		$password = $this->authService->hashPassword($password);
+		$response = $this->authService->register($firstname, $lastname, $email, $password);
 		
 		return $this->response->setJSON($response);
 	}
 
 	public function login()
 	{
-		/** @var \App\Services\AuthService $authService */
-		$authService = service('authService');
-		$data        = $this->request->getJSON(true);
+		$data = $this->request->getJSON(true);
 
-		if (! $this->validateData($data, $authService->constructLoginRules()))
+		if (! $this->validateData($data, $this->authService->constructLoginRules()))
 		{
-			return $this->response->setJSON($authService->validationErrorsToJSON($this->validator->getErrors()));
+			return $this->response->setJSON($this->authService->validationErrorsToJSON($this->validator->getErrors()));
 		}
 
 		$email    = $data['email']    ?? '';
 		$password = $data['password'] ?? '';
 
-		$response = $authService->login($email, $password);
+		$response = $this->authService->login($email, $password);
 
 		return $this->response->setJSON($response);
+	}
+
+	public function me()
+	{
+		$sessionData = $this->authService->getSession();
+
+		return $this->response->setJSON
+		(
+			$sessionData
+		);
 	}
 }
