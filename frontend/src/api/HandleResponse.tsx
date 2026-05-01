@@ -13,6 +13,6 @@ export default function HandleResponse(response: AxiosResponse<any, any, {}>): R
 
 	return {
 		type:    "success",
-		message: "Successfully registered",
+		message: response.data.message,
 	};
 }

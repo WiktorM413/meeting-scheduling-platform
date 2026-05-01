@@ -42,7 +42,8 @@ class HomeController extends BaseController
 		
 		return $this->response->setJSON
 		([
-			'error' => false,
+			'error'   => false,
+			'message' => 'Successfully registered.'
 		]);
 	}
 }
