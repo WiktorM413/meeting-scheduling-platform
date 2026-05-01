@@ -36,10 +36,10 @@ export default function Register()
 		<div className="msp-register">
 			<h1>Register</h1>
 			<div className="msp-register-form">
-				<FormField label="First Name" value={firstname} setter={setFirstname}/>
-				<FormField label="Last Name"  value={lastname}  setter={setLastName}/>
-				<FormField label="Email"       value={email}    setter={setEmail}    inputType="email"/>
-				<FormField label="Password"   value={password}  setter={setPassword} inputType="password"/>
+				<FormField label="First Name (min. 2)" value={firstname} setter={setFirstname}/>
+				<FormField label="Last Name (min. 2)"  value={lastname}  setter={setLastName}/>
+				<FormField label="Email"               value={email}    setter={setEmail}    inputType="email"/>
+				<FormField label="Password (min. 8)"   value={password}  setter={setPassword} inputType="password"/>
 				<button className="msp-button msp-register-submit" onClick={SubmitData}>Register</button>
 
 				<div className="msp-small-text">
