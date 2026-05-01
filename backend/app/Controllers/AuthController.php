@@ -52,6 +52,15 @@ class AuthController extends BaseController
 
 	public function me()
 	{
+		if (! $this->authService->getSession("logged_in"))
+		{
+			return $this->response->setStatusCode(401)->setJSON
+			([
+				'error'   => true,
+				'message' => 'Unauthorized'
+			]);
+		}
+
 		$sessionData = $this->authService->getSession();
 
 		return $this->response->setJSON
