@@ -1,6 +1,6 @@
 @import "../variables.scss";
 
-.msp-register
+.msp-register, .msp-login
 {
 	background-color: rgb(32, 32, 32);
 	display: flex;
@@ -20,7 +20,7 @@
 	}
 }
 
-.msp-register-form
+.msp-register-form, .msp-login-form
 {
 	display: flex;
 	justify-content: center;
