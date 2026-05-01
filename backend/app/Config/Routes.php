@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\AuthController;
 use App\Controllers\HomeController;
 use CodeIgniter\Router\RouteCollection;
 
@@ -8,6 +9,6 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->group('api', function ($routes) {
 	$routes->get ('home',     [HomeController::class, 'index']);
-	$routes->post('register', [HomeController::class, 'register']);
-	$routes->post('login',    [HomeController::class, 'login']);
+	$routes->post('register', [AuthController::class, 'register']);
+	$routes->post('login',    [AuthController::class, 'login']);
 });

@@ -2,16 +2,16 @@
 
 namespace App\Services;
 
-use App\Models\HomeModel;
+use App\Models\AuthModel;
 use App\Validation\ValidationRules;
 
-class HomeService
+class AuthService
 {
-	protected HomeModel $homeModel;
+	protected AuthModel $authModel;
 
 	public function __construct()
 	{
-		$this->homeModel = model(HomeModel::class);
+		$this->authModel = model(AuthModel::class);
 	}
 
 	public function register($firstname, $lastname, $email, $password, $userGroup = 0)
@@ -25,7 +25,7 @@ class HomeService
 			];
 		}
 
-		$this->homeModel->createUser($firstname, $lastname, $email, $password, $userGroup);
+		$this->authModel->createUser($firstname, $lastname, $email, $password, $userGroup);
 
 		return
 		[
@@ -45,7 +45,7 @@ class HomeService
 			];
 		}
 
-		$user = $this->homeModel->getUserByEmail($email);		
+		$user = $this->authModel->getUserByEmail($email);		
 
 		if (! password_verify($password, $user['password']))
 		{
@@ -104,7 +104,7 @@ class HomeService
 
 	public function userExists($email)
 	{
-		$user = $this->homeModel->getUserByEmail($email);
+		$user = $this->authModel->getUserByEmail($email);
 		
 		return isset($user);
 	}

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class HomeModel extends Model
+class AuthModel extends Model
 {
 	public function createUser($firstname, $lastname, $email, $password, $userGroup)
 	{
