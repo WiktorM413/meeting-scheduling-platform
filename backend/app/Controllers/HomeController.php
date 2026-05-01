@@ -21,15 +21,7 @@ class HomeController extends BaseController
 
 		if (! $this->validateData($data, $homeService->constructRegisterRules()))
 		{
-			$errors     = $this->validator->getErrors();
-			$firstField = array_key_first($errors);
-			$firstError = $errors[$firstField];
-
-			return $this->response->setJSON
-			([
-				'error'   => true,
-				'message' => "Error: $firstError",
-			]);
+			return $this->response->setJSON($homeService->validationErrorsToJSON($this->validator->getErrors()));
 		}
 
 		$firstname = $data['firstname'] ?? '';
@@ -38,12 +30,27 @@ class HomeController extends BaseController
 		$password  = $data['password']  ?? '';
 
 		$password = $homeService->hashPassword($password);
-		$homeService->register($firstname, $lastname, $email, $password);
+		$response = $homeService->register($firstname, $lastname, $email, $password);
 		
-		return $this->response->setJSON
-		([
-			'error'   => false,
-			'message' => 'Successfully registered.'
-		]);
+		return $this->response->setJSON($response);
+	}
+
+	public function login()
+	{
+		/** @var \App\Services\HomeService $homeService */
+		$homeService = service('homeService');
+		$data        = $this->request->getJSON(true);
+
+		if (! $this->validateData($data, $homeService->constructLoginRules()))
+		{
+			return $this->response->setJSON($homeService->validationErrorsToJSON($this->validator->getErrors()));
+		}
+
+		$email    = $data['email']    ?? '';
+		$password = $data['password'] ?? '';
+
+		$response = $homeService->login($email, $password);
+
+		return $this->response->setJSON($response);
 	}
 }

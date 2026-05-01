@@ -25,3 +25,14 @@
 		outline: none;
 	}
 }
+
+.msp-anchor
+{
+	margin-top: 1vh;
+	a
+	{
+		cursor: pointer;
+		color: $attention-color;
+		font-weight: 600;
+	}
+}
