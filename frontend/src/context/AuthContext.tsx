@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import { api } from "../api/client";
+import { ApiMe } from "../api/client";
 
 interface UserData
 {
@@ -19,7 +19,7 @@ async function GetCurrentUser()
 {
 	try
 	{
-		const response = await api.get("/me");
+		const response = await ApiMe();
 
 		return response.data;
 	}
