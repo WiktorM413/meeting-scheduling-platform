@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { ResponseType } from "../api/ResponseType";
 import HandleResponse from "../api/HandleResponse";
-import FormField from "../Components/FormField";
-import Anchor from "../Components/Anchor";
+import MspFormField from "../Components/MspFormField";
+import MspAnchor from "../Components/MspAnchor";
 import { useAuth } from "../context/AuthContext";
 import { ApiLogin } from "../api/client";
 
@@ -54,8 +54,8 @@ export default function Login()
 				Log in
 			</h1>
 			<div className="msp-login-form">
-				<FormField label="Email"    value={email}    setter={setEmail}    inputType="email"/>
-				<FormField label="Password" value={password} setter={setPassword} inputType="password"/>
+				<MspFormField label="Email"    value={email}    setter={setEmail}    inputType="email"/>
+				<MspFormField label="Password" value={password} setter={setPassword} inputType="password"/>
 				<button className="msp-button msp-login-submit" onClick={SubmitData}>Log in</button>
 
 				<div className="msp-small-text">
@@ -64,7 +64,7 @@ export default function Login()
 
 				<div className="msp-small-text">
 					<p>Don't have an account?</p>
-					<Anchor navigator={navigate} to={"/register"} label="Register here."/>
+					<MspAnchor navigator={navigate} to={"/register"} label="Register here."/>
 				</div>
 			</div>
 		</div>

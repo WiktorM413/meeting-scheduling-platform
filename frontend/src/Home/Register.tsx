@@ -1,10 +1,10 @@
 import "./style.scss";
 import { useEffect, useState } from "react";
-import FormField from "../Components/FormField";
+import MspFormField from "../Components/MspFormField";
+import MspAnchor from "../Components/MspAnchor";
 import HandleResponse from "../api/HandleResponse";
 import type { ResponseType } from "../api/ResponseType";
 import { useNavigate } from "react-router-dom";
-import Anchor from "../Components/Anchor";
 import { useAuth } from "../context/AuthContext";
 import { ApiRegister } from "../api/client";
 
@@ -55,10 +55,10 @@ export default function Register()
 		<div className="msp-register">
 			<h1>Register</h1>
 			<div className="msp-register-form">
-				<FormField label="First Name (min. 2)" value={firstname} setter={setFirstname}/>
-				<FormField label="Last Name (min. 2)"  value={lastname}  setter={setLastName}/>
-				<FormField label="Email"               value={email}    setter={setEmail}    inputType="email"/>
-				<FormField label="Password (min. 8)"   value={password}  setter={setPassword} inputType="password"/>
+				<MspFormField label="First Name (min. 2)" value={firstname} setter={setFirstname}/>
+				<MspFormField label="Last Name (min. 2)"  value={lastname}  setter={setLastName}/>
+				<MspFormField label="Email"               value={email}    setter={setEmail}    inputType="email"/>
+				<MspFormField label="Password (min. 8)"   value={password}  setter={setPassword} inputType="password"/>
 				<button className="msp-button msp-register-submit" onClick={SubmitData}>Register</button>
 
 				<div className="msp-small-text">
@@ -67,7 +67,7 @@ export default function Register()
 
 				<div className="msp-small-text">
 					<p>Already have an account?</p>
-					<Anchor navigator={navigate} to="/login" label="Log in here."/>
+					<MspAnchor navigator={navigate} to="/login" label="Log in here."/>
 				</div>
 			</div>
 		</div>
