@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { ResponseType } from "../api/ResponseType";
-import { api } from "../api/client";
 import HandleResponse from "../api/HandleResponse";
 import FormField from "../Components/FormField";
 import Anchor from "../Components/Anchor";
 import { useAuth } from "../context/AuthContext";
+import { ApiLogin } from "../api/client";
 
 
 export default function Login()
@@ -21,10 +21,7 @@ export default function Login()
 	{
 		try
 		{
-			const response = await api.post("/login", {
-				email:    email,
-				password: password,
-			});
+			const response = await ApiLogin(email, password);
 
 			setResponse(HandleResponse(response));
 		}

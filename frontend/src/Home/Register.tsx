@@ -1,12 +1,12 @@
 import "./style.scss";
 import { useEffect, useState } from "react";
-import { api } from "../api/client";
 import FormField from "../Components/FormField";
 import HandleResponse from "../api/HandleResponse";
 import type { ResponseType } from "../api/ResponseType";
 import { useNavigate } from "react-router-dom";
 import Anchor from "../Components/Anchor";
 import { useAuth } from "../context/AuthContext";
+import { ApiRegister } from "../api/client";
 
 export default function Register()
 {
@@ -23,12 +23,7 @@ export default function Register()
 	{
 		try
 		{
-			const response = await api.post("/register", {
-				firstname: firstname,
-				lastname:  lastname,
-				email:     email,
-				password:  password,
-			});
+			const response = await ApiRegister(firstname, lastname, email, password);
 
 			setResponse(HandleResponse(response));
 		}
