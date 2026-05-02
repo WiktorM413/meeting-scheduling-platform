@@ -1,10 +1,15 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { api } from "../api/client";
 
+interface UserData
+{
+	id:    number;
+	email: string;
+}
+
 interface AuthContextType
 {
-	email:           string|null;
-	userId:          number|null;
+	userData:        UserData|null;
 	loading:         boolean;
 	isAuthenticated: boolean;
 	refreshUser:     () => Promise<void>
@@ -28,8 +33,7 @@ const AuthContext = createContext<AuthContextType|undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode })
 {
-	const [email,   setEmail]   = useState<string|null>(null);
-	const [userId,  setUserId]  = useState<number|null>(null);
+	const [userData,   setUserData]   = useState<UserData|null>(null);
 	const [loading, setLoading] = useState(true);
 
 	const refreshUser = async () =>
@@ -38,13 +42,16 @@ export function AuthProvider({ children }: { children: ReactNode })
 		{
 			const sessionData = await GetCurrentUser();
 
-			setEmail(sessionData.email);
-			setUserId(sessionData.user_id);
+			setUserData(
+				{
+					email: sessionData.email,
+					id: sessionData.user_id
+				}
+			);
 		}
 		catch
 		{
-			setEmail(null);
-			setUserId(null);
+			setUserData(null);
 		}
 		finally
 		{
@@ -59,10 +66,9 @@ export function AuthProvider({ children }: { children: ReactNode })
 	return (
 		<AuthContext.Provider
 			value={{
-				email,
-				userId,
+				userData,
 				loading,
-				isAuthenticated: userId !== null,
+				isAuthenticated: userData?.id !== null,
 				refreshUser: refreshUser,
 			}}>
 				{children}
