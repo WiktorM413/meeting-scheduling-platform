@@ -1,14 +1,17 @@
 import "./style.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { api } from "../api/client";
 import FormField from "../Components/FormField";
 import HandleResponse from "../api/HandleResponse";
 import type { ResponseType } from "../api/ResponseType";
 import { useNavigate } from "react-router-dom";
 import Anchor from "../Components/Anchor";
+import { useAuth } from "../context/AuthContext";
 
 export default function Register()
 {
+	const { refreshUser } = useAuth();
+
 	const navigate                  = useNavigate();
 	const [firstname, setFirstname] = useState("");
 	const [lastname,  setLastName]  = useState("");
@@ -35,10 +38,23 @@ export default function Register()
 		}
 	}
 
-	if (response?.type === "success")
+	useEffect(() =>
 	{
-		setTimeout(() => navigate("/home"), 1000);
-	}
+		if (response?.type !== "success")
+		{
+			return;
+		}
+
+		const handleSuccess = async () =>
+		{
+			await refreshUser();
+
+			setTimeout(() => navigate("/home"), 1000);
+		}
+
+		handleSuccess();
+	}, [response, refreshUser, navigate]);
+	
 
 	return (
 		<div className="msp-register">
