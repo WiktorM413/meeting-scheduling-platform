@@ -1,19 +1,11 @@
-import { useState, useEffect } from "react";
-import { api } from "../api/client";
+import { useAuth } from "../context/AuthContext";
+
 
 export default function Index()
 {
-	const [message, setMessage] = useState("");
-
-	useEffect(() => 
-	{
-		api.get("/home").then((res) =>
-		{
-			setMessage(res.data.message);
-		})
-	});
+	const { userData } = useAuth();
 
 	return (
-		<><p>{message}</p></>
+		<><p>{userData?.email}</p></>
 	);
 }
