@@ -25,7 +25,7 @@ class AuthService
 			];
 		}
 
-		$userId = $$this->authModel->createUser($firstname, $lastname, $email, $password, $userGroup);
+		$userId = $this->authModel->createUser($firstname, $lastname, $email, $password, $userGroup);
 
 		$this->setSession($userId, $email);
 
