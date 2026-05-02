@@ -6,20 +6,15 @@ use App\Services\AuthService;
 
 class AuthController extends BaseController
 {
-	protected AuthService $authService;
-
-	public function __construct()
-	{
-		$authService = service('authService');
-	}
-
 	public function register()
 	{
+		/** @var \App\Services\AuthService $authService */
+		$authService = service('authService');
 		$data = $this->request->getJSON(true);
 
-		if (! $this->validateData($data, $this->authService->constructRegisterRules()))
+		if (! $this->validateData($data, $authService->constructRegisterRules()))
 		{
-			return $this->response->setJSON($this->authService->validationErrorsToJSON($this->validator->getErrors()));
+			return $this->response->setJSON($authService->validationErrorsToJSON($this->validator->getErrors()));
 		}
 
 		$firstname = $data['firstname'] ?? '';
@@ -27,32 +22,37 @@ class AuthController extends BaseController
 		$email     = $data['email']     ?? '';
 		$password  = $data['password']  ?? '';
 
-		$password = $this->authService->hashPassword($password);
-		$response = $this->authService->register($firstname, $lastname, $email, $password);
+		$password = $authService->hashPassword($password);
+		$response = $authService->register($firstname, $lastname, $email, $password);
 		
 		return $this->response->setJSON($response);
 	}
 
 	public function login()
 	{
+		/** @var \App\Services\AuthService $authService */
+		$authService = service('authService');
 		$data = $this->request->getJSON(true);
 
-		if (! $this->validateData($data, $this->authService->constructLoginRules()))
+		if (! $this->validateData($data, $authService->constructLoginRules()))
 		{
-			return $this->response->setJSON($this->authService->validationErrorsToJSON($this->validator->getErrors()));
+			return $this->response->setJSON($authService->validationErrorsToJSON($this->validator->getErrors()));
 		}
 
 		$email    = $data['email']    ?? '';
 		$password = $data['password'] ?? '';
 
-		$response = $this->authService->login($email, $password);
+		$response = $authService->login($email, $password);
 
 		return $this->response->setJSON($response);
 	}
 
 	public function me()
 	{
-		if (! $this->authService->getSession("logged_in"))
+		/** @var \App\Services\AuthService $authService */
+		$authService = service('authService');
+
+		if (! $authService->getSession("logged_in"))
 		{
 			return $this->response->setStatusCode(401)->setJSON
 			([
@@ -61,7 +61,7 @@ class AuthController extends BaseController
 			]);
 		}
 
-		$sessionData = $this->authService->getSession();
+		$sessionData = $authService->getSession();
 
 		return $this->response->setJSON
 		(
