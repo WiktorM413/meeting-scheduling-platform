@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class HomeModel extends Model
+class AuthModel extends Model
 {
 	public function createUser($firstname, $lastname, $email, $password, $userGroup)
 	{
@@ -23,7 +23,7 @@ class HomeModel extends Model
 				(:first_name:, :last_name:, :email:, :password:, :user_group:)
 		", $params);
 
-		return $this->db->affectedRows();
+		return $this->getUserByEmail($email)['id'];
 	}
 
 	public function getUserByEmail($email)

@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { ResponseType } from "../api/ResponseType";
 import { api } from "../api/client";
 import HandleResponse from "../api/HandleResponse";
 import FormField from "../Components/FormField";
 import Anchor from "../Components/Anchor";
+import { useAuth } from "../context/AuthContext";
 
 
 export default function Login()
 {
+	const { refreshUser } = useAuth();
+
 	const navigate                = useNavigate();
 	const [email,    setEmail]    = useState("");
 	const [password, setPassword] = useState("");
@@ -31,10 +34,22 @@ export default function Login()
 		}
 	}
 
-	if (response?.type === "success")
+	useEffect(() =>
 	{
-		setTimeout(() => navigate("/home"), 1000);
-	}
+		if (response?.type !== "success")
+		{
+			return;
+		}
+
+		const handleSuccess = async () =>
+		{
+			await refreshUser();
+
+			setTimeout(() => navigate("/home", { replace: true }), 1000);
+		}
+
+		handleSuccess();
+	}, [response, refreshUser, navigate]);
 
 	return (
 		<div className="msp-login">
@@ -51,7 +66,8 @@ export default function Login()
 				</div>
 
 				<div className="msp-small-text">
-					<p>Don't have an account? <Anchor navigator={navigate} to={"/register"} label="Register here."/></p>
+					<p>Don't have an account?</p>
+					<Anchor navigator={navigate} to={"/register"} label="Register here."/>
 				</div>
 			</div>
 		</div>

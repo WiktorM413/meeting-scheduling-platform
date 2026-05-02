@@ -2,16 +2,16 @@
 
 namespace App\Services;
 
-use App\Models\HomeModel;
+use App\Models\AuthModel;
 use App\Validation\ValidationRules;
 
-class HomeService
+class AuthService
 {
-	protected HomeModel $homeModel;
+	protected AuthModel $authModel;
 
 	public function __construct()
 	{
-		$this->homeModel = model(HomeModel::class);
+		$this->authModel = model(AuthModel::class);
 	}
 
 	public function register($firstname, $lastname, $email, $password, $userGroup = 0)
@@ -25,7 +25,9 @@ class HomeService
 			];
 		}
 
-		$this->homeModel->createUser($firstname, $lastname, $email, $password, $userGroup);
+		$userId = $this->authModel->createUser($firstname, $lastname, $email, $password, $userGroup);
+
+		$this->setSession($userId, $email);
 
 		return
 		[
@@ -45,7 +47,7 @@ class HomeService
 			];
 		}
 
-		$user = $this->homeModel->getUserByEmail($email);		
+		$user = $this->authModel->getUserByEmail($email);		
 
 		if (! password_verify($password, $user['password']))
 		{
@@ -55,6 +57,8 @@ class HomeService
 				'message' => 'Wrong password'
 			];
 		}
+
+		$this->setSession($user['id'], $user['email']);
 
 		return
 		[
@@ -104,8 +108,27 @@ class HomeService
 
 	public function userExists($email)
 	{
-		$user = $this->homeModel->getUserByEmail($email);
+		$user = $this->authModel->getUserByEmail($email);
 		
 		return isset($user);
+	}
+
+	public function setSession($userId, $email)
+	{
+		$session = session();
+
+		$session->set
+		([
+			'user_id'   => $userId,
+			'email'     => $email,
+			'logged_in' => true
+		]);
+	}
+
+	public function getSession(string|null $key = null)
+	{
+		$session = session();
+
+		return $session->get($key);
 	}
 }

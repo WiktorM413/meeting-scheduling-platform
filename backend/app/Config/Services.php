@@ -3,7 +3,7 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseService;
-use App\Services\HomeService;
+use App\Services\AuthService;
 
 /**
  * Services Configuration file.
@@ -30,13 +30,13 @@ class Services extends BaseService
      *     return new \CodeIgniter\Example();
      * }
      */
-	public static function homeService($getShared = true)
+	public static function authService($getShared = true)
 	{
 		if ($getShared)
 		{
-			return static::getSharedInstance('homeService');
+			return static::getSharedInstance('authService');
 		}
 
-		return new HomeService;
+		return new AuthService;
 	}
 }
