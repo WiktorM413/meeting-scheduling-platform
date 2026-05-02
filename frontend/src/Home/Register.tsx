@@ -49,7 +49,7 @@ export default function Register()
 		{
 			await refreshUser();
 
-			setTimeout(() => navigate("/home"), 1000);
+			setTimeout(() => navigate("/home", { replace: true }), 1000);
 		}
 
 		handleSuccess();
