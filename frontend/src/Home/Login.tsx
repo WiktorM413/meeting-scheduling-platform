@@ -6,6 +6,7 @@ import MspFormField from "../Components/MspFormField";
 import MspAnchor from "../Components/MspAnchor";
 import { useAuth } from "../context/AuthContext";
 import { ApiLogin } from "../api/client";
+import MspButton from "../Components/MspButton";
 
 
 export default function Login()
@@ -56,7 +57,7 @@ export default function Login()
 			<div className="msp-login-form">
 				<MspFormField label="Email"    value={email}    setter={setEmail}    inputType="email"/>
 				<MspFormField label="Password" value={password} setter={setPassword} inputType="password"/>
-				<button className="msp-button msp-login-submit" onClick={SubmitData}>Log in</button>
+				<MspButton label="Login" className="msp-login-submit" onClick={SubmitData}/>
 
 				<div className="msp-small-text">
 					<p className={response?.type === "error" ? "msp-error" : "msp-success"}>{response?.message}</p>

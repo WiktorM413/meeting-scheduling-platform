@@ -7,6 +7,7 @@ import type { ResponseType } from "../api/ResponseType";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { ApiRegister } from "../api/client";
+import MspButton from "../Components/MspButton";
 
 export default function Register()
 {
@@ -59,7 +60,7 @@ export default function Register()
 				<MspFormField label="Last Name (min. 2)"  value={lastname}  setter={setLastName}/>
 				<MspFormField label="Email"               value={email}    setter={setEmail}    inputType="email"/>
 				<MspFormField label="Password (min. 8)"   value={password}  setter={setPassword} inputType="password"/>
-				<button className="msp-button msp-register-submit" onClick={SubmitData}>Register</button>
+				<MspButton label="Register" className="msp-register-submit" onClick={SubmitData}/>
 
 				<div className="msp-small-text">
 					<p className={response?.type === "error" ? "msp-error" : "msp-success"}>{response?.message}</p>
