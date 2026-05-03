@@ -43,7 +43,7 @@ class AuthService
 		}
 
 		$this->setSession($user['id'], $user['email']);
-		// return ['error' => false, 'message' => 'Successfully logged in.'];
+
 		return SimpleJson(false, 'Successfully logged in.');
 	}
 
