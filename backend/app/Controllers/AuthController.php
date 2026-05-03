@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Services\AuthService;
+use App\Validation\AuthValidationRules;
 
 class AuthController extends BaseController
 {
@@ -12,7 +12,7 @@ class AuthController extends BaseController
 		$authService = service('authService');
 		$data = $this->request->getJSON(true);
 
-		if (! $this->validateData($data, $authService->constructRegisterRules()))
+		if (! $this->validateData($data, AuthValidationRules::register))
 		{
 			return $this->response->setJSON($authService->validationErrorsToJSON($this->validator->getErrors()));
 		}
@@ -34,7 +34,7 @@ class AuthController extends BaseController
 		$authService = service('authService');
 		$data = $this->request->getJSON(true);
 
-		if (! $this->validateData($data, $authService->constructLoginRules()))
+		if (! $this->validateData($data, AuthValidationRules::login))
 		{
 			return $this->response->setJSON($authService->validationErrorsToJSON($this->validator->getErrors()));
 		}

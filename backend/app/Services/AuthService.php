@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\AuthModel;
-use App\Validation\ValidationRules;
 
 class AuthService
 {
@@ -53,28 +52,6 @@ class AuthService
 		$this->destroySession();
 
 		return SimpleJson(false, 'Successfully logged out.');
-	}
-
-	public function constructRegisterRules()
-	{
-		$mergedRules = array_merge(
-			ValidationRules::firstname,
-			ValidationRules::lastname,
-			ValidationRules::email,
-			ValidationRules::password,
-		);
-
-		return $mergedRules;
-	}
-
-	public function constructLoginRules()
-	{
-		$mergedRules = array_merge(
-			ValidationRUles::email,
-			ValidationRules::password,
-		);
-
-		return $mergedRules;
 	}
 
 	public function hashPassword($password)
