@@ -12,7 +12,8 @@ interface AuthContextType
 	userData:        UserData|null;
 	loading:         boolean;
 	isAuthenticated: boolean;
-	refreshUser:     () => Promise<void>
+	refreshUser:     () => Promise<void>;
+	clearAuthState:  () => void;
 }
 
 async function GetCurrentUser()
@@ -63,6 +64,13 @@ export function AuthProvider({ children }: { children: ReactNode })
 		}
 	}
 
+	const clearAuthState = () =>
+	{
+		setUserData(null);
+		setLoggedIn(false);
+		setLoading(false);
+	}
+
 	useEffect(() =>
 	{
 		refreshUser();
@@ -74,7 +82,8 @@ export function AuthProvider({ children }: { children: ReactNode })
 				userData,
 				loading,
 				isAuthenticated: loggedIn,
-				refreshUser: refreshUser,
+				refreshUser,
+				clearAuthState,
 			}}>
 				{children}
 		</AuthContext.Provider>
