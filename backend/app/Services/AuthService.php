@@ -23,7 +23,7 @@ class AuthService
 
 		$userId = $this->authModel->createUser($firstname, $lastname, $email, $password, $userGroup);
 
-		$this->setSession($userId, $email);
+		$this->setSession($userId, $firstname, $lastname, $email, $userGroup);
 
 		return SimpleJson(false, 'Successfully registered');
 	}
@@ -42,7 +42,7 @@ class AuthService
 			return SimpleJson(true, 'Wrong password');
 		}
 
-		$this->setSession($user['id'], $user['email']);
+		$this->setSession($user['id'], $user['first_name'], $user['last_name'], $user['email'], $user['user_group']);
 
 		return SimpleJson(false, 'Successfully logged in.');
 	}
@@ -74,15 +74,18 @@ class AuthService
 		return isset($user);
 	}
 
-	public function setSession($userId, $email)
+	public function setSession($userId, $firstname, $lastname, $email, $userGroup)
 	{
 		$session = session();
 
 		$session->set
 		([
-			'user_id'   => $userId,
-			'email'     => $email,
-			'logged_in' => true
+			'user_id'    => $userId,
+			'firstname'  => $firstname,
+			'lastname'   => $lastname,
+			'email'      => $email,
+			'user_group' => $userGroup,
+			'logged_in'  => true
 		]);
 	}
 
