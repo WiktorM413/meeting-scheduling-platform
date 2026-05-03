@@ -38,3 +38,10 @@ export async function ApiMe(): Promise<AxiosResponse<any, any, {}>>
 
 	return response;
 }
+
+export async function ApiLogout(): Promise<AxiosResponse<any, any, {}>>
+{
+	const response = await api.get("/logout");
+	
+	return response;
+}
