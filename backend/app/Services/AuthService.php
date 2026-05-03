@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\AuthModel;
-use App\Validation\ValidationRules;
 
 class AuthService
 {
@@ -12,81 +11,47 @@ class AuthService
 	public function __construct()
 	{
 		$this->authModel = model(AuthModel::class);
+		helper('response');
 	}
 
 	public function register($firstname, $lastname, $email, $password, $userGroup = 0)
 	{
 		if ($this->userExists($email))
 		{
-			return
-			[
-				'error'   => true,
-				'message' => 'User already exists.'
-			];
+			return SimpleJson(true, 'User already exists');
 		}
 
 		$userId = $this->authModel->createUser($firstname, $lastname, $email, $password, $userGroup);
 
 		$this->setSession($userId, $email);
 
-		return
-		[
-			'error'   => false,
-			'message' => 'Successfully registered.'
-		];
+		return SimpleJson(false, 'Successfully registered');
 	}
 
 	public function login($email, $password)
 	{
 		if (! $this->userExists($email))
 		{
-			return
-			[
-				'error'   => true,
-				'message' => 'User with that email doesn\'t exist'
-			];
+			return SimpleJson(true, 'User with that eamil doesn\'t exist.');
 		}
 
-		$user = $this->authModel->getUserByEmail($email);		
+		$user = $this->authModel->getUserByEmail($email);
 
 		if (! password_verify($password, $user['password']))
 		{
-			return
-			[
-				'error'   => true,
-				'message' => 'Wrong password'
-			];
+			return SimpleJson(true, 'Wrong password');
 		}
 
 		$this->setSession($user['id'], $user['email']);
 
-		return
-		[
-			'error'   => false,
-			'message' => 'Successfully logged in.'
-		];
+		return SimpleJson(false, 'Successfully logged in.');
 	}
 
-	public function constructRegisterRules()
+	public function logout()
 	{
-		$mergedRules = array_merge(
-			ValidationRules::firstname,
-			ValidationRules::lastname,
-			ValidationRules::email,
-			ValidationRules::password,
-		);
+		$this->destroySession();
 
-		return $mergedRules;
-	}
-
-	public function constructLoginRules()
-	{
-		$mergedRules = array_merge(
-			ValidationRUles::email,
-			ValidationRules::password,
-		);
-
-		return $mergedRules;
+		return SimpleJson(false, 'Successfully logged out.');
 	}
 
 	public function hashPassword($password)
@@ -99,11 +64,7 @@ class AuthService
 		$firstField = array_key_first($errors);
 		$firstError = $errors[$firstField];
 
-		return
-		[
-			'error'   => true,
-			'message' => "Error: $firstError",
-		];
+		return SimpleJson(true, "Error: $firstError");
 	}
 
 	public function userExists($email)
@@ -130,5 +91,12 @@ class AuthService
 		$session = session();
 
 		return $session->get($key);
+	}
+
+	public function destroySession()
+	{
+		$session = session();
+
+		$session->destroy();
 	}
 }

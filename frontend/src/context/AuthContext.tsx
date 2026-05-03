@@ -12,7 +12,8 @@ interface AuthContextType
 	userData:        UserData|null;
 	loading:         boolean;
 	isAuthenticated: boolean;
-	refreshUser:     () => Promise<void>
+	refreshUser:     () => Promise<void>;
+	clearAuthState:  () => void;
 }
 
 async function GetCurrentUser()
@@ -33,7 +34,8 @@ const AuthContext = createContext<AuthContextType|undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode })
 {
-	const [userData,   setUserData]   = useState<UserData|null>(null);
+	const [userData,   setUserData] = useState<UserData|null>(null);
+	const [loggedIn,   setLoggedIn] = useState(false);
 	const [loading, setLoading] = useState(true);
 
 	const refreshUser = async () =>
@@ -47,7 +49,10 @@ export function AuthProvider({ children }: { children: ReactNode })
 					email: sessionData.email,
 					id: sessionData.user_id
 				}
+		
 			);
+
+			setLoggedIn(sessionData.logged_in);
 		}
 		catch
 		{
@@ -57,6 +62,13 @@ export function AuthProvider({ children }: { children: ReactNode })
 		{
 			setLoading(false);
 		}
+	}
+
+	const clearAuthState = () =>
+	{
+		setUserData(null);
+		setLoggedIn(false);
+		setLoading(false);
 	}
 
 	useEffect(() =>
@@ -69,8 +81,9 @@ export function AuthProvider({ children }: { children: ReactNode })
 			value={{
 				userData,
 				loading,
-				isAuthenticated: userData?.id !== null,
-				refreshUser: refreshUser,
+				isAuthenticated: loggedIn,
+				refreshUser,
+				clearAuthState,
 			}}>
 				{children}
 		</AuthContext.Provider>
