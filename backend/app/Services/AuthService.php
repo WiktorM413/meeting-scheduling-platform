@@ -5,8 +5,6 @@ namespace App\Services;
 use App\Models\AuthModel;
 use App\Validation\ValidationRules;
 
-use function App\Helpers\SimpleJson;
-
 class AuthService
 {
 	protected AuthModel $authModel;
@@ -14,6 +12,7 @@ class AuthService
 	public function __construct()
 	{
 		$this->authModel = model(AuthModel::class);
+		helper('response');
 	}
 
 	public function register($firstname, $lastname, $email, $password, $userGroup = 0)
@@ -37,7 +36,7 @@ class AuthService
 			return SimpleJson(true, 'User with that eamil doesn\'t exist.');
 		}
 
-		$user = $this->authModel->getUserByEmail($email);		
+		$user = $this->authModel->getUserByEmail($email);
 
 		if (! password_verify($password, $user['password']))
 		{
@@ -45,7 +44,7 @@ class AuthService
 		}
 
 		$this->setSession($user['id'], $user['email']);
-
+		// return ['error' => false, 'message' => 'Successfully logged in.'];
 		return SimpleJson(false, 'Successfully logged in.');
 	}
 
