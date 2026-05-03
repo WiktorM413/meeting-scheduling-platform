@@ -6,6 +6,6 @@ export default function Index()
 	const { userData } = useAuth();
 
 	return (
-		<><p>{userData?.email}</p></>
+		<><p>Hello {userData?.firstname} {userData?.lastname}. You're a {userData?.userGroup?.type}</p></>
 	);
 }
