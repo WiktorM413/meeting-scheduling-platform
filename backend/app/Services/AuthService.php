@@ -49,6 +49,13 @@ class AuthService
 		return SimpleJson(false, 'Successfully logged in.');
 	}
 
+	public function logout()
+	{
+		$this->destroySession();
+
+		return SimpleJson(false, 'Successfully logged out.');
+	}
+
 	public function constructRegisterRules()
 	{
 		$mergedRules = array_merge(

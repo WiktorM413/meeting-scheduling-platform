@@ -63,9 +63,16 @@ class AuthController extends BaseController
 
 		$sessionData = $authService->getSession();
 
-		return $this->response->setJSON
-		(
-			$sessionData
-		);
+		return $this->response->setJSON($sessionData);
+	}
+
+	public function logout()
+	{
+		/** @var \App\Services\AuthService $authService */
+		$authService = service('authService');
+
+		$response = $authService->logout();
+
+		return $this->response->setJSON($response);
 	}
 }
