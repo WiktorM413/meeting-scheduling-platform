@@ -29,15 +29,12 @@
 
 	button
 	{
-		border: none;
 		margin-top: 2vh;
-		transition: 0.5s;
-
-		&:hover
-		{
-			background-color: $button-color-hover;
-			transition: 0.5s;
-			cursor: pointer;
-		}
 	}
+}
+
+.msp-home-button-group
+{
+	display: flex;
+	justify-content: space-around;
 }
