@@ -30,6 +30,12 @@ body
 {
 	background-color: $button-color-normal;
 	font-weight: 500;
+	border: none;
+	padding: 2vh;
+	width: 22vh;
+	border-radius: 40px;
+	font-size: 2vh;
+	color: $font-light;
 }
 
 .msp-standard-color
