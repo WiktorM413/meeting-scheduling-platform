@@ -9,6 +9,9 @@ export default function Header()
 
 	return (
 		<div className="msp-header">
+			<div className="msp-header-logo">
+				MSP
+			</div>
 			<AccountButtons isAuthenticated={isAuthenticated}/>
 		</div>
 	)
