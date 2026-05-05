@@ -15,6 +15,8 @@
 	padding-bottom: 1.2rem;
 	border-radius: 25px;
 
+	animation: fadeUp 0.4s ease both;
+
 	h1
 	{
 		color: $font-light;
@@ -26,6 +28,9 @@
 		justify-content: center;
 		align-items: center;
 		flex-direction: column;
+
+		animation: fadeUp 0.4s ease both;
+		animation-delay: 0.12s;
 
 		button
 		{
