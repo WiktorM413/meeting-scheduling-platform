@@ -20,7 +20,6 @@ export default function Index()
 			</section>
 			<section className="msp-home-preview">
 				<div className="msp-home-calendar">
-					{/* TODO: Create a calendar element for display */}
 					<MspCalendar />
 				</div>
 			</section>
