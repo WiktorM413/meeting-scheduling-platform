@@ -1,4 +1,5 @@
 import MspButton from "../Components/MspButton";
+import MspCalendar from "../Components/MspCalendar/MspCalendar";
 import MspListArrow from "../Components/MspListArrow";
 import MspListStep from "../Components/MspListStep";
 import "./style.scss";
@@ -20,7 +21,7 @@ export default function Index()
 			<section className="msp-home-preview">
 				<div className="msp-home-calendar">
 					{/* TODO: Create a calendar element for display */}
-					Calender
+					<MspCalendar />
 				</div>
 			</section>
 			<section className="msp-home-how-it-works">
