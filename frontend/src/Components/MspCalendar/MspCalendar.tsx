@@ -11,8 +11,8 @@ function BuildMonth(year: number, month: number): DayCell[]
 	const daysInMonth = new Date(year, month + 1, 0).getDate();
 	const today =       new Date();
 	
-	const offset           = firstDay.getDay();
-	const cells: (DayCell|null)[] = [];
+	const offset           = (firstDay.getDay() + 6) % 7; // Convert from 0 -> Sunday to 0 -> Monday
+	const cells: DayCell[] = [];
 
 	for (let i = 0; i < offset; i++)
 	{
@@ -27,7 +27,8 @@ function BuildMonth(year: number, month: number): DayCell[]
 			dateObj.getMonth()    === today.getMonth() &&
 			dateObj.getFullYear() === today.getFullYear();
 
-		const isAvailable = dateObj.getDay() < 5;
+		const day = (dateObj.getDay() + 6) % 7; // Convert from 0 -> Sunday to 0 -> Monday
+		const isAvailable = day < 5;
 
 		cells.push
 		({
