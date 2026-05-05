@@ -1,15 +1,27 @@
 .msp-footer
 {
 	display: flex;
-	flex-direction: row;
 	align-items: center;
 	justify-content: center;
-	gap: 0.5vw;
-	a
+	gap: 10px;
+
+	padding: 20px;
+	margin-top: 40px;
+
+	color: #aaa;
+	font-size: 0.9rem;
+
+	border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+	a img
 	{
-		img
+		opacity: 0.7;
+		transition: opacity 0.2s ease, transform 0.2s ease;
+
+		&:hover
 		{
-			float: right;
+			opacity: 1;
+			transform: translateY(-2px);
 		}
 	}
 }

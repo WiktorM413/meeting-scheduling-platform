@@ -8,7 +8,22 @@
 body
 {
 	font-family: $global-font-family;
-	background-color: rgb(16, 16, 16);
+	background: linear-gradient(to bottom, #1e1e1e, #121212);
+}
+
+html, body, #root
+{
+	height: 100%;
+}
+
+.msp
+{
+	min-height: 100vh;
+}
+
+.msp-content
+{
+	flex: 1;
 }
 
 .msp-small-text
@@ -24,12 +39,6 @@ body
 .msp-error
 {
 	color: red;
-}
-
-.msp-button
-{
-	background-color: $button-color-normal;
-	font-weight: 500;
 }
 
 .msp-standard-color

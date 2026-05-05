@@ -1,4 +1,5 @@
 @import "../variables.scss";
+@import "../animations.scss";
 
 .msp-form-field
 {
@@ -8,16 +9,16 @@
 		color: rgb(137, 137, 137);
 		border: none;
 		border-radius: 7px;
-		height: 4vh;
-		width: 40vh;
-		font-size: 2vh;
+		height: 3rem;
+		width: 25rem;
+		font-size: 1.25rem;
 		padding: 10px;
 	}
 	
 	p
 	{
 		color:   rgb(162, 162, 162);
-		font-size: 2vh;
+		font-size: 1.2rem;
 	}
 
 	:focus
@@ -33,5 +34,72 @@
 		cursor: pointer;
 		color: $attention-color;
 		font-weight: 600;
+	}
+}
+
+.msp-button
+{
+	background-color: $button-color-normal;
+	font-weight: 500;
+	border: none;
+	padding: 1.4rem;
+	width: 13rem;
+	border-radius: 40px;
+	font-size: 1.1rem;
+	color: $font-light;
+	transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+
+	&:hover
+	{
+		transform: translateY(-2px);
+		background-color: $button-color-hover;
+		box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+		cursor: pointer;
+	}
+}
+
+.msp-list-arrow
+{
+	font-size: 1.5rem;
+	color: #666;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	animation: subtleBob 1.5s ease-in-out infinite;
+}
+
+.msp-list-step
+{
+	background-color: #2a2a2a;
+	padding: 20px 20px;
+	border-radius: 15px;
+	color: #ddd;
+	font-size: 1rem;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+	&:hover
+	{
+		transform: translateY(-2px);
+		box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+	}
+}
+
+
+@media (prefers-reduced-motion: reduce)
+{
+	.msp-home-hero,
+	.msp-home-preview,
+	.msp-home-how-it-works,
+	.msp-list-arrow
+	{
+		animation: none;
+	}
+
+	.msp-button,
+	.msp-home-calendar,
+	.msp-list-step
+	{
+		transition: none;
 	}
 }

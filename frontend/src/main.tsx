@@ -16,9 +16,13 @@ createRoot(document.getElementById('root')!).render(
 	<StrictMode>
 		<BrowserRouter>
 			<AuthProvider>
-				<Header />
-				<AppRoutes />
-				<Footer />
+				<div className="msp">
+					<Header />
+					<main className="msp-content">
+					<AppRoutes />
+					</main>
+					<Footer />
+				</div>
 			</AuthProvider>
 		</BrowserRouter>
 	</StrictMode>,
