@@ -1,5 +1,21 @@
 @import "../variables.scss";
 
+// Animations
+
+@keyframes subtleBob
+{
+	0%, 100%
+	{
+		transform: translateY(0);
+	}
+	50%
+	{
+		transform: translateY(3px);
+	}
+}
+
+// Style
+
 .msp-form-field
 {
 	input
@@ -46,12 +62,14 @@
 	border-radius: 40px;
 	font-size: 1.1rem;
 	color: $font-light;
-	transition: 0.5s;
+	transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
 
 	&:hover
 	{
+		transform: translateY(-2px);
 		background-color: $button-color-hover;
-		transition: 0.5s;
+		box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
 		cursor: pointer;
 	}
 }
@@ -60,6 +78,10 @@
 {
 	font-size: 1.5rem;
 	color: #666;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	animation: subtleBob 1.5s ease-in-out infinite;
 }
 
 .msp-list-step
@@ -69,4 +91,30 @@
 	border-radius: 15px;
 	color: #ddd;
 	font-size: 1rem;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+	&:hover
+	{
+		transform: translateY(-2px);
+		box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+	}
+}
+
+
+@media (prefers-reduced-motion: reduce)
+{
+	.msp-home-hero,
+	.msp-home-preview,
+	.msp-home-how-it-works,
+	.msp-list-arrow
+	{
+		animation: none;
+	}
+
+	.msp-button,
+	.msp-home-calendar,
+	.msp-list-step
+	{
+		transition: none;
+	}
 }
