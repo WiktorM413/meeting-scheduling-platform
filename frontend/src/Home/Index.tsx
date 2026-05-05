@@ -1,6 +1,7 @@
 import MspButton from "../Components/MspButton";
 import MspListArrow from "../Components/MspListArrow";
 import MspListStep from "../Components/MspListStep";
+import "./style.scss";
 
 export default function Index()
 {
