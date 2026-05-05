@@ -11,6 +11,21 @@ body
 	background: linear-gradient(to bottom, #1e1e1e, #121212);
 }
 
+html, body, #root
+{
+	height: 100%;
+}
+
+.msp
+{
+	min-height: 100vh;
+}
+
+.msp-content
+{
+	flex: 1;
+}
+
 .msp-small-text
 {
 	font-size: 1.5vh;
