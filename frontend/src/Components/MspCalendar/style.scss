@@ -79,5 +79,16 @@
 .msp-calendar-cell-date
 {
 	font-size: 14px;
+	color: rgb(67, 67, 67);
 }
 
+.msp-calendar-cell-dot
+{
+	width: 8px;
+	height: 8px;
+	background: red;
+	border-radius: 50%;
+	position: absolute;
+	top: 15px;
+	right: 8px;
+}

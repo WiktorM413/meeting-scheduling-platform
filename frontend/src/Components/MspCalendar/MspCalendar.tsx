@@ -31,9 +31,10 @@ function BuildMonth(year: number, month: number): DayCell[]
 
 		cells.push
 		({
-			date: d,
-			isToday: isToday,
-			isSelected: false,
+			date:         d,
+			isToday:      isToday,
+			isSelected:   false,
+			hasEvents:    false,
 			availability: isAvailable,
 		});
 	}
@@ -116,6 +117,7 @@ export default function MspCalendar()
 							onClick={() => setSelectedDay(cell.date)}
 						>
 							<span className="msp-calendar-cell-date">{cell.date}</span>
+							{cell.hasEvents && <span className="msp-calendar-cell-dot"/>}
 						</div>
 					);
 				})}
