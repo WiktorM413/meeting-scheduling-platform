@@ -1,20 +1,5 @@
 @import "../variables.scss";
-
-// Animations
-
-@keyframes subtleBob
-{
-	0%, 100%
-	{
-		transform: translateY(0);
-	}
-	50%
-	{
-		transform: translateY(3px);
-	}
-}
-
-// Style
+@import "../animations.scss";
 
 .msp-form-field
 {

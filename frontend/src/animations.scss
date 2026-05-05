@@ -1,0 +1,26 @@
+@keyframes fadeUp
+{
+	from
+	{
+		opacity: 0;
+		transform: translateY(16px);
+	}
+
+	to
+	{
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes subtleBob
+{
+	0%, 100%
+	{
+		transform: translateY(0);
+	}
+	50%
+	{
+		transform: translateY(3px);
+	}
+}
