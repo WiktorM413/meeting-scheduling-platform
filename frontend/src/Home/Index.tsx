@@ -1,4 +1,6 @@
 import MspButton from "../Components/MspButton";
+import MspListArrow from "../Components/MspListArrow";
+import MspListStep from "../Components/MspListStep";
 
 export default function Index()
 {
@@ -23,9 +25,11 @@ export default function Index()
 			<section className="msp-home-how-it-works">
 				<h2>How it works</h2>
 				<ol>
-					<li>Set availability</li>
-					<li>Share booking link</li>
-					<li>Get appointments</li>
+					<MspListStep label="Set availability"/>
+					<MspListArrow />
+					<MspListStep label="Share booking link"/>
+					<MspListArrow />
+					<MspListStep label="Get appointments"/>
 				</ol>
 			</section>
 		</div>
