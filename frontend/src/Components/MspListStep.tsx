@@ -1,6 +1,11 @@
 import "./style.scss";
 
-export default function MspListStep(label: string)
+type MspListStepProps =
+{
+	label: string;
+}
+
+export default function MspListStep({label}: MspListStepProps)
 {
 	return (
 		<li className="msp-list-step">
