@@ -3,28 +3,36 @@ import type { ResponseType } from "../api/ResponseType";
 
 import { ApiGetAllMeetings } from "../api/client";
 import HandleResponse from "../api/HandleResponse";
+import type { MeetingType } from "./MeetingType";
 
 export default function Index()
 {
+	const [meetings, setMeetings] = useState<MeetingType[]>([]);
 	const [response, setResponse] = useState<ResponseType|null>(null);
 
-	useEffect(() => {
-		const loadMeetings = async () =>
+	useEffect(() =>
 	{
-		try
+		const loadMeetings = async () =>
 		{
-			const response = await ApiGetAllMeetings();
+			try
+			{
+				const response = await ApiGetAllMeetings();
 
-			setResponse(HandleResponse(response));
+				setResponse(HandleResponse(response));
+			}
+			catch (error)
+			{
+				console.log("Error submitting data: ", error);
+			}
 		}
-		catch (error)
-		{
-			console.log("Error submitting data: ", error);
-		}
-	}
 
 	loadMeetings();
-	}, [setResponse]);
+
+	if (response?.type === "success")
+	{
+		setMeetings(response.data);
+	}
+	}, [response, setResponse, setMeetings]);
 
 	return (
 		<>
