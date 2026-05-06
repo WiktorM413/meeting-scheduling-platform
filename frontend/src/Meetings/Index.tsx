@@ -6,7 +6,6 @@ import HandleResponse from "../api/HandleResponse";
 import type { MeetingType } from "./MeetingType";
 import MspCalendar from "../Components/MspCalendar/MspCalendar";
 import { useAuth } from "../context/AuthContext";
-import type { AxiosResponse } from "axios";
 
 export default function Index()
 {
