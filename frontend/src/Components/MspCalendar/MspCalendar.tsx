@@ -2,10 +2,11 @@ import "./style.scss";
 import { useMemo, useState } from "react";
 import type { DayCell } from "./DayCell";
 import MspButton from "../MspButton";
+import type { MeetingType } from "../../Meetings/MeetingType";
 
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-function BuildMonth(year: number, month: number): DayCell[]
+function BuildMonth(year: number, month: number, meetings?: MeetingType[]): DayCell[]
 {
 	const firstDay =    new Date(year, month, 1);
 	const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -29,13 +30,30 @@ function BuildMonth(year: number, month: number): DayCell[]
 
 		const day = (dateObj.getDay() + 6) % 7; // Convert from 0 -> Sunday to 0 -> Monday
 		const isAvailable = day < 5;
+		let hasEvents = false;
+
+		if (meetings)
+		{
+			for (let i = 0; i < meetings.length; i++)
+			{
+				let dateArr = meetings[i].when.split("-");
+
+				if (Number(dateArr[0])     === year  &&
+					Number(dateArr[1]) - 1 === month && // months are by index
+					Number(dateArr[2])     === d)
+				{
+					hasEvents = true;
+					break;
+				}
+			}
+		}
 
 		cells.push
 		({
 			date:         d,
 			isToday:      isToday,
 			isSelected:   false,
-			hasEvents:    false,
+			hasEvents:    hasEvents,
 			availability: isAvailable,
 		});
 	}
@@ -47,14 +65,19 @@ function BuildMonth(year: number, month: number): DayCell[]
 	return cells;
 }
 
-export default function MspCalendar()
+type MspCalendarProps =
+{
+	meetings?: MeetingType[];
+}
+
+export default function MspCalendar({ meetings }: MspCalendarProps)
 {
 	const now = new Date();
 	const [year,  setYear]  = useState(now.getFullYear());
 	const [month, setMonth] = useState(now.getMonth());
 	const [selectedDay, setSelectedDay] = useState<number|null>(now.getDate());
 
-	const days = useMemo(() => BuildMonth(year, month), [year, month]);
+	const days = useMemo(() => BuildMonth(year, month, meetings), [year, month, meetings]);
 
 	const prevMonth = () =>
 	{

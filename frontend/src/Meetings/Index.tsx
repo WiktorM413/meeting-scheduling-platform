@@ -4,6 +4,7 @@ import type { ResponseType } from "../api/ResponseType";
 import { ApiGetAllMeetings } from "../api/client";
 import HandleResponse from "../api/HandleResponse";
 import type { MeetingType } from "./MeetingType";
+import MspCalendar from "../Components/MspCalendar/MspCalendar";
 
 export default function Index()
 {
@@ -36,7 +37,7 @@ export default function Index()
 
 	return (
 		<>
-			Hello in meetings index
+			<MspCalendar meetings={meetings}/>
 		</>
 	);
 }
