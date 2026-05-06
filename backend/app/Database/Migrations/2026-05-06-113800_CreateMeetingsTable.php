@@ -10,14 +10,14 @@ class CreateMeetingsTable extends Migration
 	{
 		$this->db->query("
 			CREATE TABLE `meetings` (
-				`unique_id`   int NOT NULL,
-				`provider_id` int DEFAULT NULL,
-				`receiver_id` int DEFAULT NULL,
-				`topic`       text DEFAULT NULL,
-				`when`        date DEFAULT NULL,
-				`where`       text DEFAULT NULL,
-				`time_start`  varchar(5) DEFAULT NULL,
-				`time_end`    varchar(5) DEFAULT NULL
+				`unique_id`   int  NOT NULL,
+				`provider_id` int  NOT NULL,
+				`receiver_id` int  NOT NULL,
+				`topic`       text NOT NULL,
+				`when`        date NOT NULL,
+				`where`       text NOT NULL,
+				`time_start`  time NOT NULL,
+				`time_end`    time NOT NULL
 			)
 		");
 
