@@ -1,6 +1,6 @@
+import "./style.scss";
 import { useState, useEffect } from "react";
 import type { ResponseType } from "../api/ResponseType";
-
 import { ApiGetAllMeetingsForUser } from "../api/client";
 import HandleResponse from "../api/HandleResponse";
 import type { MeetingType } from "./MeetingType";
@@ -16,40 +16,53 @@ export default function Index()
 	const [response, setResponse] = useState<ResponseType|null>(null);
 
 	useEffect(() =>
+{
+	const loadMeetings = async () =>
 	{
-		const loadMeetings = async () =>
+		try
 		{
-			try
-			{
-				let response: AxiosResponse<any, any, {}>;
-				if (userData)
-				{
-					response = await ApiGetAllMeetingsForUser(userData.id);
-					setResponse(HandleResponse(response));
-				}
-				else
-				{
-					setResponse(null);
-				}
-
+			if (!userData) {
+				setMeetings([]);
+				return;
 			}
-			catch (error)
+
+			const response = await ApiGetAllMeetingsForUser(userData.id);
+			const handled = HandleResponse(response);
+
+			setResponse(handled);
+
+			if (handled?.type === "success")
 			{
-				console.log("Error submitting data: ", error);
+				setMeetings(handled.data);
+			}
+			else
+			{
+				setMeetings([]);
 			}
 		}
+		catch (error)
+		{
+			console.log("Error submitting data: ", error);
+		}
+	};
 
 	loadMeetings();
+}, [userData]);
 
-	if (response?.type === "success")
-	{
-		setMeetings(response.data);
-	}
-	}, [response, setResponse, setMeetings]);
+	console.log(meetings);
 
 	return (
-		<>
-			<MspCalendar meetings={meetings}/>
-		</>
+		<div className="msp-meetings">
+		<section className="msp-meetings-header">
+			<h1>Your meetings</h1>
+			<p>Manage and view all your scheduled events</p>
+		</section>
+
+		<section className="msp-meetings-calendar-wrapper">
+			<div className="msp-meetings-calendar">
+				<MspCalendar meetings={meetings}/>
+			</div>
+		</section>
+	</div>
 	);
 }
