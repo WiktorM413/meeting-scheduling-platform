@@ -14,10 +14,7 @@ export default function Header()
 		<div className="msp-header">
 			<MspAnchor className="msp-header-logo"     label="MSP"      navigator={navigate} to="/home" />
 			<div className="msp-header-main-routes-group">
-			<MspAnchor className="msp-header-meetings" label="Meetings" navigator={navigate} to="/meetings"/>
-			<MspAnchor className="msp-header-meetings" label="Meetings" navigator={navigate} to="/meetings"/>
-			<MspAnchor className="msp-header-meetings" label="Meetings" navigator={navigate} to="/meetings"/>
-			<MspAnchor className="msp-header-meetings" label="Meetings" navigator={navigate} to="/meetings"/>
+				<MspAnchor className="msp-header-meetings" label="Meetings" navigator={navigate} to="/meetings"/>
 			</div>
 			<AccountButtons isAuthenticated={isAuthenticated}/>
 		</div>
