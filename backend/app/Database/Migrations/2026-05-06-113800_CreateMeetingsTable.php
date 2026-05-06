@@ -15,6 +15,7 @@ class CreateMeetingsTable extends Migration
 				`receiver_id` int DEFAULT NULL,
 				`topic`       text DEFAULT NULL,
 				`when`        date DEFAULT NULL,
+				`where`       text DEFAULT NULL,
 				`time_start`  varchar(5) DEFAULT NULL,
 				`time_end`    varchar(5) DEFAULT NULL
 			)
