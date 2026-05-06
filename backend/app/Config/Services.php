@@ -2,6 +2,7 @@
 
 namespace Config;
 
+use App\Services\MeetingsService;
 use CodeIgniter\Config\BaseService;
 use App\Services\AuthService;
 
@@ -38,5 +39,15 @@ class Services extends BaseService
 		}
 
 		return new AuthService;
+	}
+
+	public static function meetingsService($getShared = true)
+	{
+		if ($getShared)
+		{
+			return static::getSharedInstance('meetingsService');
+		}
+
+		return new MeetingsService;
 	}
 }

@@ -10,4 +10,14 @@ if (! function_exists('SimpleJson'))
 			'message' => $message
 		];
 	}
+
+	function DataJson(bool $error, string $message, $data)
+	{
+		return
+		[
+			'error' =>   $error,
+			'message' => $message,
+			'data'    => $data
+		];
+	}
 }
