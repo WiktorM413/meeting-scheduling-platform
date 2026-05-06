@@ -16,7 +16,7 @@ $routes->group('api', function ($routes) {
 	$routes->get  ('me',      [AuthController::class, 'me']);
 	$routes->get  ('logout',  [AuthController::class, 'logout']);
 
-	$routes->get('meetings', [MeetingsController::class, 'getAllMeetings']);
-	$routes->get('meetingsForUser', [MeetingsController::class, 'getAllMeetingsForUser']);
+	$routes->get ('meetings',        [MeetingsController::class, 'getAllMeetings']);
+	$routes->post('meetingsForUser', [MeetingsController::class, 'getAllMeetingsForUser']);
 	
 });

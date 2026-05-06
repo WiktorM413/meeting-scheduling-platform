@@ -27,7 +27,9 @@ class MeetingsController extends BaseController
 			return $this->response->setJSON(MeetingsValidationRules::validationErrorsToJSON($this->validator->getErrors()));
 		}
 
-		$response = $meetingsService->getAllMeetingsForUser();
+		$userId = $data['user_id'];
+		
+		$response = $meetingsService->getAllMeetingsForUser($userId);
 
 		return $this->response->setJSON($response);
 	}

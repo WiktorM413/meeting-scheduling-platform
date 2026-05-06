@@ -16,9 +16,14 @@ class MeetingsService
 	
 	public function getAllMeetings()
 	{
-		$meetingsModel = model(MeetingsModel::class);
+		$meetings = $this->meetingsModel->getAllMeetings();
 
-		$meetings = $meetingsModel->getAllMeetings();
+		return DataJson(false, "Successfully retrieved meetings", $meetings);
+	}
+
+	public function getAllMeetingsForUser(int $userId)
+	{
+		$meetings = $this->meetingsModel->getAllMeetingsForUser($userId);
 
 		return DataJson(false, "Successfully retrieved meetings", $meetings);
 	}
