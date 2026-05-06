@@ -45,3 +45,10 @@ export async function ApiLogout(): Promise<AxiosResponse<any, any, {}>>
 	
 	return response;
 }
+
+export async function ApiGetAllMeetings(): Promise<AxiosResponse<any, any, {}>>
+{
+	const response = await api.get("/meetings");
+
+	return response;
+}
