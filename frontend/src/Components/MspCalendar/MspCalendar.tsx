@@ -67,10 +67,11 @@ function BuildMonth(year: number, month: number, meetings?: MeetingType[]): DayC
 
 type MspCalendarProps =
 {
-	meetings?: MeetingType[];
+	meetings?:                   MeetingType[];
+	externalSelectedDateSetter?: React.Dispatch<React.SetStateAction<string>>
 }
 
-export default function MspCalendar({ meetings }: MspCalendarProps)
+export default function MspCalendar({ meetings, externalSelectedDateSetter }: MspCalendarProps)
 {
 	const now = new Date();
 	const [year,  setYear]  = useState(now.getFullYear());
@@ -138,7 +139,15 @@ export default function MspCalendar({ meetings }: MspCalendarProps)
 							} ${
 								cell.availability ? "msp-calendar-cell-available" : "msp-calendar-cell-blocked"
 							}`}
-							onClick={() => setSelectedDay(cell.date)}
+							onClick={() =>
+								{
+									setSelectedDay(cell.date);
+									if (externalSelectedDateSetter)
+									{
+										const formatted = `${year}-${(month + 1).toString().padStart(2, "0")}-${cell.date.toString().padStart(2, '0')}`;
+										externalSelectedDateSetter(formatted);
+									}
+								}}
 						>
 							<span className="msp-calendar-cell-date">{cell.date}</span>
 							{cell.hasEvents && <span className="msp-calendar-cell-dot"/>}
