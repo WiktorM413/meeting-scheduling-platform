@@ -16,6 +16,7 @@ export default function Header()
 			{isAuthenticated &&
 				<div className="msp-header-main-routes-group">
 					<MspAnchor className="msp-header-meetings" label="Meetings" navigator={navigate} to="/meetings"/>
+					<MspAnchor className="msp-header-schedule" label="Schedule" navigator={navigate} to="/schedule" />
 				</div>
 			}
 			<AccountButtons isAuthenticated={isAuthenticated}/>
