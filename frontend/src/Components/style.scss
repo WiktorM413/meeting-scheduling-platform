@@ -29,11 +29,18 @@
 
 .msp-anchor
 {
+	transition: color 0.2s ease;
+
 	a
 	{
 		cursor: pointer;
 		color: $attention-color;
 		font-weight: 600;
+	}
+
+	&:hover
+	{
+		transform: translateY(-1px);
 	}
 }
 

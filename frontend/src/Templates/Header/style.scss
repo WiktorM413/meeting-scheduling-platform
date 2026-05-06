@@ -17,6 +17,13 @@
 		letter-spacing: 0.5px;
 		cursor: pointer;
 	}
+
+	.msp-header-main-routes-group
+	{
+		display: flex;
+		flex-direction: row;
+		gap: 20px;
+	}
 }
 
 .msp-account-buttons
