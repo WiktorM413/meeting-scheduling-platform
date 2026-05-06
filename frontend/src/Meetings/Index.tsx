@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react";
 import type { ResponseType } from "../api/ResponseType";
 
-import { ApiGetAllMeetings } from "../api/client";
+import { ApiGetAllMeetingsForUser } from "../api/client";
 import HandleResponse from "../api/HandleResponse";
 import type { MeetingType } from "./MeetingType";
 import MspCalendar from "../Components/MspCalendar/MspCalendar";
+import { useAuth } from "../context/AuthContext";
+import type { AxiosResponse } from "axios";
 
 export default function Index()
 {
+	const { userData } = useAuth();
+
 	const [meetings, setMeetings] = useState<MeetingType[]>([]);
 	const [response, setResponse] = useState<ResponseType|null>(null);
 
@@ -17,9 +21,17 @@ export default function Index()
 		{
 			try
 			{
-				const response = await ApiGetAllMeetings();
+				let response: AxiosResponse<any, any, {}>;
+				if (userData)
+				{
+					response = await ApiGetAllMeetingsForUser(userData.id);
+					setResponse(HandleResponse(response));
+				}
+				else
+				{
+					setResponse(null);
+				}
 
-				setResponse(HandleResponse(response));
 			}
 			catch (error)
 			{

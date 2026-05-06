@@ -52,3 +52,14 @@ export async function ApiGetAllMeetings(): Promise<AxiosResponse<any, any, {}>>
 
 	return response;
 }
+
+export async function ApiGetAllMeetingsForUser(userId: number): Promise<AxiosResponse<any, any, {}>>
+{
+	const response = await api.post("/meetingsForUser",
+		{
+			"user_id": userId
+		}
+	)
+
+	return response;
+}
