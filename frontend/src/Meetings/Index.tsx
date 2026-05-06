@@ -48,8 +48,6 @@ export default function Index()
 	loadMeetings();
 }, [userData]);
 
-	console.log(meetings);
-
 	return (
 		<div className="msp-meetings">
 		<section className="msp-meetings-header">
