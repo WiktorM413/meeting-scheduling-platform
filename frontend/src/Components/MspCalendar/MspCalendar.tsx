@@ -77,7 +77,7 @@ export default function MspCalendar({ label, meetings, externalSelectedDateSette
 	const now = new Date();
 	const [year,  setYear]  = useState(now.getFullYear());
 	const [month, setMonth] = useState(now.getMonth());
-	const [selectedDay, setSelectedDay] = useState<number|null>(now.getDate());
+	const [selectedDay, setSelectedDay] = useState<number|null>(null);
 
 	const days = useMemo(() => BuildMonth(year, month, meetings), [year, month, meetings]);
 
