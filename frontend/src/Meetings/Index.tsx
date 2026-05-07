@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import type { ResponseType } from "../api/ResponseType";
 import { ApiGetAllMeetingsForUser } from "../api/client";
 import HandleResponse from "../api/HandleResponse";
-import type { MeetingType } from "./MeetingType";
+import type { MeetingType } from "../api/MeetingType";
 import MspCalendar from "../Components/MspCalendar/MspCalendar";
 import { useAuth } from "../context/AuthContext";
 

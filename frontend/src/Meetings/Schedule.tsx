@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import type { ResponseType } from "../api/ResponseType";
 import { ApiGetAllMeetingsForUser } from "../api/client";
 import HandleResponse from "../api/HandleResponse";
-import type { MeetingType } from "./MeetingType";
+import type { MeetingType } from "../api/MeetingType";
 import MspCalendar from "../Components/MspCalendar/MspCalendar";
 import { useAuth } from "../context/AuthContext";
 import MspFormField from "../Components/MspFormField";
@@ -12,9 +12,10 @@ export default function Schedule()
 {
 		const { userData } = useAuth();
 	
-		const [meetings,     setMeetings] = useState<MeetingType[]>([]);
-		const [response,     setResponse] = useState<ResponseType|null>(null);
+		const [meetings,     setMeetings]     = useState<MeetingType[]>([]);
+		const [response,     setResponse]     = useState<ResponseType|null>(null);
 		const [selectedDate, setSelectedDate] = useState("");
+		const [receiverId,   setReceiverId]   = useState<number>();
 	
 		useEffect(() =>
 	{
@@ -60,7 +61,7 @@ export default function Schedule()
 						<MspCalendar meetings={meetings} externalSelectedDateSetter={setSelectedDate}/>
 					</div>
 				</section>
-				{/* TODO: MspFormField for start_time end_time topic, etc. from meetings table */}
+				
 			</div>
 		</div>
 	);

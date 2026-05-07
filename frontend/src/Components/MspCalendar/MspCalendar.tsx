@@ -2,7 +2,7 @@ import "./style.scss";
 import { useMemo, useState } from "react";
 import type { DayCell } from "./DayCell";
 import MspButton from "../MspButton";
-import type { MeetingType } from "../../Meetings/MeetingType";
+import type { MeetingType } from "../../api/MeetingType";
 
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
