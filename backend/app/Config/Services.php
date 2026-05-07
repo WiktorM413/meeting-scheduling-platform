@@ -3,6 +3,7 @@
 namespace Config;
 
 use App\Services\MeetingsService;
+use App\Services\UserService;
 use CodeIgniter\Config\BaseService;
 use App\Services\AuthService;
 
@@ -49,5 +50,15 @@ class Services extends BaseService
 		}
 
 		return new MeetingsService;
+	}
+
+	public static function userService($getShared = true)
+	{
+		if ($getShared)
+		{
+			return static::getSharedInstance('userService');
+		}
+
+		return new UserService;
 	}
 }
