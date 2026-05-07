@@ -67,11 +67,12 @@ function BuildMonth(year: number, month: number, meetings?: MeetingType[]): DayC
 
 type MspCalendarProps =
 {
+	label?:                      string;
 	meetings?:                   MeetingType[];
 	externalSelectedDateSetter?: React.Dispatch<React.SetStateAction<string>>
 }
 
-export default function MspCalendar({ meetings, externalSelectedDateSetter }: MspCalendarProps)
+export default function MspCalendar({ label, meetings, externalSelectedDateSetter }: MspCalendarProps)
 {
 	const now = new Date();
 	const [year,  setYear]  = useState(now.getFullYear());
@@ -98,6 +99,7 @@ export default function MspCalendar({ meetings, externalSelectedDateSetter }: Ms
 
 	return (
 		<div className="msp-calendar">
+			{label && <p className="msp-calendar-label">{label}</p>}
 			<div className="msp-calendar-header">
 				<MspButton label="<" onClick={prevMonth}/>
 				<h2>
