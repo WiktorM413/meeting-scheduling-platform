@@ -7,6 +7,7 @@ import MspCalendar from "../Components/MspCalendar/MspCalendar";
 import { useAuth } from "../context/AuthContext";
 import MspFormField from "../Components/MspFormField";
 import type { UserData } from "../api/UserType";
+import MspSelect from "../Components/MspSelect";
 
 
 async function Load(userData:    UserData|null,
@@ -91,10 +92,10 @@ export default function Schedule()
 			<div className="msp-form">
 				<section className="msp-meetings-calendar-wrapper">
 					<div className="msp-meetings-calendar">
-						<MspCalendar meetings={meetings} externalSelectedDateSetter={setSelectedDate}/>
+						<MspCalendar label="Choose a day" meetings={meetings} externalSelectedDateSetter={setSelectedDate}/>
 					</div>
 				</section>
-				<select className="msp-schedule-user-select" value={receiverId} onChange={(e) => setReceiverId(Number(e.target.value))}>
+				<MspSelect label="Choose a user" value={receiverId} setter={setReceiverId} className="msp-schedule-user-select">
 					<option key="" value="">Choose a person</option>
 					{
 						users.map((user) =>
@@ -104,7 +105,7 @@ export default function Schedule()
 							</option>
 						))
 					}
-				</select>
+				</MspSelect>
 			</div>
 		</div>
 	);
