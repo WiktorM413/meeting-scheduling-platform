@@ -3,8 +3,8 @@ import type { UserGroup } from "./UserGroup";
 export interface UserData
 {
 	id:         number;
-	firstname:  string;
-	lastname:   string;
+	first_name:  string;
+	last_name:   string;
 	email:      string;
-	userGroup: UserGroup|undefined;
+	user_group: UserGroup|undefined;
 }
