@@ -1,6 +1,6 @@
 import "./style.scss";
 import { useState, useEffect } from "react";
-import { ApiGetAllMeetingsForUser, ApiGetAllUsers } from "../api/client";
+import { ApiCreateMeeting, ApiGetAllMeetingsForUser, ApiGetAllUsers } from "../api/client";
 import HandleResponse from "../api/HandleResponse";
 import type { MeetingType } from "../api/MeetingType";
 import MspCalendar from "../Components/MspCalendar/MspCalendar";
@@ -81,17 +81,44 @@ export default function Schedule()
 	const [meetings,     setMeetings]     = useState<MeetingType[]>([]);
 	const [users,        setUsers]        = useState<UserData[]>([]);
 	const [selectedDate, setSelectedDate] = useState("");
-	const [receiverId,   setReceiverId]   = useState<number>();
+	const [receiverId,   setReceiverId]   = useState<number>(-1);
 	const [topic,        setTopic]        = useState("");
 	const [where,        setWhere]        = useState("");
 	const [startTime,    setStartTime]    = useState("");
 	const [endTime,      setEndTime]      = useState("");
+	const [message,      setMessage]      = useState("");
+	const [responseType, setResponseType] = useState("error");
 
 	useEffect(() =>
 	{
 		Load(userData, setMeetings, setUsers);
 	}, [userData, setMeetings, setUsers]);
 	
+	const createMeeting = async () =>
+	{
+		try
+		{
+			if (receiverId == -1)
+			{
+				setMessage("Error: The user field is required");
+				return;
+			}
+
+			if (userData)
+			{
+				const response = await ApiCreateMeeting(userData.id, receiverId, topic, selectedDate, where, startTime, endTime)
+				const handled = HandleResponse(response);
+
+				setMessage(handled.message);
+				setResponseType(handled.type);
+			}
+		}
+		catch (error)
+		{
+			console.log("Error submitting data: ", error);
+		}
+	}
+
 	return (
 		<div className="msp-schedule">
 			<div className="msp-form">
@@ -116,7 +143,10 @@ export default function Schedule()
 				<MspFormField className="msp-schedule-form-field" value={startTime} setter={setStartTime} label="When to start" inputType="time"/>
 				<MspFormField className="msp-schedule-form-field" value={endTime}  setter={setEndTime}    label="When to end"   inputType="time"/>
 
-				<MspButton label="Schedule meeting"/>
+				<MspButton label="Schedule meeting" onClick={createMeeting}/>
+				<div className="msp-small-text">
+					<p className={responseType === "error" ? "msp-error" : "msp-success"}>{message}</p>
+				</div>
 			</div>
 		</div>
 	);
