@@ -10,7 +10,7 @@ class UserService
 
 	public function __construct()
 	{
-		$userModel = model(UserModel::class);
+		$this->userModel = model(UserModel::class);
 		helper('response');
 	}
 
