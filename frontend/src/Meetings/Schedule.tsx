@@ -8,6 +8,7 @@ import { useAuth } from "../context/AuthContext";
 import MspFormField from "../Components/MspFormField";
 import type { UserData } from "../api/UserType";
 import MspSelect from "../Components/MspSelect";
+import MspButton from "../Components/MspButton";
 
 
 async function Load(userData:    UserData|null,
@@ -114,6 +115,8 @@ export default function Schedule()
 				<MspFormField className="msp-schedule-form-field" value={where}     setter={setWhere}     label="Set a place"/>
 				<MspFormField className="msp-schedule-form-field" value={startTime} setter={setStartTime} label="When to start" inputType="time"/>
 				<MspFormField className="msp-schedule-form-field" value={endTime}  setter={setEndTime}    label="When to end"   inputType="time"/>
+
+				<MspButton label="Schedule meeting"/>
 			</div>
 		</div>
 	);
