@@ -111,6 +111,11 @@ export default function Schedule()
 
 				setMessage(handled.message);
 				setResponseType(handled.type);
+
+				if (handled.type === "success")
+				{
+					await Load(userData, setMeetings, setUsers);
+				}
 			}
 		}
 		catch (error)
