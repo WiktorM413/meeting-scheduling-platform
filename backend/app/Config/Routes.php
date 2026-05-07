@@ -19,6 +19,7 @@ $routes->group('api', function ($routes) {
 
 	$routes->get ('meetings',        [MeetingsController::class, 'getAllMeetings']);
 	$routes->post('meetingsForUser', [MeetingsController::class, 'getAllMeetingsForUser']);
+	$routes->post('createMeeting',   [MeetingsController::class, 'createMeeting']);
 
 	$routes->get('getAllUsers', [UserController::class, 'getAllUsers']);
 });

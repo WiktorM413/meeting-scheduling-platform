@@ -33,4 +33,28 @@ class MeetingsController extends BaseController
 
 		return $this->response->setJSON($response);
 	}
+
+	public function createMeeting()
+	{
+		/** @var \App\Services\MeetingsService $meetingsService */
+		$meetingsService = service('meetingsService');	
+		$data = $this->request->getJSON(true);
+
+		if (! $this->validateData($data, MeetingsValidationRules::meeting))
+		{
+			return $this->response->setJSON(MeetingsValidationRules::validationErrorsToJSON($this->validator->getErrors()));
+		}
+
+		$providerId = $data['provider_id'];
+		$receiverId = $data['receiver_id'];
+		$topic      = $data['topic'];
+		$when       = $data['when'];
+		$where      = $data['where'];
+		$timeStart  = $data['time_start'];
+		$timeEnd    = $data['time_end'];
+
+		$response = $meetingsService->createMeeting($providerId, $receiverId, $topic, $when, $where, $timeStart, $timeEnd);
+
+		return $this->response->setJSON($response);
+	}
 }
