@@ -148,9 +148,11 @@ export default function Schedule()
 				<MspFormField className="msp-schedule-form-field" value={startTime} setter={setStartTime} label="When to start" inputType="time"/>
 				<MspFormField className="msp-schedule-form-field" value={endTime}  setter={setEndTime}    label="When to end"   inputType="time"/>
 
-				<MspButton label="Schedule meeting" onClick={createMeeting}/>
-				<div className="msp-small-text">
-					<p className={responseType === "error" ? "msp-error" : "msp-success"}>{message}</p>
+				<div className="msp-schedule-form-submit">
+					<MspButton label="Schedule meeting" onClick={createMeeting}/>
+					<div className="msp-small-text">
+						<p className={responseType === "error" ? "msp-error" : "msp-success"}>{message}</p>
+					</div>
 				</div>
 			</div>
 		</div>
