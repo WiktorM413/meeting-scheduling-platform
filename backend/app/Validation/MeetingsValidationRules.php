@@ -26,16 +26,25 @@ class MeetingsValidationRules extends BaseValidationRules
 			'rules' => 'required|string|max_length[255]'
 		],
 		'when' => [
-			'rules' => 'required|valid_date[Y-m-d]'
+			'rules'  => 'required|valid_date[Y-m-d]',
+			'errors' => [
+				'required' => 'Choose a date on the calendar',
+			]
 		],
 		'where' => [
 			'rules' => 'required|string|max_length[255]'
 		],
 		'time_start' => [
-			'rules' => 'required|valid_date[H:i]'
+			'rules'  => 'required|valid_date[H:i]',
+			'errors' => [
+				'required' => 'Start time is required'
+			]
 		],
 		'time_end' => [
-			'rules' => 'required|valid_date[H:i]'
+			'rules' => 'required|valid_date[H:i]',
+			'errors' => [
+				'required' => 'End time is required'
+			]
 		]
 	];
 }
