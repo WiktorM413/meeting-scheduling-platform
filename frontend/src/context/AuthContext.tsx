@@ -1,15 +1,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { ApiMe } from "../api/client";
-import { ToUserGroup, type UserGroup } from "../api/UserGroup";
-
-interface UserData
-{
-	id:         number;
-	firstname:  string;
-	lastname:   string;
-	email:      string;
-	userGroup: UserGroup|undefined;
-}
+import { ToUserGroup } from "../api/UserGroup";
+import { type UserData } from "../api/UserType";
 
 interface AuthContextType
 {
