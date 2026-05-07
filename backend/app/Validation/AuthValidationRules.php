@@ -2,7 +2,9 @@
 
 namespace App\Validation;
 
-class AuthValidationRules
+use App\Validation\BaseValidationRules;
+
+class AuthValidationRules extends BaseValidationRules
 {
 	public const register = [
 		'firstname' => [

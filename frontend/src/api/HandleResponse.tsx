@@ -14,5 +14,6 @@ export default function HandleResponse(response: AxiosResponse<any, any, {}>): R
 	return {
 		type:    "success",
 		message: response.data.message,
+		data:    response.data.data
 	};
 }

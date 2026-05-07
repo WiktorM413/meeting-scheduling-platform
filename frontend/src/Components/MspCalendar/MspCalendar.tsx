@@ -2,10 +2,11 @@ import "./style.scss";
 import { useMemo, useState } from "react";
 import type { DayCell } from "./DayCell";
 import MspButton from "../MspButton";
+import type { MeetingType } from "../../api/MeetingType";
 
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-function BuildMonth(year: number, month: number): DayCell[]
+function BuildMonth(year: number, month: number, meetings?: MeetingType[]): DayCell[]
 {
 	const firstDay =    new Date(year, month, 1);
 	const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -29,13 +30,30 @@ function BuildMonth(year: number, month: number): DayCell[]
 
 		const day = (dateObj.getDay() + 6) % 7; // Convert from 0 -> Sunday to 0 -> Monday
 		const isAvailable = day < 5;
+		let hasEvents = false;
+
+		if (meetings)
+		{
+			for (let i = 0; i < meetings.length; i++)
+			{
+				let dateArr = meetings[i].when.split("-");
+
+				if (Number(dateArr[0])     === year  &&
+					Number(dateArr[1]) - 1 === month && // months are by index
+					Number(dateArr[2])     === d)
+				{
+					hasEvents = true;
+					break;
+				}
+			}
+		}
 
 		cells.push
 		({
 			date:         d,
 			isToday:      isToday,
 			isSelected:   false,
-			hasEvents:    false,
+			hasEvents:    hasEvents,
 			availability: isAvailable,
 		});
 	}
@@ -47,14 +65,21 @@ function BuildMonth(year: number, month: number): DayCell[]
 	return cells;
 }
 
-export default function MspCalendar()
+type MspCalendarProps =
+{
+	label?:                      string;
+	meetings?:                   MeetingType[];
+	externalSelectedDateSetter?: React.Dispatch<React.SetStateAction<string>>
+}
+
+export default function MspCalendar({ label, meetings, externalSelectedDateSetter }: MspCalendarProps)
 {
 	const now = new Date();
 	const [year,  setYear]  = useState(now.getFullYear());
 	const [month, setMonth] = useState(now.getMonth());
-	const [selectedDay, setSelectedDay] = useState<number|null>(now.getDate());
+	const [selectedDay, setSelectedDay] = useState<number|null>(null);
 
-	const days = useMemo(() => BuildMonth(year, month), [year, month]);
+	const days = useMemo(() => BuildMonth(year, month, meetings), [year, month, meetings]);
 
 	const prevMonth = () =>
 	{
@@ -74,6 +99,7 @@ export default function MspCalendar()
 
 	return (
 		<div className="msp-calendar">
+			{label && <p className="msp-calendar-label">{label}</p>}
 			<div className="msp-calendar-header">
 				<MspButton label="<" onClick={prevMonth}/>
 				<h2>
@@ -115,7 +141,15 @@ export default function MspCalendar()
 							} ${
 								cell.availability ? "msp-calendar-cell-available" : "msp-calendar-cell-blocked"
 							}`}
-							onClick={() => setSelectedDay(cell.date)}
+							onClick={() =>
+								{
+									setSelectedDay(cell.date);
+									if (externalSelectedDateSetter)
+									{
+										const formatted = `${year}-${(month + 1).toString().padStart(2, "0")}-${cell.date.toString().padStart(2, '0')}`;
+										externalSelectedDateSetter(formatted);
+									}
+								}}
 						>
 							<span className="msp-calendar-cell-date">{cell.date}</span>
 							{cell.hasEvents && <span className="msp-calendar-cell-dot"/>}

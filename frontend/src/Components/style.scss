@@ -29,11 +29,18 @@
 
 .msp-anchor
 {
+	transition: color 0.2s ease;
+
 	a
 	{
 		cursor: pointer;
 		color: $attention-color;
 		font-weight: 600;
+	}
+
+	&:hover
+	{
+		transform: translateY(-1px);
 	}
 }
 
@@ -85,6 +92,39 @@
 	}
 }
 
+.msp-select
+{
+	width: 25rem;
+	font-size: 1.2rem;
+
+	select
+	{
+		background-color: rgb(66, 66, 66);
+		color: rgb(137, 137, 137);
+		border: none;
+		border-radius: 7px;
+		height: 3rem;
+		width: 100%;
+		font-size: 1.25rem;
+		padding: 10px;
+		appearance: none;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		cursor: pointer;
+		transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+		&:hover
+		{
+			transform: translateY(-2px);
+		}
+	}
+
+	select:focus
+	{
+		outline: none;
+		box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+	}
+}
 
 @media (prefers-reduced-motion: reduce)
 {

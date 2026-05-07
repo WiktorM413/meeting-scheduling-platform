@@ -2,6 +2,8 @@
 
 use App\Controllers\AuthController;
 use App\Controllers\HomeController;
+use App\Controllers\MeetingsController;
+use App\Controllers\UserController;
 use CodeIgniter\Router\RouteCollection;
 
 /**
@@ -14,4 +16,10 @@ $routes->group('api', function ($routes) {
 	$routes->post('login',    [AuthController::class, 'login']);
 	$routes->get  ('me',      [AuthController::class, 'me']);
 	$routes->get  ('logout',  [AuthController::class, 'logout']);
+
+	$routes->get ('meetings',        [MeetingsController::class, 'getAllMeetings']);
+	$routes->post('meetingsForUser', [MeetingsController::class, 'getAllMeetingsForUser']);
+	$routes->post('createMeeting',   [MeetingsController::class, 'createMeeting']);
+
+	$routes->get('getAllUsers', [UserController::class, 'getAllUsers']);
 });

@@ -7,12 +7,16 @@ import type { RouteObject } from "react-router-dom";
 const HomeRoutes: RouteObject[] =
 [
 	{
+		path:    "/",
+		element: <Index />
+	},
+	{
 		path:    "/home",
-		element: <Index />,
+		element: <Index />
 	},
 	{
 		path:    "/register",
-		element: <Register />,
+		element: <Register />
 	},
 	{
 		path:    "/login",

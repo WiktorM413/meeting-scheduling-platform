@@ -1,15 +1,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { ApiMe } from "../api/client";
-import { ToUserGroup, type UserGroup } from "../api/UserGroup";
-
-interface UserData
-{
-	id:         number;
-	firstname:  string;
-	lastname:   string;
-	email:      string;
-	userGroup: UserGroup|undefined;
-}
+import { ToUserGroup } from "../api/UserGroup";
+import { type UserData } from "../api/UserType";
 
 interface AuthContextType
 {
@@ -50,11 +42,11 @@ export function AuthProvider({ children }: { children: ReactNode })
 
 			setUserData(
 				{
-					id:    sessionData.user_id,
-					firstname: sessionData.firstname,
-					lastname: sessionData.lastname,
-					email: sessionData.email,
-					userGroup: ToUserGroup(sessionData.user_group),
+					id:         sessionData.user_id,
+					first_name: sessionData.firstname,
+					last_name:  sessionData.lastname,
+					email:      sessionData.email,
+					user_group: ToUserGroup(sessionData.user_group),
 				}
 		
 			);

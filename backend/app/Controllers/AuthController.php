@@ -14,7 +14,7 @@ class AuthController extends BaseController
 
 		if (! $this->validateData($data, AuthValidationRules::register))
 		{
-			return $this->response->setJSON($authService->validationErrorsToJSON($this->validator->getErrors()));
+			return $this->response->setJSON(AuthValidationRules::validationErrorsToJSON($this->validator->getErrors()));
 		}
 
 		$firstname = $data['firstname'] ?? '';
@@ -36,7 +36,7 @@ class AuthController extends BaseController
 
 		if (! $this->validateData($data, AuthValidationRules::login))
 		{
-			return $this->response->setJSON($authService->validationErrorsToJSON($this->validator->getErrors()));
+			return $this->response->setJSON(AuthValidationRules::validationErrorsToJSON($this->validator->getErrors()));
 		}
 
 		$email    = $data['email']    ?? '';

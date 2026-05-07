@@ -59,14 +59,6 @@ class AuthService
 		return password_hash($password, PASSWORD_DEFAULT);
 	}
 
-	public function validationErrorsToJSON($errors)
-	{
-		$firstField = array_key_first($errors);
-		$firstError = $errors[$firstField];
-
-		return SimpleJson(true, "Error: $firstError");
-	}
-
 	public function userExists($email)
 	{
 		$user = $this->authModel->getUserByEmail($email);

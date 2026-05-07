@@ -45,3 +45,45 @@ export async function ApiLogout(): Promise<AxiosResponse<any, any, {}>>
 	
 	return response;
 }
+
+export async function ApiGetAllMeetings(): Promise<AxiosResponse<any, any, {}>>
+{
+	const response = await api.get("/meetings");
+
+	return response;
+}
+
+export async function ApiGetAllMeetingsForUser(userId: number): Promise<AxiosResponse<any, any, {}>>
+{
+	const response = await api.post("/meetingsForUser",
+		{
+			"user_id": userId
+		}
+	)
+
+	return response;
+}
+
+export async function ApiGetAllUsers()
+{
+	const response = await api.get("/getAllUsers");
+
+	return response;
+}
+
+export async function ApiCreateMeeting(providerId: number, receiverId: number, topic: string, when: string, where: string, timeStart: string, timeEnd: string)
+{
+	const response = await api.post("/createMeeting",
+		{
+			"provider_id": providerId,
+			"receiver_id": receiverId,
+			"topic":       topic,
+			"when":        when,
+			"where":       where,
+			"time_start":  timeStart,
+			"time_end":    timeEnd
+		}
+	)
+
+	return response;
+}
