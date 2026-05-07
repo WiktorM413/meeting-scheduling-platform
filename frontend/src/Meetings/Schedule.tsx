@@ -126,7 +126,7 @@ export default function Schedule()
 
 	return (
 		<div className="msp-schedule">
-			<div className="msp-form">
+			<div className="msp-schedule-form">
 				<section className="msp-meetings-calendar-wrapper">
 					<div className="msp-meetings-calendar">
 						<MspCalendar label="Choose a day" meetings={meetings} externalSelectedDateSetter={setSelectedDate}/>
