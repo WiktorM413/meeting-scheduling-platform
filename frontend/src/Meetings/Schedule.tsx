@@ -81,6 +81,10 @@ export default function Schedule()
 	const [users,        setUsers]        = useState<UserData[]>([]);
 	const [selectedDate, setSelectedDate] = useState("");
 	const [receiverId,   setReceiverId]   = useState<number>();
+	const [topic,        setTopic]        = useState("");
+	const [where,        setWhere]        = useState("");
+	const [startTime,    setStartTime]    = useState("");
+	const [endTime,      setEndTime]      = useState("");
 
 	useEffect(() =>
 	{
@@ -106,6 +110,10 @@ export default function Schedule()
 						))
 					}
 				</MspSelect>
+				<MspFormField className="msp-schedule-form-field" value={topic}     setter={setTopic}     label="Set a topic"/>
+				<MspFormField className="msp-schedule-form-field" value={where}     setter={setWhere}     label="Set a place"/>
+				<MspFormField className="msp-schedule-form-field" value={startTime} setter={setStartTime} label="When to start" inputType="time"/>
+				<MspFormField className="msp-schedule-form-field" value={endTime}  setter={setEndTime}    label="When to end"   inputType="time"/>
 			</div>
 		</div>
 	);
