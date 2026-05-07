@@ -95,6 +95,7 @@
 .msp-select
 {
 	width: 25rem;
+	font-size: 1.2rem;
 
 	select
 	{
@@ -116,11 +117,6 @@
 		{
 			transform: translateY(-2px);
 		}
-	}
-
-	p
-	{
-		font-size: 2rem;
 	}
 
 	select:focus
