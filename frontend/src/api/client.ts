@@ -63,3 +63,10 @@ export async function ApiGetAllMeetingsForUser(userId: number): Promise<AxiosRes
 
 	return response;
 }
+
+export async function ApiGetAllUsers()
+{
+	const response = await api.get("/getAllUsers");
+
+	return response;
+}
