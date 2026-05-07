@@ -105,31 +105,22 @@
 		height: 3rem;
 		width: 100%;
 		font-size: 1.25rem;
-		padding: 10px 40px 10px 10px;
+		padding: 10px;
 		appearance: none;
 		-webkit-appearance: none;
 		-moz-appearance: none;
 		cursor: pointer;
-		transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+		transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+		&:hover
+		{
+			transform: translateY(-2px);
+		}
 	}
 
-	position: relative;
-
-	&::after
+	p
 	{
-		content: "▾";
-		position: absolute;
-		right: 12px;
-		top: 50%;
-		transform: translateY(-50%);
-		color: #666;
-		pointer-events: none;
-		font-size: 1.2rem;
-	}
-
-	&:hover select
-	{
-		transform: translateY(-1px);
+		font-size: 2rem;
 	}
 
 	select:focus

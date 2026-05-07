@@ -2,7 +2,8 @@ import "./style.scss";
 
 type MspSelectProps<T> =
 {
-	className?: string
+	className?: string;
+	label:      string;
 	value:      T;
 	setter:     React.Dispatch<React.SetStateAction<T>>;
 	children:   React.ReactNode;
@@ -10,6 +11,7 @@ type MspSelectProps<T> =
 
 export default function MspSelect<T>({
 	className,
+	label,
 	value,
 	setter,
 	children
@@ -17,6 +19,7 @@ export default function MspSelect<T>({
 {
 	return (
 		<div className={`msp-select ${className}`}>
+			<p>{label}</p>
 			<select
 				value={value as any}
 				onChange={(e) =>
