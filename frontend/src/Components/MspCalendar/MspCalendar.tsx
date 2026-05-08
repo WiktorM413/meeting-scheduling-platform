@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import type { DayCell } from "./DayCell";
 import MspButton from "../MspButton";
 import type { MeetingType } from "../../api/MeetingType";
+import { popup } from "../MspPopup/PopupManager";
 
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
@@ -152,7 +153,23 @@ export default function MspCalendar({ label, meetings, externalSelectedDateSette
 								}}
 						>
 							<span className="msp-calendar-cell-date">{cell.date}</span>
-							{cell.hasEvents && <span className="msp-calendar-cell-dot"/>}
+							{cell.hasEvents && <span className="msp-calendar-cell-dot"
+								onClick={() =>
+								{
+									const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(cell.date).padStart(2, '0')}`;
+
+									popup.Open(
+										<>
+											<h1>{dateString}</h1>
+											{meetings?.map((meeting) =>
+											(
+												<div>{meeting.time_start} - {meeting.time_end}: {meeting.topic}</div>
+											))}
+
+										</>
+									);
+								}
+							}/>}
 						</div>
 					);
 				})}
