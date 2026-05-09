@@ -18,12 +18,32 @@ class MeetingsModel extends Model
 	public function getAllMeetingsForUser(int $userId)
 	{
 		$result = $this->db->query("
-			SELECT * FROM `meetings`
-			WHERE	`provider_id` = :user_id: OR
-					`receiver_id` = :user_id:
-			ORDER BY
-				`time_start` ASC,
-				`time_end`   ASC
+			SELECT
+				m.unique_id,
+				m.provider_id,
+				m.receiver_id,
+				m.time_end,
+				m.time_start,
+				m.topic,
+				m.when,
+				GROUP_CONCAT(CONCAT(u.first_name, ' ', u.last_name) SEPARATOR ', ') AS other_names
+		FROM meetings m
+		JOIN users u
+			ON
+			(
+				(m.provider_id = :user_id: AND u.id = m.receiver_id)
+				OR
+				(m.receiver_id = :user_id: AND u.id = m.provider_id)
+			)
+		WHERE 30 IN (m.provider_id, m.receiver_id)
+		GROUP BY
+			m.when,
+			m.time_start,
+			m.time_end,
+			m.topic
+		ORDER BY
+			m.time_start ASC,
+			m.time_end   ASC;
 		", ['user_id' => $userId]);
 
 		return $result->getResultArray();
