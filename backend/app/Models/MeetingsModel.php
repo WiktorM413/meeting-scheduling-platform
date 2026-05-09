@@ -40,7 +40,10 @@ class MeetingsModel extends Model
 			m.when,
 			m.time_start,
 			m.time_end,
-			m.topic;
+			m.topic
+		ORDER BY
+			m.time_start ASC,
+			m.time_end   ASC;
 		", ['user_id' => $userId]);
 
 		return $result->getResultArray();
