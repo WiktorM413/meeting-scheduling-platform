@@ -162,16 +162,16 @@ export default function MspCalendar({ label, meetings, externalSelectedDateSette
 									popup.Open(
 										<>
 											<h1>{dateString}</h1>
-											<ol>
-											{meetings?.map((meeting) =>
-											(
-												<li>
-													{meeting.other_names}&nbsp;
-													({FormatTime(meeting.time_start)} - {FormatTime(meeting.time_end)}):&nbsp;
-													{meeting.topic}
-												</li>
-											))}
-											</ol>
+											{meetings?.map((meeting, i) =>
+												meeting.when === dateString ?
+												(
+													<div key={i}>
+														{meeting.other_names}&nbsp;
+														({FormatTime(meeting.time_start)} - {FormatTime(meeting.time_end)}):&nbsp;
+														{meeting.topic}
+													</div>
+												) : null
+											)}
 										</>
 									);
 								}
