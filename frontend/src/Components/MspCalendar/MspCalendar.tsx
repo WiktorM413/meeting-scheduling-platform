@@ -4,6 +4,8 @@ import type { DayCell } from "./DayCell";
 import MspButton from "../MspButton";
 import type { MeetingType } from "../../api/MeetingType";
 import { popup } from "../MspPopup/PopupManager";
+import type { UserData } from "../../api/UserType";
+import { FormatTime } from "../../utils/time";
 
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
@@ -70,10 +72,11 @@ type MspCalendarProps =
 {
 	label?:                      string;
 	meetings?:                   MeetingType[];
+	receivers?:                  UserData[],
 	externalSelectedDateSetter?: React.Dispatch<React.SetStateAction<string>>
 }
 
-export default function MspCalendar({ label, meetings, externalSelectedDateSetter }: MspCalendarProps)
+export default function MspCalendar({ label, meetings, receivers, externalSelectedDateSetter }: MspCalendarProps)
 {
 	const now = new Date();
 	const [year,  setYear]  = useState(now.getFullYear());
@@ -157,13 +160,17 @@ export default function MspCalendar({ label, meetings, externalSelectedDateSette
 								onClick={() =>
 								{
 									const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(cell.date).padStart(2, '0')}`;
-
+									
 									popup.Open(
 										<>
 											<h1>{dateString}</h1>
-											{meetings?.map((meeting) =>
+											{meetings?.map((meeting, i) =>
 											(
-												<div>{meeting.time_start} - {meeting.time_end}: {meeting.topic}</div>
+												<div>
+													{receivers?.[i].first_name} {receivers?.[i].last_name}
+													{FormatTime(meeting.time_start)} - {FormatTime(meeting.time_end)}:
+													{meeting.topic}
+												</div>
 											))}
 
 										</>
