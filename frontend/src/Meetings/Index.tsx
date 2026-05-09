@@ -48,7 +48,7 @@ export default function Index()
 			{
 				setMeetings(handled.data);
 
-				loadReceivers(handled.data);
+				await loadReceivers(handled.data);
 			}
 			else
 			{
