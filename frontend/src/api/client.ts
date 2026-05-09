@@ -82,17 +82,17 @@ export async function ApiGetUserById(userId: number)
 	return response;
 }
 
-export async function ApiCreateMeeting(providerId: number, receiverId: number, topic: string, when: string, where: string, timeStart: string, timeEnd: string)
+export async function ApiCreateMeeting(providerId: number, receiverIds: number[], topic: string, when: string, where: string, timeStart: string, timeEnd: string)
 {
 	const response = await api.post("/createMeeting",
 		{
-			"provider_id": providerId,
-			"receiver_id": receiverId,
-			"topic":       topic,
-			"when":        when,
-			"where":       where,
-			"time_start":  timeStart,
-			"time_end":    timeEnd
+			"provider_id":  providerId,
+			"receiver_ids": receiverIds,
+			"topic":        topic,
+			"when":         when,
+			"where":        where,
+			"time_start":   timeStart,
+			"time_end":     timeEnd
 		}
 	)
 
