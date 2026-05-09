@@ -1,69 +1,49 @@
 import "./style.scss";
 import { useState, useEffect } from "react";
-import { ApiGetAllMeetingsForUser, ApiGetUserById } from "../api/client";
+import { ApiGetAllMeetingsForUser } from "../api/client";
 import HandleResponse from "../api/HandleResponse";
 import type { MeetingType } from "../api/MeetingType";
 import MspCalendar from "../Components/MspCalendar/MspCalendar";
 import { useAuth } from "../context/AuthContext";
-import { type UserData } from "../api/UserType";
 
 export default function Index()
 {
 	const { userData } = useAuth();
 
 	const [meetings,  setMeetings]  = useState<MeetingType[]>([]);
-	const [receivers, setReceivers] = useState<UserData[]>([]);
 
 	useEffect(() =>
-{
-	const loadReceivers = async (meetings: MeetingType[]) =>
 	{
-		setReceivers([]);
-
-		for (const meeting of meetings)
+		const loadMeetings = async () =>
 		{
-			const response = await ApiGetUserById(meeting.receiver_id);
-			const handled = HandleResponse(response);
-			
-			if (handled?.type == "success")
+			try
 			{
-				setReceivers([...receivers, handled?.data]);
+				if (!userData) {
+					setMeetings([]);
+					return;
+				}
+
+				const response = await ApiGetAllMeetingsForUser(userData.id);
+				const handled = HandleResponse(response);
+
+				if (handled?.type === "success")
+				{
+					setMeetings(handled.data);
+				}
+				else
+				{
+					setMeetings([]);
+				}
 			}
-		}
-	}
-
-	const loadMeetings = async () =>
-	{
-		try
-		{
-			if (!userData) {
-				setMeetings([]);
-				return;
-			}
-
-			const response = await ApiGetAllMeetingsForUser(userData.id);
-			const handled = HandleResponse(response);
-
-			if (handled?.type === "success")
+			catch (error)
 			{
-				setMeetings(handled.data);
-
-				await loadReceivers(handled.data);
+				console.log("Error submitting data: ", error);
 			}
-			else
-			{
-				setMeetings([]);
-			}
-		}
-		catch (error)
-		{
-			console.log("Error submitting data: ", error);
-		}
-	};
+		};
 
-	loadMeetings();
-}, [userData]);
-
+		loadMeetings();
+	}, [userData]);
+	console.log(meetings);
 	return (
 		<div className="msp-meetings">
 		<section className="msp-meetings-header">
@@ -73,7 +53,7 @@ export default function Index()
 
 		<section className="msp-meetings-calendar-wrapper">
 			<div className="msp-meetings-calendar">
-				<MspCalendar meetings={meetings} receivers={receivers}/>
+				<MspCalendar meetings={meetings} />
 			</div>
 		</section>
 	</div>
