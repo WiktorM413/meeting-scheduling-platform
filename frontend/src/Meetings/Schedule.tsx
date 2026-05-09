@@ -1,6 +1,6 @@
 import "./style.scss";
 import { useState, useEffect } from "react";
-import { ApiCreateMeeting, ApiGetAllMeetingsForUser, ApiGetAllUsers } from "../api/client";
+import { ApiCreateMeeting, ApiGetAllMeetingsForUser, ApiGetAllUsers, ApiGetUserById } from "../api/client";
 import HandleResponse from "../api/HandleResponse";
 import type { MeetingType } from "../api/MeetingType";
 import MspCalendar from "../Components/MspCalendar/MspCalendar";
@@ -11,10 +11,34 @@ import MspSelect from "../Components/MspSelect";
 import MspButton from "../Components/MspButton";
 
 
-async function Load(userData:    UserData|null,
-					setMeetings: React.Dispatch<React.SetStateAction<MeetingType[]>>,
-					setUsers:    React.Dispatch<React.SetStateAction<UserData[]>>)
+async function Load(userData:     UserData|null,
+					setMeetings:  React.Dispatch<React.SetStateAction<MeetingType[]>>,
+					setUsers:     React.Dispatch<React.SetStateAction<UserData[]>>,
+					setReceivers: React.Dispatch<React.SetStateAction<UserData[]>>)
 {
+		const loadReceivers = async (meetings: MeetingType[]) =>
+		{
+			setReceivers([]);
+
+			for (const meeting of meetings)
+			{
+				try
+				{
+					const response = await ApiGetUserById(meeting.receiver_id);
+					const handled = HandleResponse(response);
+
+					if (handled?.type == "success")
+					{
+						setReceivers(receivers => [...receivers, handled?.data]);
+					}
+				}
+				catch (error)
+				{
+					console.log("Error retrieving data: ", error);
+				}
+			}
+		}
+
 		const loadMeetings = async () =>
 		{
 			try
@@ -30,6 +54,8 @@ async function Load(userData:    UserData|null,
 				if (handled?.type === "success")
 				{
 					setMeetings(handled.data);
+
+					await loadReceivers(handled.data);
 				}
 				else
 				{
@@ -80,6 +106,7 @@ export default function Schedule()
 
 	const [meetings,     setMeetings]     = useState<MeetingType[]>([]);
 	const [users,        setUsers]        = useState<UserData[]>([]);
+	const [receivers,    setReceivers]    = useState<UserData[]>([]);
 	const [selectedDate, setSelectedDate] = useState("");
 	const [receiverId,   setReceiverId]   = useState<number>(-1);
 	const [topic,        setTopic]        = useState("");
@@ -91,7 +118,7 @@ export default function Schedule()
 
 	useEffect(() =>
 	{
-		Load(userData, setMeetings, setUsers);
+		Load(userData, setMeetings, setUsers, setReceivers);
 	}, [userData, setMeetings, setUsers]);
 	
 	const createMeeting = async () =>
@@ -114,7 +141,7 @@ export default function Schedule()
 
 				if (handled.type === "success")
 				{
-					await Load(userData, setMeetings, setUsers);
+					await Load(userData, setMeetings, setUsers, setReceivers);
 				}
 			}
 		}
@@ -129,7 +156,7 @@ export default function Schedule()
 			<div className="msp-schedule-form">
 				<section className="msp-meetings-calendar-wrapper">
 					<div className="msp-meetings-calendar">
-						<MspCalendar label="Choose a day" meetings={meetings} externalSelectedDateSetter={setSelectedDate}/>
+						<MspCalendar label="Choose a day" meetings={meetings} receivers={receivers} externalSelectedDateSetter={setSelectedDate}/>
 					</div>
 				</section>
 				<MspSelect label="Choose a user" value={receiverId} setter={setReceiverId} className="msp-schedule-user-select">

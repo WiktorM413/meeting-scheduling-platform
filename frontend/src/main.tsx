@@ -6,6 +6,7 @@ import routes from './Routes/routes.tsx';
 import { AuthProvider } from './context/AuthContext.tsx';
 import Header from './Templates/Header/Header.tsx';
 import Footer from './Templates/Footer/Footer.tsx';
+import PopupRenderer from './Components/MspPopup/PopupRenderer.tsx';
 
 function AppRoutes()
 {
@@ -22,6 +23,7 @@ createRoot(document.getElementById('root')!).render(
 					<AppRoutes />
 					</main>
 					<Footer />
+					<PopupRenderer />
 				</div>
 			</AuthProvider>
 		</BrowserRouter>

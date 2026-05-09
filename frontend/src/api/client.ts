@@ -71,6 +71,17 @@ export async function ApiGetAllUsers()
 	return response;
 }
 
+export async function ApiGetUserById(userId: number)
+{
+	const response = await api.post("/getUserById",
+		{
+			"user_id": userId
+		}
+	)
+
+	return response;
+}
+
 export async function ApiCreateMeeting(providerId: number, receiverId: number, topic: string, when: string, where: string, timeStart: string, timeEnd: string)
 {
 	const response = await api.post("/createMeeting",
