@@ -164,15 +164,16 @@ export default function MspCalendar({ label, meetings, receivers, externalSelect
 									popup.Open(
 										<>
 											<h1>{dateString}</h1>
+											<ol>
 											{meetings?.map((meeting, i) =>
 											(
-												<div>
+												<li>
 													{receivers?.[i].first_name} {receivers?.[i].last_name}&nbsp;
-													({FormatTime(meeting.time_start)} - {FormatTime(meeting.time_end)}):
+													({FormatTime(meeting.time_start)} - {FormatTime(meeting.time_end)}):&nbsp;
 													{meeting.topic}
-												</div>
+												</li>
 											))}
-
+											</ol>
 										</>
 									);
 								}
