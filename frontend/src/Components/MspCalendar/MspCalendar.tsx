@@ -167,8 +167,8 @@ export default function MspCalendar({ label, meetings, receivers, externalSelect
 											{meetings?.map((meeting, i) =>
 											(
 												<div>
-													{receivers?.[i].first_name} {receivers?.[i].last_name}
-													{FormatTime(meeting.time_start)} - {FormatTime(meeting.time_end)}:
+													{receivers?.[i].first_name} {receivers?.[i].last_name}&nbsp;
+													({FormatTime(meeting.time_start)} - {FormatTime(meeting.time_end)}):
 													{meeting.topic}
 												</div>
 											))}
