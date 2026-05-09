@@ -21,6 +21,9 @@ class MeetingsModel extends Model
 			SELECT * FROM `meetings`
 			WHERE	`provider_id` = :user_id: OR
 					`receiver_id` = :user_id:
+			ORDER BY
+				`time_start` ASC,
+				`time_end`   ASC
 		", ['user_id' => $userId]);
 
 		return $result->getResultArray();
