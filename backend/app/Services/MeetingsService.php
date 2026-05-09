@@ -30,11 +30,10 @@ class MeetingsService
 
 	public function createMeeting(int $providerId, array $receiverIds, string $topic, string $when, string $where, string $timeStart, string $timeEnd)
 	{
-		foreach ($receiverIds as $receiverId)
-		{
-			$this->meetingsModel->createMeeting($providerId, $receiverId, $topic, $when, $where, $timeStart, $timeEnd);
-		}
+		$meetingId = $this->meetingsModel->createMeeting($providerId, $topic, $when, $where, $timeStart, $timeEnd);
 
-		return SimpleJson(false, "Successfully scheduled a meeting");
+		$this->meetingsModel->addUsersToMeeting($meetingId, $receiverIds);
+
+		return SimpleJson(false, "Successfully scheduled a meeting.");
 	}
 }

@@ -18,43 +18,57 @@ class MeetingsModel extends Model
 	public function getAllMeetingsForUser(int $userId)
 	{
 		$result = $this->db->query("
-			SELECT
-				m.unique_id,
+			SELECT 
+				m.unique_id AS meeting_id,
 				m.provider_id,
-				m.receiver_id,
-				m.time_end,
 				m.time_start,
+				m.time_end,
 				m.topic,
 				m.when,
-				GROUP_CONCAT(CONCAT(u.first_name, ' ', u.last_name) SEPARATOR ', ') AS other_names
-		FROM meetings m
-		JOIN users u
-			ON
-			(
-				(m.provider_id = :user_id: AND u.id = m.receiver_id)
-				OR
-				(m.receiver_id = :user_id: AND u.id = m.provider_id)
-			)
-		WHERE 30 IN (m.provider_id, m.receiver_id)
-		GROUP BY
-			m.when,
-			m.time_start,
-			m.time_end,
-			m.topic
-		ORDER BY
-			m.time_start ASC,
-			m.time_end   ASC;
+
+				CASE 
+					WHEN m.provider_id = :user_id: THEN
+						GROUP_CONCAT(CONCAT(u.first_name, ' ', u.last_name) SEPARATOR ', ')
+					ELSE
+						CONCAT(p.first_name, ' ', p.last_name)
+				END AS other_names
+			FROM meetings m
+			LEFT JOIN meeting_participants mp 
+				ON mp.meeting_id = m.unique_id
+
+			LEFT JOIN users u 
+				ON u.id = mp.user_id
+
+			LEFT JOIN users p 
+				ON p.id = m.provider_id
+
+			WHERE 
+				m.provider_id = :user_id:
+				OR mp.user_id = :user_id:
+
+			GROUP BY 
+				m.unique_id,
+				m.provider_id,
+				m.time_start,
+				m.time_end,
+				m.topic,
+				m.when,
+				p.first_name,
+				p.last_name
+
+			ORDER BY 
+				m.time_start ASC,
+				m.time_end ASC;
 		", ['user_id' => $userId]);
 
 		return $result->getResultArray();
 	}
 
-	public function createMeeting(int $providerId, int $receiverId, string $topic, string $when, string $where, string $timeStart, string $timeEnd)
+	public function createMeeting(int $providerId, string $topic, string $when, string $where, string $timeStart, string $timeEnd)
 	{
 		$params =
 		[
 			'provider_id' => $providerId,
-			'receiver_id' => $receiverId,
 			'topic'       => $topic,
 			'when'        => $when,
 			'where'       => $where,
@@ -64,8 +78,25 @@ class MeetingsModel extends Model
 
 		$this->db->query("
 			INSERT INTO `meetings`
-			(`provider_id`, `receiver_id`, `topic`, `when`, `where`, `time_start`, `time_end`) VALUES
-			(:provider_id:, :receiver_id:, :topic:, :when:, :where:, :time_start:, :time_end:)
+			(`provider_id`, `topic`, `when`, `where`, `time_start`, `time_end`) VALUES
+			(:provider_id:, :topic:, :when:, :where:, :time_start:, :time_end:)
 		", $params);
+
+		return $this->db->insertID();
+	}
+
+	public function addUsersToMeeting(int $meetingId, array $userIds)
+	{
+		foreach ($userIds as $userId)
+		{
+			$this->db->query("
+			INSERT INTO meeting_participants
+			(meeting_id, user_id)
+			VALUES (:meeting_id:, :user_id:)
+			", [
+				'meeting_id' => $meetingId,
+				'user_id'    => $userId
+			]);
+		}
 	}
 }
