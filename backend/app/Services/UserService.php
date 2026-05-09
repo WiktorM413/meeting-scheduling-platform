@@ -20,4 +20,11 @@ class UserService
 
 		return DataJson(false, "Successfully retrieved all users", $users);
 	}
+
+	public function getUserById($userId)
+	{
+		$user = $this->userModel->getUserById($userId);
+
+		return DataJson(false, 'Successflly retrieved user', $user);
+	}
 }

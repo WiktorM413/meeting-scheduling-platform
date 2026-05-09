@@ -14,4 +14,15 @@ class UserModel extends Model
 
 		return $result->getResultArray();
 	}
+
+	public function getUserById($userId)
+	{
+		$result = $this->db->query("
+			SELECT * FROM users
+			WHERE id = ?
+			LIMIT 1
+		", [$userId]);
+
+		return $result->getResultArray()[0];
+	}
 }
