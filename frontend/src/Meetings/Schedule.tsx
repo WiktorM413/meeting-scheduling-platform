@@ -55,7 +55,7 @@ async function Load(userData:     UserData|null,
 				{
 					setMeetings(handled.data);
 
-					loadReceivers(handled.data);
+					await loadReceivers(handled.data);
 				}
 				else
 				{
