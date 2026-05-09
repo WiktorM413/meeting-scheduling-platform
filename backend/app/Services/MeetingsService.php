@@ -28,9 +28,12 @@ class MeetingsService
 		return DataJson(false, "Successfully retrieved meetings", $meetings);
 	}
 
-	public function createMeeting(int $providerId, int $receiverId, string $topic, string $when, string $where, string $timeStart, string $timeEnd)
+	public function createMeeting(int $providerId, array $receiverIds, string $topic, string $when, string $where, string $timeStart, string $timeEnd)
 	{
-		$this->meetingsModel->createMeeting($providerId, $receiverId, $topic, $when, $where, $timeStart, $timeEnd);
+		foreach ($receiverIds as $receiverId)
+		{
+			$this->meetingsModel->createMeeting($providerId, $receiverId, $topic, $when, $where, $timeStart, $timeEnd);
+		}
 
 		return SimpleJson(false, "Successfully scheduled a meeting");
 	}
