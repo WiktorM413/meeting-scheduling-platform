@@ -1,5 +1,6 @@
+import "./style.scss";
 import { useState } from "react";
-import type { UserData } from "../api/UserType";
+import type { UserData } from "../../api/UserType";
 
 type UserPickerProps =
 {
@@ -9,7 +10,7 @@ type UserPickerProps =
 
 }
 
-export default function UserPicker({ receiverIds, users, setReceiverIds }: UserPickerProps)
+export default function MspUserPicker({ receiverIds, users, setReceiverIds }: UserPickerProps)
 {
 	const [userSearch,   setUserSearch]   = useState<string>("");
 
@@ -34,7 +35,7 @@ export default function UserPicker({ receiverIds, users, setReceiverIds }: UserP
 		<div className="msp-user-picker">
 			<label>Invite people</label>
 
-			<div className="msp-selected-users">
+			<div className="msp-user-picker-selected-users">
 				{
 					receiverIds.map((id) =>
 					{
@@ -46,7 +47,7 @@ export default function UserPicker({ receiverIds, users, setReceiverIds }: UserP
 						return (
 							<div
 								key={id}
-								className="msp-user-chip"
+								className="msp-user-picker-user-chip"
 								onClick={() => RemoveReceiver(id)}
 							>
 								{user.first_name} {user.last_name} ✕
@@ -61,19 +62,19 @@ export default function UserPicker({ receiverIds, users, setReceiverIds }: UserP
 				value={userSearch}
 				onChange={(e) => setUserSearch(e.target.value)}
 				placeholder="Search users..."
-				className="msp-user-search"
+				className="msp-user-picker-user-search"
 			/>
 
 			{
 				userSearch.trim() && filteredUsers.length > 0 &&
 				(
-					<div className="msp-user-results">
+					<div className="msp-user-picker-user-results">
 						{
 							filteredUsers.map((user) =>
 							(
 								<div
 									key={user.id}
-									className="msp-user-result"
+									className="msp-user-picker-user-result"
 									onClick={() => AddReceiver(user.id)}
 								>
 									{user.first_name} {user.last_name}

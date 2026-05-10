@@ -8,7 +8,7 @@ import { useAuth } from "../context/AuthContext";
 import MspFormField from "../Components/MspFormField";
 import type { UserData } from "../api/UserType";
 import MspButton from "../Components/MspButton";
-import UserPicker from "./UserPicker";
+import MspUserPicker from "./MspUserPicker/MspUserPicker";
 
 
 async function Load(userData:     UserData|null,
@@ -133,7 +133,7 @@ export default function Schedule()
 						<MspCalendar label="Choose a day" meetings={meetings} externalSelectedDateSetter={setSelectedDate}/>
 					</div>
 				</section>
-				<UserPicker receiverIds={receiverIds} users={users} setReceiverIds={setReceiverIds}/>
+				<MspUserPicker receiverIds={receiverIds} users={users} setReceiverIds={setReceiverIds}/>
 				<MspFormField className="msp-schedule-form-field" value={topic}     setter={setTopic}     label="Set a topic"/>
 				<MspFormField className="msp-schedule-form-field" value={where}     setter={setWhere}     label="Set a place"/>
 				<MspFormField className="msp-schedule-form-field" value={startTime} setter={setStartTime} label="When to start" inputType="time"/>

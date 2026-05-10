@@ -1,0 +1,100 @@
+@import "../../animations.scss";
+
+.msp-user-picker
+{
+	display: flex;
+	flex-direction: column;
+	gap: 0.8rem;
+	width: 25rem;
+	position: relative;
+	margin: 0 auto;
+
+	label
+	{
+		color: #a2a2a2;
+		font-size: 1.2rem;
+		font-weight: 500;
+	}
+
+	&:focus
+	{
+		outline: none;
+	}
+}
+
+.msp-user-picker-selected-users
+{
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.6rem;
+}
+
+.msp-user-picker-user-chip
+{
+	background-color: #424242;
+	color: #d2d2d2;
+	padding: 0.65rem 1rem;
+	border-radius: 30px;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+
+	&:hover
+	{
+		transform: translateY(-2px);
+		background-color: #525252;
+		box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+	}
+}
+
+.msp-user-picker-user-search
+{
+	background-color: #424242;
+	color: #898989;
+	border:none;
+	border-radius: 7px;
+	height: 3rem;
+	width: 100%;
+	font-size: 1.2rem;
+	padding: 10px;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+	&:focus
+	{
+		box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+	}
+
+	&:hover
+	{
+		transform: translateY(-2px);
+	}
+}
+
+.msp-user-picker-user-results
+{
+	position: absolute;
+	top: calc(100% + 0.5rem);
+	width: 100%;
+	background-color: #2a2a2a;
+	border-radius: 15px;
+	overflow: auto;
+	box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+	z-index: 100;
+	animation: fadeIn 0.2s ease;
+}
+
+.msp-user-picker-user-result
+{
+	padding: 1rem 1.2rem;
+	color: #ddd;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: background-color 0.2s ease, transform 0.5s ease;
+
+	&:hover
+	{
+		background-color: #424242;
+		transform: translateX(4px);
+	}
+}
