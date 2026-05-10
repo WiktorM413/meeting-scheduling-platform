@@ -37,8 +37,10 @@ export default function Index()
 		) :
 		filterType.type === "week" ?
 		(
-			<div>
-				<MspWeekDisplay />
+			<div className="msp-meetings-week-display-wrapper">
+				<div className="msp-meetings-week-display">
+				<MspWeekDisplay meetings={meetings}/>
+				</div>
 			</div>
 		) : // type === "day"
 		(
