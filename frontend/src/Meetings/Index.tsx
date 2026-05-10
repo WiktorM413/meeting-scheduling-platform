@@ -5,12 +5,46 @@ import HandleResponse from "../api/HandleResponse";
 import type { MeetingType } from "../api/MeetingType";
 import MspCalendar from "../Components/MspCalendar/MspCalendar";
 import { useAuth } from "../context/AuthContext";
+import MspButton from "../Components/MspButton";
+
+type FilterType =
+{
+	type: "month"
+}
+| {
+	type: "week"
+}
+| {
+	type: "day"
+};
 
 export default function Index()
 {
 	const { userData } = useAuth();
 
-	const [meetings,  setMeetings]  = useState<MeetingType[]>([]);
+	const [meetings,   setMeetings]   = useState<MeetingType[]>([]);
+	const [filterType, setFilterType] = useState<FilterType>({type: "month"});
+
+	const displayedObject =
+		filterType.type === "month" ?
+		(
+			<section className="msp-meetings-calendar-wrapper">
+				<div className="msp-meetings-calendar">
+					<MspCalendar meetings={meetings} />
+				</div>
+			</section>
+		) :
+		filterType.type === "week" ?
+		(
+			<div>
+
+			</div>
+		) : // type === "day"
+		(
+			<div>
+
+			</div>
+		);
 
 	useEffect(() =>
 	{
@@ -43,19 +77,20 @@ export default function Index()
 
 		loadMeetings();
 	}, [userData]);
-	console.log(meetings);
+
 	return (
 		<div className="msp-meetings">
 		<section className="msp-meetings-header">
 			<h1>Your meetings</h1>
 			<p>Manage and view all your scheduled events</p>
 		</section>
-
-		<section className="msp-meetings-calendar-wrapper">
-			<div className="msp-meetings-calendar">
-				<MspCalendar meetings={meetings} />
-			</div>
-		</section>
+		<div className="msp-meetings-button-group">
+			<MspButton label="Month" onClick={() => setFilterType({ type: "month" })}/>
+			<MspButton label="Week"  onClick={() => setFilterType({ type: "week" })}/>
+			<MspButton label="Day"   onClick={() => setFilterType({ type: "day" })}/>
+		</div>
+		{displayedObject}
+		
 	</div>
 	);
 }
