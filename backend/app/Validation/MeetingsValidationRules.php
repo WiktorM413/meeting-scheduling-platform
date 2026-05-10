@@ -19,7 +19,7 @@ class MeetingsValidationRules extends BaseValidationRules
 		'provider_id' => [
 			'rules' => 'required|integer'
 		],
-		'receiver_id' => [
+		'receiver_ids.*' => [
 			'rules' => 'required|integer'
 		],
 		'topic' => [
