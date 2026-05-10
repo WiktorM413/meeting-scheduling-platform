@@ -1,7 +1,125 @@
+.msp-week-display
+{
+	margin: 40px auto;
+
+	h2
+	{
+		font-size: 1.4rem;
+		font-weight: 600;
+		margin: 0;
+		color: #2d2d2d;
+	}
+}
+
 .msp-week-display-header
 {
 	display: flex;
-	justify-content: center;
-	gap: 1rem;
-	
+	justify-content: space-between;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 20px;
+
+	.msp-button
+	{
+		padding: 8px 12px;
+		min-width: 40px;
+	}
+}
+
+.msp-week-display-week
+{
+	display: flex;
+	gap: 6px;
+}
+
+.msp-week-display-weekdays
+{
+	display: flex;
+	gap: 6px;
+	margin-bottom: 8px;
+}
+
+.msp-week-display-weekday
+{
+	flex: 1;
+	text-align: center;
+	font-size: 12px;
+	font-weight: 600;
+	color: #666;
+	letter-spacing: 0.4em;
+	padding: 6px 0;
+}
+
+.msp-week-display-cell
+{
+	flex: 1;
+	height: 110px;
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	padding: 8px;
+	position: relative;
+	cursor: pointer;
+	background-color: white;
+	box-sizing: border-box;
+	transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+
+	&:hover
+	{
+		transform: translateY(-1px);
+		border-color: #b8b8b8;
+	}
+}
+
+.msp-week-display-cell-empty
+{
+	background: transparent;
+	border: none;
+	cursor: default;
+	box-shadow: none;
+
+	&:hover
+	{
+		transform: none;
+	}
+}
+
+.msp-week-display-cell-today
+{
+	border: 2px solid #4f46e5 !important;
+	background-color: #f5f4ff;
+}
+
+.msp-week-display-cell-available
+{
+	background-color: #f9fff9;
+}
+
+.msp-week-display-cell-selected
+{
+	background-color: #ffe3e3;
+	border: 2px solid #e54646;
+}
+
+.msp-week-display-cell-blocked
+{
+	opacity: 0.45;
+	background-color: #f3f3f3;
+}
+
+.msp-week-display-cell-date
+{
+	font-size: 14px;
+	font-weight: 600;
+	color: #434343;
+}
+
+.msp-week-display-cell-dot
+{
+	width: 8px;
+	height: 8px;
+	background: #e54646;
+	border-radius: 50%;
+	position: absolute;
+	top: 12px;
+	right: 10px;
 }

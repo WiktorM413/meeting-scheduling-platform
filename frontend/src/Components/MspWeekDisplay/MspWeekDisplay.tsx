@@ -3,12 +3,13 @@ import { useMemo, useState } from "react";
 import type { MeetingType } from "../../api/MeetingType";
 import type { DayCell } from "../MspCalendar/DayCell";
 import MspButton from "../MspButton";
+import { popup } from "../MspPopup/PopupManager";
+import { FormatTime } from "../../utils/time";
 
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 function BuildWeek(year: number, month: number, startDay: number, meetings?: MeetingType[]): DayCell[]
 {
-	const firstDay    = new Date(year, month, startDay);
 	const daysInMonth = new Date(year, month + 1, 0).getDate();
 	const today       = new Date();
 
@@ -60,16 +61,21 @@ function BuildWeek(year: number, month: number, startDay: number, meetings?: Mee
 	return cells;
 }
 
-export default function MspWeekDisplay()
+type MspWeekDisplayProps =
+{
+	meetings?: MeetingType[];
+	startDayNum?: number;
+}
+
+export default function MspWeekDisplay({ meetings, startDayNum = 1 }: MspWeekDisplayProps)
 {
 	const now = new Date();
 	const [year,  setYear]              = useState(now.getFullYear());
 	const [month, setMonth]             = useState(now.getMonth());
-	const [startDay, setStartDay]       = useState<number>(1);
+	const [startDay, setStartDay]       = useState<number>(startDayNum);
 	const [selectedDay, setSelectedDay] = useState<number|null>(null);
 
-	const days = useMemo(() => BuildWeek(year, month, startDay), [year, month, startDay]);
-	const daysInMonth = new Date(year, month + 1, 0).getDate();
+	const days = useMemo(() => BuildWeek(year, month, startDay, meetings), [year, month, startDay, meetings]);
 
 	const prevWeek = () =>
 	{
@@ -88,6 +94,21 @@ export default function MspWeekDisplay()
 		setMonth(d.getMonth());
 		setStartDay(d.getDate());
 		setSelectedDay(null);
+	}
+
+	let weekdaysObj: string[] = [];
+	{
+		let day = new Date(year, month, startDayNum).getDay() - 2;
+		if (day < 0)
+		{
+			day = 7 + day;
+		}
+		
+		for (let i = 0; i < 7; i++)
+		{
+			day = (day + 1) % 7;
+			weekdaysObj.push(WEEKDAYS[day]); 
+		}
 	}
 
 	return (
@@ -112,6 +133,65 @@ export default function MspWeekDisplay()
 					)}
 				</h2>
 				<MspButton label=">" onClick={nextWeek}/>
+			</div>
+
+			<div className="msp-week-display-weekdays">
+				{weekdaysObj.map((weekday) =>
+				(
+					<div key={weekday} className="msp-week-display-weekday">
+						{weekday}
+					</div>
+				))}
+			</div>
+
+			<div className="msp-week-display-week">
+				{days.map((day, i) =>
+				{
+					if (!day)
+					{
+						return <div key={i} className="msp-week-display-cell msp-week-display-cell-empty"/>
+					}
+
+					const isSelected = selectedDay === day.date;
+
+					return (
+						<div
+							key={i}
+							className={`msp-week-display-cell ${
+								isSelected ? "msp-week-display-cell-selected" : ""
+							} ${
+								day?.isToday ? "msp-week-display-cell-today" : ""
+							} ${
+								day?.availability ? "msp-week-display-cell-available": "msp-week-display-cell-blocked"
+							}`}
+							onClick={() => setSelectedDay(day.date)}
+						>
+							<span className="msp-week-display-cell-date">{day.date}</span>
+							{day.hasEvents && <span className="msp-calendar-cell-dot"
+								onClick={() =>
+								{
+									const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day.date).padStart(2, '0')}`;
+									
+									popup.Open(
+										<>
+											<h1>{dateString}</h1>
+											{meetings?.map((meeting, i) =>
+												meeting.when === dateString ?
+												(
+													<div key={i}>
+														{meeting.other_names}&nbsp;
+														({FormatTime(meeting.time_start)} - {FormatTime(meeting.time_end)}):&nbsp;
+														{meeting.topic}
+													</div>
+												) : null
+											)}
+										</>
+									);
+								}
+							}/>}
+						</div>
+					)
+				})}
 			</div>
 		</div>
 	);
