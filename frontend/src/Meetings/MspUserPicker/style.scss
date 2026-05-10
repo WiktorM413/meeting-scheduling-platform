@@ -48,6 +48,12 @@
 	}
 }
 
+.msp-user-picker-user-search-wrapper
+{
+	position: relative;
+	width: 100%;
+}
+
 .msp-user-picker-user-search
 {
 	background-color: #424242;
@@ -68,6 +74,34 @@
 	&:hover
 	{
 		transform: translateY(-2px);
+	}
+}
+
+.msp-user-picker-user-search-clear
+{
+	position: absolute;
+	top: 50%;
+	right: 0.8rem;
+	transform: translateY(-50%);
+	background: none;
+	border: none;
+	color: #898989;
+	font-size: 1rem;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: color 0.2s ease, transform 0.2s ease;
+
+	&:hover
+	{
+		color: #dcdcdc;
+		transform: translateY(-50%) scale(1.1);
+	}
+
+	&:focus
+	{
+		outline: none;
 	}
 }
 

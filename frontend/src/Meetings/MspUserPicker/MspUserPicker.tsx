@@ -57,13 +57,26 @@ export default function MspUserPicker({ receiverIds, users, setReceiverIds }: Us
 				}
 			</div>
 
-			<input
-				type="text"
-				value={userSearch}
-				onChange={(e) => setUserSearch(e.target.value)}
-				placeholder="Search users..."
-				className="msp-user-picker-user-search"
-			/>
+			<div className="msp-user-picker-user-search-wrapper">
+				<input
+					type="text"
+					value={userSearch}
+					onChange={(e) => setUserSearch(e.target.value)}
+					placeholder="Search users..."
+					className="msp-user-picker-user-search"
+				/>
+				{userSearch &&
+					(
+						<button
+							className="msp-user-picker-user-search-clear"
+							onClick={() => setUserSearch("")}
+						>
+							✕
+						</button>
+					)
+
+				}
+			</div>
 
 			{
 				userSearch.trim() && filteredUsers.length > 0 &&
