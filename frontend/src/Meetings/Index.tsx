@@ -6,6 +6,7 @@ import type { MeetingType } from "../api/MeetingType";
 import MspCalendar from "../Components/MspCalendar/MspCalendar";
 import { useAuth } from "../context/AuthContext";
 import MspButton from "../Components/MspButton";
+import MspWeekDisplay from "../Components/MspWeekDisplay/MspWeekDisplay";
 
 type FilterType =
 {
@@ -37,7 +38,7 @@ export default function Index()
 		filterType.type === "week" ?
 		(
 			<div>
-
+				<MspWeekDisplay />
 			</div>
 		) : // type === "day"
 		(
