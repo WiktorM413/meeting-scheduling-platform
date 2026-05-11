@@ -101,18 +101,19 @@ type MspDayDisplayProps =
 export default function MspDayDisplay({meetings}: MspDayDisplayProps)
 {
 	const now = new Date();
-	console.log();
-	const [date,  setDate]  = useState(
+	const today =
 		now.getFullYear().toString() + "-" +
 		(now.getMonth() + 1).toString().padStart(2, "0") /* from month index to month number */ + "-" +
-		now.getDate().toString().padStart(2, "0"));
+		now.getDate().toString().padStart(2, "0");
+	const [date,  setDate]  = useState(today);
+		
 
 	const cell = useMemo(() => BuildDay(date, meetings), [date, meetings]);
 	
 	return (
 		<div className="msp-day-display">
 			<div className="msp-day-display-header">
-				<input type="date" onChange={(e) => setDate(e.target.value)}/>
+				<input value={today} type="date" onChange={(e) => setDate(e.target.value)}/>
 			</div>
 
 			<DayObj cell={cell} date={date} meetings={meetings}/>
