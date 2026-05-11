@@ -7,6 +7,7 @@ import MspCalendar from "../Components/MspCalendar/MspCalendar";
 import { useAuth } from "../context/AuthContext";
 import MspButton from "../Components/MspButton";
 import MspWeekDisplay from "../Components/MspWeekDisplay/MspWeekDisplay";
+import MspDayDisplay from "../Components/MspDayDisplay/MspDayDisplay";
 
 type FilterType =
 {
@@ -49,7 +50,7 @@ export default function Index()
 		filterType.type === "day" ?
 		(
 			<div>
-				Day
+				<MspDayDisplay meetings={meetings}/>
 			</div>
 		) : // type === "list"
 		(
