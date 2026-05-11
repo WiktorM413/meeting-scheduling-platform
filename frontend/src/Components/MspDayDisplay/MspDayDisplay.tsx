@@ -4,10 +4,12 @@ import type { DayCell } from "../MspCalendar/DayCell";
 import { FormatTime } from "../../utils/time";
 import { popup } from "../MspPopup/PopupManager";
 
-function BuildDay(year: number, month: number, day: number, meetings?: MeetingType[]): DayCell
+function BuildDay(date: string, meetings?: MeetingType[]): DayCell
 {
+	const [year, month, day] = date.split("-").map((value) => Number(value));
+
 	const today   = new Date();
-	const dateObj = new Date(year, month, day);
+	const dateObj = new Date(year, month - 1 /* to month index */, day);
 	const isToday = 
 		dateObj.getDate()     === today.getDate()  &&
 		dateObj.getMonth()    === today.getMonth() &&
@@ -22,11 +24,7 @@ function BuildDay(year: number, month: number, day: number, meetings?: MeetingTy
 	{
 		for (let i = 0; i < meetings.length; i++)
 		{
-			let dateArr = meetings[i].when.split("-");
-
-			if (Number(dateArr[0])     === year  &&
-				Number(dateArr[1]) - 1 === month && // months are by index
-				Number(dateArr[2])     === day)
+			if (meetings[i].when === date)
 			{
 				hasEvents = true;
 				break;
@@ -49,54 +47,50 @@ function BuildDay(year: number, month: number, day: number, meetings?: MeetingTy
 type DayObjPorps =
 {
 	cell:      DayCell;
-	year:      number;
-	month:     number;
-	day:       number;
+	date:      string;
 	meetings?: MeetingType[];
 }
 
-function DayObj({cell, year, month, meetings}: DayObjPorps)
+function DayObj({cell, date, meetings}: DayObjPorps)
 {
 	if (!cell)
-		{
-			return <div className="msp-week-display-cell msp-week-display-cell-empty"/>
-		}
+	{
+		return <div className="msp-week-display-cell msp-week-display-cell-empty"/>
+	}
 
-		return (
-			<div
-				className={`msp-week-display-cell ${
-					cell.isSelected ? "msp-week-display-cell-selected" : ""
-				} ${
-					cell?.isToday ? "msp-week-display-cell-today" : ""
-				} ${
-					cell?.availability ? "msp-week-display-cell-available": "msp-week-display-cell-blocked"
-				}`}
-			>
-				<span className="msp-week-display-cell-date">{cell.date}</span>
-				{cell.hasEvents && <span className="msp-calendar-cell-dot"
-					onClick={() =>
-					{
-						const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(cell.date).padStart(2, '0')}`;
-						
-						popup.Open(
-							<>
-								<h1>{dateString}</h1>
-								{meetings?.map((meeting, i) =>
-									meeting.when === dateString ?
-									(
-										<div key={i}>
-											{meeting.other_names}&nbsp;
-											({FormatTime(meeting.time_start)} - {FormatTime(meeting.time_end)}):&nbsp;
-											{meeting.topic}
-										</div>
-									) : null
-								)}
-							</>
-						);
-					}
-				}/>}
-			</div>
-		)
+	return (
+		<div
+			className={`msp-week-display-cell ${
+				cell.isSelected ? "msp-week-display-cell-selected" : ""
+			} ${
+				cell?.isToday ? "msp-week-display-cell-today" : ""
+			} ${
+				cell?.availability ? "msp-week-display-cell-available": "msp-week-display-cell-blocked"
+			}`}
+		>
+			<span className="msp-week-display-cell-date">{cell.date}</span>
+			{cell.hasEvents && <span className="msp-calendar-cell-dot"
+				onClick={() =>
+				{
+					popup.Open(
+						<>
+							<h1>{date}</h1>
+							{meetings?.map((meeting, i) =>
+								meeting.when === date ?
+								(
+									<div key={i}>
+										{meeting.other_names}&nbsp;
+										({FormatTime(meeting.time_start)} - {FormatTime(meeting.time_end)}):&nbsp;
+										{meeting.topic}
+									</div>
+								) : null
+							)}
+						</>
+					);
+				}
+			}/>}
+		</div>
+	)
 }
 
 type MspDayDisplayProps =
@@ -107,28 +101,21 @@ type MspDayDisplayProps =
 export default function MspDayDisplay({meetings}: MspDayDisplayProps)
 {
 	const now = new Date();
-	const [year,  setYear]  = useState(now.getFullYear());
-	const [month, setMonth] = useState(now.getMonth());
-	const [day,   setDay]   = useState(now.getDate());
-	const [date,  setDate]  = useState("");
+	console.log();
+	const [date,  setDate]  = useState(
+		now.getFullYear().toString() + "-" +
+		(now.getMonth() + 1).toString().padStart(2, "0") /* from month index to month number */ + "-" +
+		now.getDate().toString().padStart(2, "0"));
 
-	const cell = useMemo(() => BuildDay(year, month, day, meetings), [year, month, day, meetings]);
+	const cell = useMemo(() => BuildDay(date, meetings), [date, meetings]);
 	
 	return (
 		<div className="msp-day-display">
 			<div className="msp-day-display-header">
-				<input type="date" onChange={(e) =>
-					{
-						const [inYear, inMonth, inDay] = e.target.value.split("-");
-
-						setYear (Number(inYear));
-						setMonth(Number(inMonth));
-						setDay  (Number(inDay));
-					}
-				}/>
+				<input type="date" onChange={(e) => setDate(e.target.value)}/>
 			</div>
 
-			<DayObj cell={cell} year={year} month={month} day={day} meetings={meetings}/>
+			<DayObj cell={cell} date={date} meetings={meetings}/>
 		</div>
 	);
 }
