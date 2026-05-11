@@ -17,6 +17,9 @@ type FilterType =
 }
 | {
 	type: "day"
+}
+| {
+	type: "list"
 };
 
 export default function Index()
@@ -42,10 +45,16 @@ export default function Index()
 				<MspWeekDisplay meetings={meetings}/>
 				</div>
 			</div>
-		) : // type === "day"
+		) :
+		filterType.type === "day" ?
 		(
 			<div>
-
+				Day
+			</div>
+		) : // type === "list"
+		(
+			<div>
+				List
 			</div>
 		);
 
@@ -91,6 +100,7 @@ export default function Index()
 			<MspButton label="Month" onClick={() => setFilterType({ type: "month" })}/>
 			<MspButton label="Week"  onClick={() => setFilterType({ type: "week" })}/>
 			<MspButton label="Day"   onClick={() => setFilterType({ type: "day" })}/>
+			<MspButton label="List"  onClick={() => setFilterType({ type: "list" })}/>
 		</div>
 		{displayedObject}
 		
