@@ -1,0 +1,119 @@
+.msp-day-display
+{
+	margin: 40px auto;
+}
+
+.msp-day-display-header
+{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 20px;
+
+	input[type="date"]
+	{
+		padding: 8px 12px;
+
+		border: 1px solid #ddd;
+		border-radius: 10px;
+
+		background: white;
+		color: #434343;
+
+		font-size: 14px;
+		font-weight: 500;
+
+		outline: none;
+
+		transition:
+			border-color 0.2s ease,
+			transform 0.15s ease;
+
+		&:focus
+		{
+			border-color: #b8b8b8;
+		}
+
+		&:hover
+		{
+			transform: translateY(-1px);
+		}
+	}
+}
+
+.msp-day-display-meetings
+{
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.msp-day-display-meeting-card
+{
+	display: flex;
+	align-items: flex-start;
+	gap: 14px;
+
+	padding: 12px;
+
+	background: white;
+
+	border: 1px solid #ddd;
+	border-radius: 10px;
+
+	box-sizing: border-box;
+
+	transition:
+		background-color 0.2s ease,
+		border-color 0.2s ease,
+		transform 0.15s ease;
+
+	&:hover
+	{
+		transform: translateY(-1px);
+		border-color: #b8b8b8;
+	}
+}
+
+.msp-day-display-meeting-time
+{
+	min-width: 110px;
+
+	font-size: 13px;
+	font-weight: 600;
+
+	color: #666;
+
+	letter-spacing: 0.02em;
+}
+
+.msp-day-display-meeting-main
+{
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+
+	min-width: 0;
+}
+
+.msp-day-display-meeting-topic
+{
+	font-size: 14px;
+	font-weight: 600;
+
+	color: #434343;
+
+	word-break: break-word;
+}
+
+.msp-day-display-meeting-people
+{
+	font-size: 13px;
+
+	color: #777;
+
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

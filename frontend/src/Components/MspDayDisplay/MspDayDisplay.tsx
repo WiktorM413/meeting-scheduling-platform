@@ -1,8 +1,8 @@
+import "./style.scss";
 import { useMemo, useState } from "react";
 import type { MeetingType } from "../../api/MeetingType"
 import type { DayCell } from "../MspCalendar/DayCell";
 import { FormatTime } from "../../utils/time";
-import { popup } from "../MspPopup/PopupManager";
 
 function BuildDay(date: string, meetings?: MeetingType[]): DayCell
 {
@@ -46,49 +46,37 @@ function BuildDay(date: string, meetings?: MeetingType[]): DayCell
 
 type DayObjPorps =
 {
-	cell:      DayCell;
 	date:      string;
 	meetings?: MeetingType[];
 }
 
-function DayObj({cell, date, meetings}: DayObjPorps)
+function DayObj({date, meetings}: DayObjPorps)
 {
-	if (!cell)
-	{
-		return <div className="msp-week-display-cell msp-week-display-cell-empty"/>
-	}
-
 	return (
-		<div
-			className={`msp-week-display-cell ${
-				cell.isSelected ? "msp-week-display-cell-selected" : ""
-			} ${
-				cell?.isToday ? "msp-week-display-cell-today" : ""
-			} ${
-				cell?.availability ? "msp-week-display-cell-available": "msp-week-display-cell-blocked"
-			}`}
-		>
-			<span className="msp-week-display-cell-date">{cell.date}</span>
-			{cell.hasEvents && <span className="msp-calendar-cell-dot"
-				onClick={() =>
+		<div className="msp-day-display-meetings">
+			{meetings?.map((meeting) =>
+			{
+				if (meeting.when === date)
 				{
-					popup.Open(
-						<>
-							<h1>{date}</h1>
-							{meetings?.map((meeting, i) =>
-								meeting.when === date ?
-								(
-									<div key={i}>
-										{meeting.other_names}&nbsp;
-										({FormatTime(meeting.time_start)} - {FormatTime(meeting.time_end)}):&nbsp;
-										{meeting.topic}
-									</div>
-								) : null
-							)}
-						</>
-					);
+					return (
+						<div className="msp-day-display-meeting-card">
+							<div className="msp-day-display-meeting-time">
+								{FormatTime(meeting.time_start)} - {FormatTime(meeting.time_end)}
+							</div>
+
+							<div className="msp-day-display-meeting-main">
+								<div className="msp-day-display-meeting-topic">
+									{meeting.topic}
+								</div>
+
+								<div className="msp-day-display-meeting-people">
+									{meeting.other_names}
+								</div>
+							</div>
+						</div>
+					)
 				}
-			}/>}
+			})}
 		</div>
 	)
 }
@@ -116,7 +104,7 @@ export default function MspDayDisplay({meetings}: MspDayDisplayProps)
 				<input value={today} type="date" onChange={(e) => setDate(e.target.value)}/>
 			</div>
 
-			<DayObj cell={cell} date={date} meetings={meetings}/>
+			<DayObj date={date} meetings={meetings}/>
 		</div>
 	);
 }
