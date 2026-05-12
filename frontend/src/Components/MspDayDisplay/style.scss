@@ -1,17 +1,4 @@
-@keyframes mspFadeSlideIn
-{
-	from
-	{
-		opacity: 0;
-		transform: translateY(10px);
-	}
-
-	to
-	{
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
+@import "../../animations.scss";
 
 .msp-day-display
 {
