@@ -5,6 +5,7 @@ import type { DayCell } from "../MspCalendar/DayCell";
 import MspButton from "../MspButton";
 import { popup } from "../MspPopup/PopupManager";
 import { FormatTime } from "../../utils/time";
+import MspMeetingsListPopup from "../MspPopup/MspMeetingsListPopup";
 
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
@@ -170,22 +171,15 @@ export default function MspWeekDisplay({ meetings, startDayNum = 1 }: MspWeekDis
 							{day.hasEvents && <span className="msp-calendar-cell-dot"
 								onClick={() =>
 								{
+									if (! meetings)
+									{
+										return;
+									}
+									
 									const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day.date).padStart(2, '0')}`;
 									
 									popup.Open(
-										<>
-											<h1>{dateString}</h1>
-											{meetings?.map((meeting, i) =>
-												meeting.when === dateString ?
-												(
-													<div key={i}>
-														{meeting.other_names}&nbsp;
-														({FormatTime(meeting.time_start)} - {FormatTime(meeting.time_end)}):&nbsp;
-														{meeting.topic}
-													</div>
-												) : null
-											)}
-										</>
+										<MspMeetingsListPopup date={dateString} meetings={meetings}/>
 									);
 								}
 							}/>}
