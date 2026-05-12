@@ -20,6 +20,7 @@ $routes->group('api', function ($routes) {
 	$routes->get ('meetings',        [MeetingsController::class, 'getAllMeetings']);
 	$routes->post('meetingsForUser', [MeetingsController::class, 'getAllMeetingsForUser']);
 	$routes->post('createMeeting',   [MeetingsController::class, 'createMeeting']);
+	$routes->post('editMeeting',     [MeetingsController::class, 'editMeeting']);
 
 	$routes->get ('getAllUsers', [UserController::class, 'getAllUsers']);
 	$routes->post('getUserById', [UserController::class, 'getUserById']);

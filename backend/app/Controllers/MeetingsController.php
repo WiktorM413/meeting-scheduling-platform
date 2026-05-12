@@ -6,20 +6,23 @@ use App\Validation\MeetingsValidationRules;
 
 class MeetingsController extends BaseController
 {
+	/** @var \App\Services\MeetingsService $meetingsService */
+	protected $meetingsService;
+
+	public function __construct()
+	{
+		$this->meetingsService = service('meetingService');
+	}
+
 	public function getAllMeetings()
 	{
-		/** @var \App\Services\MeetingsService $meetingsService */
-		$meetingsService = service('meetingsService');
-
-		$response = $meetingsService->getAllMeetings();
+		$response = $this->meetingsService->getAllMeetings();
 
 		return $this->response->setJSON($response);
 	}
 
 	public function getAllMeetingsForUser()
 	{
-		/** @var \App\Services\MeetingsService $meetingsService */
-		$meetingsService = service('meetingsService');
 		$data = $this->request->getJSON(true);
 
 		if (! $this->validateData($data, MeetingsValidationRules::userId))
@@ -29,15 +32,13 @@ class MeetingsController extends BaseController
 
 		$userId = $data['user_id'];
 		
-		$response = $meetingsService->getAllMeetingsForUser($userId);
+		$response = $this->meetingsService->getAllMeetingsForUser($userId);
 
 		return $this->response->setJSON($response);
 	}
 
 	public function createMeeting()
 	{
-		/** @var \App\Services\MeetingsService $meetingsService */
-		$meetingsService = service('meetingsService');	
 		$data = $this->request->getJSON(true);
 
 		if (! $this->validateData($data, MeetingsValidationRules::meeting))
@@ -53,8 +54,13 @@ class MeetingsController extends BaseController
 		$timeStart   = $data['time_start'];
 		$timeEnd     = $data['time_end'];
 
-		$response = $meetingsService->createMeeting($providerId, $receiverIds, $topic, $when, $where, $timeStart, $timeEnd);
+		$response = $this->meetingsService->createMeeting($providerId, $receiverIds, $topic, $when, $where, $timeStart, $timeEnd);
 
 		return $this->response->setJSON($response);
+	}
+
+	public function editMeeting()
+	{
+		
 	}
 }
