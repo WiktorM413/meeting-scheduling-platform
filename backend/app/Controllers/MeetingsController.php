@@ -61,6 +61,25 @@ class MeetingsController extends BaseController
 
 	public function editMeeting()
 	{
-		
+		$data = $this->request->getJSON(true);
+
+		if (! $this->validateData($data, MeetingsValidationRules::editMeeting))
+		{
+			return $this->response->setJSON(MeetingsValidationRules::validationErrorsToJSON($this->validator->getErrors()));
+		}
+
+		$meetingId   = $data['meetingId'];
+		$receiverIds = $data['receiver_ids'] ?? null;
+		$timeStart   = $data['time_start']   ?? null;
+		$timeEnd     = $data['time_end']     ?? null;
+		$topic       = $data['topic']        ?? null;
+		$where       = $data['where']        ?? null;
+		$when        = $data['when']         ?? null;
+
+		$response = $this->meetingsService->editMeeting($meetingId, $receiverIds, $timeStart, $timeEnd, $topic, $where, $when);
+
+		return $this->response->setJSON($response);
 	}
+
+
 }

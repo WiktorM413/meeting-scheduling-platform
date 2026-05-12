@@ -36,4 +36,12 @@ class MeetingsService
 
 		return SimpleJson(false, "Successfully scheduled a meeting.");
 	}
+
+	public function editMeeting(int $meetingId, array|null $receiverIds, string|null $timeStart,
+	string|null $timeEnd,string|null $topic, string|null $where, string|null $when)
+	{
+		$this->meetingsModel->editMeeting($meetingId, $receiverIds, $timeStart, $timeEnd, $topic, $where, $when);
+
+		return SimpleJson(false, "Successfully edited a meeting.");
+	}
 }

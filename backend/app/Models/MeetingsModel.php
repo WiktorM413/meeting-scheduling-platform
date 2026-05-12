@@ -99,4 +99,35 @@ class MeetingsModel extends Model
 			]);
 		}
 	}
+
+	public function editMeeting(int $meetingId, array|null $receiverIds, string|null $timeStart,
+	string|null $timeEnd,string|null $topic, string|null $where, string|null $when)
+	{
+		if (isset($receiverIds))
+		{
+			$this->db->query("
+				DELETE FROM meeting_participants
+				WHERE meeting_id = ?
+			", [$meetingId]);
+
+			foreach ($receiverIds as $receiverId)
+			{
+				$this->db->query("
+					INSERT INTO meeting_participants
+					(meeting_id, user_id)
+					VALUES (?, ?)
+				", [$meetingId, $receiverId]);
+			}
+		}
+
+		$this->db->query("
+			UPDATE meetings SET
+				topic = COALESCE(?, topic),
+				when  = COALESCE(?, when),
+				where = COALESCE(?, where),
+				time_start = COALESCE(?, time_start),
+				time_end = COALESCE(?, time_end)
+			WHERE unique_id = ?
+		", [$topic, $when, $where, $timeStart, $timeEnd, $meetingId]);
+	}
 }
