@@ -57,7 +57,7 @@ export default function MspDayDisplay({meetings}: MspDayDisplayProps)
 	return (
 		<div className="msp-day-display">
 			<div className="msp-day-display-header">
-				<input value={today} type="date" onChange={(e) => setDate(e.target.value)}/>
+				<input value={date} type="date" onChange={(e) => setDate(e.target.value)}/>
 			</div>
 
 			<DayObj date={date} meetings={meetings}/>
