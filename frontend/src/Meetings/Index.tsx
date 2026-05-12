@@ -8,6 +8,7 @@ import { useAuth } from "../context/AuthContext";
 import MspButton from "../Components/MspButton";
 import MspWeekDisplay from "../Components/MspWeekDisplay/MspWeekDisplay";
 import MspDayDisplay from "../Components/MspDayDisplay/MspDayDisplay";
+import MspListDisplay from "../Components/MspListDisplay/MspListDisplay";
 
 type FilterType =
 {
@@ -55,7 +56,7 @@ export default function Index()
 		) : // type === "list"
 		(
 			<div>
-				List
+				<MspListDisplay meetings={meetings}/>
 			</div>
 		);
 

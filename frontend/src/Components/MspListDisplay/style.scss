@@ -1,0 +1,75 @@
+.msp-list-display-list
+{
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.msp-list-display-meeting-card
+{
+	display: flex;
+	align-items: flex-start;
+	gap: 14px;
+
+	padding: 12px;
+
+	background: white;
+
+	border: 1px solid #ddd;
+	border-radius: 10px;
+
+	box-sizing: border-box;
+
+	transition:
+		background-color 0.2s ease,
+		border-color 0.2s ease,
+		transform 0.15s ease;
+
+	&:hover
+	{
+		transform: translateY(-1px);
+		border-color: #b8b8b8;
+	}
+}
+
+.msp-list-display-meeting-time
+{
+	min-width: 110px;
+
+	font-size: 13px;
+	font-weight: 600;
+
+	color: #666;
+
+	letter-spacing: 0.02em;
+}
+
+.msp-list-display-meeting-main
+{
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+
+	min-width: 0;
+}
+
+.msp-list-display-meeting-topic
+{
+	font-size: 14px;
+	font-weight: 600;
+
+	color: #434343;
+
+	word-break: break-word;
+}
+
+.msp-list-display-meeting-people
+{
+	font-size: 13px;
+
+	color: #777;
+
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
