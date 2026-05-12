@@ -4,7 +4,6 @@ import type { DayCell } from "./DayCell";
 import MspButton from "../MspButton";
 import type { MeetingType } from "../../api/MeetingType";
 import { popup } from "../MspPopup/PopupManager";
-import { FormatTime } from "../../utils/time";
 import MspMeetingsListPopup from "../MspPopup/MspMeetingsListPopup";
 
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
