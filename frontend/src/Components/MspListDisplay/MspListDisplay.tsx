@@ -45,7 +45,7 @@ export default function MspListDisplay({meetings}: MspListDisplayProps)
 				{[...mappedMeetings.entries()].sort().map(([date, meetings]) => (
 					<div key={date}>
 						<h2>{date}</h2>
-
+						<div className="msp-list-display-meetings">
 						{meetings.map((meeting) => (
 							<div className="msp-list-display-meeting-card">
 								<div className="msp-list-display-meeting-time">
@@ -63,6 +63,7 @@ export default function MspListDisplay({meetings}: MspListDisplayProps)
 								</div>
 							</div>
 						))}
+						</div>
 					</div>
 				))}
 			</div>
