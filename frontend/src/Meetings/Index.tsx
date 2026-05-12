@@ -5,12 +5,60 @@ import HandleResponse from "../api/HandleResponse";
 import type { MeetingType } from "../api/MeetingType";
 import MspCalendar from "../Components/MspCalendar/MspCalendar";
 import { useAuth } from "../context/AuthContext";
+import MspButton from "../Components/MspButton";
+import MspWeekDisplay from "../Components/MspWeekDisplay/MspWeekDisplay";
+import MspDayDisplay from "../Components/MspDayDisplay/MspDayDisplay";
+import MspListDisplay from "../Components/MspListDisplay/MspListDisplay";
+
+type FilterType =
+{
+	type: "month"
+}
+| {
+	type: "week"
+}
+| {
+	type: "day"
+}
+| {
+	type: "list"
+};
 
 export default function Index()
 {
 	const { userData } = useAuth();
 
-	const [meetings,  setMeetings]  = useState<MeetingType[]>([]);
+	const [meetings,   setMeetings]   = useState<MeetingType[]>([]);
+	const [filterType, setFilterType] = useState<FilterType>({type: "month"});
+
+	const displayedObject =
+		filterType.type === "month" ?
+		(
+			<section className="msp-meetings-calendar-wrapper">
+				<div className="msp-meetings-calendar">
+					<MspCalendar meetings={meetings} />
+				</div>
+			</section>
+		) :
+		filterType.type === "week" ?
+		(
+			<div className="msp-meetings-week-display-wrapper">
+				<div className="msp-meetings-week-display">
+				<MspWeekDisplay meetings={meetings}/>
+				</div>
+			</div>
+		) :
+		filterType.type === "day" ?
+		(
+			<div>
+				<MspDayDisplay meetings={meetings}/>
+			</div>
+		) : // type === "list"
+		(
+			<div>
+				<MspListDisplay meetings={meetings}/>
+			</div>
+		);
 
 	useEffect(() =>
 	{
@@ -43,19 +91,21 @@ export default function Index()
 
 		loadMeetings();
 	}, [userData]);
-	console.log(meetings);
+
 	return (
 		<div className="msp-meetings">
 		<section className="msp-meetings-header">
 			<h1>Your meetings</h1>
 			<p>Manage and view all your scheduled events</p>
 		</section>
-
-		<section className="msp-meetings-calendar-wrapper">
-			<div className="msp-meetings-calendar">
-				<MspCalendar meetings={meetings} />
-			</div>
-		</section>
+		<div className="msp-meetings-button-group">
+			<MspButton label="Month" onClick={() => setFilterType({ type: "month" })}/>
+			<MspButton label="Week"  onClick={() => setFilterType({ type: "week" })}/>
+			<MspButton label="Day"   onClick={() => setFilterType({ type: "day" })}/>
+			<MspButton label="List"  onClick={() => setFilterType({ type: "list" })}/>
+		</div>
+		{displayedObject}
+		
 	</div>
 	);
 }

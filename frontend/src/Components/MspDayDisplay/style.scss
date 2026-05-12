@@ -1,0 +1,152 @@
+@import "../../animations.scss";
+
+.msp-day-display
+{
+	margin: 40px auto;
+
+	animation: mspFadeSlideIn 0.35s ease;
+}
+
+.msp-day-display-header
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 20px;
+
+	input[type="date"]
+	{
+		padding: 8px 12px;
+
+		border: 1px solid #ddd;
+		border-radius: 10px;
+
+		background: white;
+		color: #434343;
+
+		font-size: 14px;
+		font-weight: 500;
+
+		outline: none;
+
+		transition:
+			border-color 0.2s ease,
+			transform 0.18s ease,
+			box-shadow 0.2s ease;
+
+		&:focus
+		{
+			border-color: #b8b8b8;
+			box-shadow: 0 0 0 4px rgba(184, 184, 184, 0.15);
+		}
+
+		&:hover
+		{
+			transform: translateY(-1px);
+		}
+	}
+}
+
+.msp-day-display-meetings
+{
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.msp-day-display-meeting-card
+{
+	display: flex;
+	align-items: flex-start;
+	gap: 14px;
+
+	padding: 12px;
+
+	background: white;
+
+	border: 1px solid #ddd;
+	border-radius: 10px;
+
+	box-sizing: border-box;
+
+	opacity: 0;
+	animation: mspFadeSlideIn 0.35s ease forwards;
+
+	transition:
+		background-color 0.2s ease,
+		border-color 0.2s ease,
+		transform 0.18s ease,
+		box-shadow 0.2s ease;
+
+	&:hover
+	{
+		transform: translateY(-2px) scale(1.01);
+		border-color: #b8b8b8;
+		box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+	}
+
+	@for $i from 1 through 20
+	{
+		&:nth-child(#{$i})
+		{
+			animation-delay: #{($i - 1) * 0.05}s;
+		}
+	}
+}
+
+.msp-day-display-meeting-time
+{
+	min-width: 110px;
+
+	font-size: 13px;
+	font-weight: 600;
+
+	color: #666;
+
+	letter-spacing: 0.02em;
+}
+
+.msp-day-display-meeting-main
+{
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+
+	min-width: 0;
+}
+
+.msp-day-display-meeting-topic
+{
+	font-size: 14px;
+	font-weight: 600;
+
+	color: #434343;
+
+	word-break: break-word;
+
+	transition: color 0.2s ease;
+}
+
+.msp-day-display-meeting-card:hover .msp-day-display-meeting-topic
+{
+	color: #222;
+}
+
+.msp-day-display-meeting-people
+{
+	font-size: 13px;
+
+	color: #777;
+
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+
+	transition: color 0.2s ease;
+}
+
+.msp-day-display-meeting-card:hover .msp-day-display-meeting-people
+{
+	color: #555;
+}
