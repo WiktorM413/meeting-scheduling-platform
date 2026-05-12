@@ -11,9 +11,11 @@ type DayObjPorps =
 
 function DayObj({date, meetings}: DayObjPorps)
 {
+	const matchingMeetings = meetings?.filter((meeting) => meeting.when === date) ?? [];
+	
 	return (
 		<div className="msp-day-display-meetings">
-			{meetings?.map((meeting) =>
+			{matchingMeetings.map((meeting) =>
 			{
 				if (meeting.when === date)
 				{
@@ -36,6 +38,11 @@ function DayObj({date, meetings}: DayObjPorps)
 					)
 				}
 			})}
+
+			{matchingMeetings.length === 0 &&
+			(
+				<p className="msp-day-display-message">No events on {date}</p>
+			)}
 		</div>
 	)
 }
@@ -60,7 +67,11 @@ export default function MspDayDisplay({meetings}: MspDayDisplayProps)
 				<input value={date} type="date" onChange={(e) => setDate(e.target.value)}/>
 			</div>
 
-			<DayObj date={date} meetings={meetings}/>
+			{meetings ?
+				<DayObj date={date} meetings={meetings}/>
+			:
+				<p>No meetings on {date}</p>
+			}
 		</div>
 	);
 }
