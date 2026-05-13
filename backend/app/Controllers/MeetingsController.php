@@ -11,7 +11,7 @@ class MeetingsController extends BaseController
 
 	public function __construct()
 	{
-		$this->meetingsService = service('meetingService');
+		$this->meetingsService = service('meetingsService');
 	}
 
 	public function getAllMeetings()
