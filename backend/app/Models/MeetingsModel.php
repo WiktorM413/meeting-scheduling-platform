@@ -19,7 +19,7 @@ class MeetingsModel extends Model
 	{
 		$result = $this->db->query("
 			SELECT 
-				m.unique_id AS meeting_id,
+				m.unique_id AS unique_id,
 				m.provider_id,
 				m.time_start,
 				m.time_end,
