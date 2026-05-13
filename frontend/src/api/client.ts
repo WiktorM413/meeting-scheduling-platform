@@ -98,3 +98,21 @@ export async function ApiCreateMeeting(providerId: number, receiverIds: number[]
 
 	return response;
 }
+
+export async function ApiEditMeeting(meetingId: number, newReceiverIds?: number[], newTimeStart?: string,
+newTimeEnd?: string, newTopic?: string, newWhere?: string, newWhen?: string)
+{
+	const response = await api.post("/editMeeting",
+		{
+			"unique_id": meetingId,
+			"receiver_ids": newReceiverIds,
+			"time_start": newTimeStart,
+			"time_end": newTimeEnd,
+			"topic": newTopic,
+			"where": newWhere,
+			"when": newWhen
+		}
+	)
+
+	return response;
+}
