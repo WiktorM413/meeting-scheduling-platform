@@ -68,7 +68,7 @@ class MeetingsController extends BaseController
 			return $this->response->setJSON(MeetingsValidationRules::validationErrorsToJSON($this->validator->getErrors()));
 		}
 
-		$meetingId   = $data['meetingId'];
+		$meetingId   = $data['unique_id'];
 		$receiverIds = $data['receiver_ids'] ?? null;
 		$timeStart   = $data['time_start']   ?? null;
 		$timeEnd     = $data['time_end']     ?? null;

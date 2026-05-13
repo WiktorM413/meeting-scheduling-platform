@@ -53,22 +53,22 @@ class MeetingsValidationRules extends BaseValidationRules
 			'rules' => 'required|integer|is_not_unique[meetings.unique_id]'
 		],
 		'topic' => [
-			'rules' => 'string|max_length[255]'
+			'rules' => 'permit_empty|string|max_length[255]'
 		],
 		'when' => [
-			'rules' => 'valid_date[Y-m-d]'
+			'rules' => 'permit_empty|valid_date[Y-m-d]'
 		],
 		'where' => [
-			'rules' => 'string|max_length[255]'
+			'rules' => 'permit_empty|string|max_length[255]'
 		],
 		'time_start' => [
-			'rules' => 'valid_date[H:i]',
+			'rules' => 'permit_empty|valid_date[H:i]',
 		],
 		'time_end' => [
-			'rules' => 'valid_date[H:i]'
+			'rules' => 'permit_empty|valid_date[H:i]'
 		],
 		'receiver_ids.*' => [
-			'rules' => 'integer'
+			'rules' => 'permit_empty|integer'
 		]
 	];
 }
