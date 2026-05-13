@@ -106,27 +106,27 @@ class MeetingsModel extends Model
 		if (isset($receiverIds))
 		{
 			$this->db->query("
-				DELETE FROM meeting_participants
-				WHERE meeting_id = ?
+				DELETE FROM `meeting_participants`
+				WHERE `meeting_id` = ?
 			", [$meetingId]);
 
 			foreach ($receiverIds as $receiverId)
 			{
 				$this->db->query("
-					INSERT INTO meeting_participants
-					(meeting_id, user_id)
+					INSERT INTO `meeting_participants`
+					(`meeting_id`, `user_id`)
 					VALUES (?, ?)
 				", [$meetingId, $receiverId]);
 			}
 		}
 
 		$this->db->query("
-			UPDATE meetings SET
-				topic = COALESCE(?, topic),
-				when  = COALESCE(?, when),
-				where = COALESCE(?, where),
-				time_start = COALESCE(?, time_start),
-				time_end = COALESCE(?, time_end)
+			UPDATE `meetings` SET
+				`topic`      = COALESCE(?, `topic`),
+				`when`       = COALESCE(?, `when`),
+				`where`      = COALESCE(?, `where`),
+				`time_start` = COALESCE(?, `time_start`),
+				`time_end`   = COALESCE(?, `time_end`)
 			WHERE unique_id = ?
 		", [$topic, $when, $where, $timeStart, $timeEnd, $meetingId]);
 	}
