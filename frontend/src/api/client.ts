@@ -104,13 +104,13 @@ newTimeEnd?: string, newTopic?: string, newWhere?: string, newWhen?: string)
 {
 	const response = await api.post("/editMeeting",
 		{
-			"unique_id": meetingId,
+			"unique_id":    meetingId,
 			"receiver_ids": newReceiverIds,
-			"time_start": newTimeStart,
-			"time_end": newTimeEnd,
-			"topic": newTopic,
-			"where": newWhere,
-			"when": newWhen
+			"time_start":   newTimeStart,
+			"time_end":     newTimeEnd,
+			"topic":        newTopic,
+			"where":        newWhere,
+			"when":         newWhen
 		}
 	)
 

@@ -7,10 +7,11 @@ type UserPickerProps =
 	receiverIds:    number[];
 	users:          UserData[];
 	setReceiverIds: React.Dispatch<React.SetStateAction<number[]>>;
+	className?: string;
 
 }
 
-export default function MspUserPicker({ receiverIds, users, setReceiverIds }: UserPickerProps)
+export default function MspUserPicker({ className, receiverIds, users, setReceiverIds }: UserPickerProps)
 {
 	const [userSearch,   setUserSearch]   = useState<string>("");
 
@@ -32,7 +33,7 @@ export default function MspUserPicker({ receiverIds, users, setReceiverIds }: Us
 	}
 
 	return (
-		<div className="msp-user-picker">
+		<div className={`msp-user-picker ${className ? className : ""}`}>
 			<label>Invite people</label>
 
 			<div className="msp-user-picker-selected-users">
