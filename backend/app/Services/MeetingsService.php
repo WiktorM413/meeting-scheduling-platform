@@ -21,6 +21,13 @@ class MeetingsService
 		return DataJson(false, "Successfully retrieved meetings", $meetings);
 	}
 
+	public function getMeetingById(int $uniqueId)
+	{
+		$meeting = $this->meetingsModel->getMeetingById($uniqueId);
+
+		return DataJson(false, "Successfully retrieved meeting", $meeting);
+	}
+
 	public function getAllMeetingsForUser(int $userId)
 	{
 		$meetings = $this->meetingsModel->getAllMeetingsForUser($userId);

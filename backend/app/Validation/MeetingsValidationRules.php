@@ -6,6 +6,12 @@ use App\Validation\BaseValidationRules;
 
 class MeetingsValidationRules extends BaseValidationRules
 {
+	public const meetingId = [
+		'unique_id' => [
+			'rules' => 'required|integer|is_not_unique[meetings.unique_id]'
+		]
+	];
+	
 	public const userId = [
 		'user_id' => [
 			'rules'  => 'required|integer|is_not_unique[users.id]',
