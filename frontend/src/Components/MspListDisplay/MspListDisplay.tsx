@@ -4,7 +4,8 @@ import { FormatTime } from "../../utils/time";
 
 type MspListDisplayProps =
 {
-	meetings?: MeetingType[]
+	meetings?:   MeetingType[];
+	otherNames?: string[];
 }
 
 function MapMeetings(meetings: MeetingType[]): Map<string, MeetingType[]>
@@ -26,7 +27,7 @@ function MapMeetings(meetings: MeetingType[]): Map<string, MeetingType[]>
 	return mappedMeetings;
 }
 
-export default function MspListDisplay({meetings}: MspListDisplayProps)
+export default function MspListDisplay({meetings, otherNames}: MspListDisplayProps)
 {
 	if (! meetings)
 	{
@@ -46,7 +47,7 @@ export default function MspListDisplay({meetings}: MspListDisplayProps)
 					<div key={date}>
 						<h2>{date}</h2>
 						<div className="msp-list-display-meetings">
-						{meetings.map((meeting) => (
+						{meetings.map((meeting, i) => (
 							<div className="msp-list-display-meeting-card">
 								<div className="msp-list-display-meeting-time">
 									{FormatTime(meeting.time_start)} - {FormatTime(meeting.time_end)}
@@ -58,7 +59,7 @@ export default function MspListDisplay({meetings}: MspListDisplayProps)
 									</div>
 
 									<div className="msp-list-display-meeting-people">
-										{meeting.other_names}
+										{otherNames ? otherNames[i] : <></>}
 									</div>
 								</div>
 							</div>
