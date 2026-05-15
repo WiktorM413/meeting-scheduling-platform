@@ -15,11 +15,43 @@ class MeetingsModel extends Model
 		return $result->getResultArray();
 	}
 
+	public function getMeetingById(int $uniqueId)
+	{
+		$result = $this->db->query("
+			SELECT
+				m.unique_id AS unique_id,
+				m.provider_id,
+				m.time_start,
+				m.time_end,
+				m.topic,
+				m.when,
+				m.where,
+				GROUP_CONCAT(CONCAT(mp.user_id) SEPARATOR ',') AS receiver_ids
+			FROM meetings m
+			LEFT JOIN meeting_participants mp
+				ON mp.meeting_id = m.unique_id
+			WHERE
+				m.unique_id = :unique_id:
+			GROUP BY
+				m.unique_id,
+				m.provider_id,
+				m.time_start,
+				m.time_end,
+				m.topic,
+				m.when
+			ORDER BY
+				mp.user_id
+			LIMIT 1
+		", ['unique_id' => $uniqueId]);
+
+		return $result->getResultArray()[0];
+	}
+
 	public function getAllMeetingsForUser(int $userId)
 	{
 		$result = $this->db->query("
 			SELECT 
-				m.unique_id AS meeting_id,
+				m.unique_id AS unique_id,
 				m.provider_id,
 				m.time_start,
 				m.time_end,
@@ -98,5 +130,36 @@ class MeetingsModel extends Model
 				'user_id'    => $userId
 			]);
 		}
+	}
+
+	public function editMeeting(int $meetingId, array|null $receiverIds, string|null $timeStart,
+	string|null $timeEnd,string|null $topic, string|null $where, string|null $when)
+	{
+		if (isset($receiverIds))
+		{
+			$this->db->query("
+				DELETE FROM `meeting_participants`
+				WHERE `meeting_id` = ?
+			", [$meetingId]);
+
+			foreach ($receiverIds as $receiverId)
+			{
+				$this->db->query("
+					INSERT INTO `meeting_participants`
+					(`meeting_id`, `user_id`)
+					VALUES (?, ?)
+				", [$meetingId, $receiverId]);
+			}
+		}
+
+		$this->db->query("
+			UPDATE `meetings` SET
+				`topic`      = COALESCE(?, `topic`),
+				`when`       = COALESCE(?, `when`),
+				`where`      = COALESCE(?, `where`),
+				`time_start` = COALESCE(?, `time_start`),
+				`time_end`   = COALESCE(?, `time_end`)
+			WHERE unique_id = ?
+		", [$topic, $when, $where, $timeStart, $timeEnd, $meetingId]);
 	}
 }

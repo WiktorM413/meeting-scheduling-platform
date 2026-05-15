@@ -1,0 +1,30 @@
+.msp-edit-meeting-user-picker
+{
+	margin: 0 auto;
+}
+
+.msp-edit-meeting-form-field
+{
+	width: 25rem;
+	margin: 0 auto;
+}
+
+.msp-edit-meeting-form-submit
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 2rem;
+}
+
+.msp-edit-meeting-form
+{
+	animation: fadeUp 0.6s ease both;
+	animation-delay: 0.12s;
+}
+
+.msp-edit-meeting-form-message
+{
+	text-align: center;
+}

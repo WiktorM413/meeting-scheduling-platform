@@ -5,15 +5,18 @@ import { FormatTime } from "../../utils/time";
 
 type DayObjPorps =
 {
-	date:      string;
-	meetings?: MeetingType[];
+	date:         string;
+	meetings?:    MeetingType[];
+	otherNames?: string[];
 }
 
-function DayObj({date, meetings}: DayObjPorps)
+function DayObj({date, meetings, otherNames}: DayObjPorps)
 {
+	const matchingMeetings = meetings?.filter((meeting) => meeting.when === date) ?? [];
+	
 	return (
 		<div className="msp-day-display-meetings">
-			{meetings?.map((meeting) =>
+			{matchingMeetings.map((meeting, i) =>
 			{
 				if (meeting.when === date)
 				{
@@ -29,23 +32,29 @@ function DayObj({date, meetings}: DayObjPorps)
 								</div>
 
 								<div className="msp-day-display-meeting-people">
-									{meeting.other_names}
+									{otherNames ? otherNames[i] : <></>}
 								</div>
 							</div>
 						</div>
 					)
 				}
 			})}
+
+			{matchingMeetings.length === 0 &&
+			(
+				<p className="msp-day-display-message">No events on {date}</p>
+			)}
 		</div>
 	)
 }
 
 type MspDayDisplayProps =
 {
-	meetings?: MeetingType[];
+	meetings?:   MeetingType[];
+	otherNames?: string[];
 }
 
-export default function MspDayDisplay({meetings}: MspDayDisplayProps)
+export default function MspDayDisplay({meetings, otherNames}: MspDayDisplayProps)
 {
 	const now = new Date();
 	const today =
@@ -60,7 +69,11 @@ export default function MspDayDisplay({meetings}: MspDayDisplayProps)
 				<input value={date} type="date" onChange={(e) => setDate(e.target.value)}/>
 			</div>
 
-			<DayObj date={date} meetings={meetings}/>
+			{meetings ?
+				<DayObj date={date} meetings={meetings} otherNames={otherNames}/>
+			:
+				<p>No meetings on {date}</p>
+			}
 		</div>
 	);
 }

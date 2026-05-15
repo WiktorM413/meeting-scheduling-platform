@@ -21,6 +21,13 @@ class MeetingsService
 		return DataJson(false, "Successfully retrieved meetings", $meetings);
 	}
 
+	public function getMeetingById(int $uniqueId)
+	{
+		$meeting = $this->meetingsModel->getMeetingById($uniqueId);
+
+		return DataJson(false, "Successfully retrieved meeting", $meeting);
+	}
+
 	public function getAllMeetingsForUser(int $userId)
 	{
 		$meetings = $this->meetingsModel->getAllMeetingsForUser($userId);
@@ -35,5 +42,13 @@ class MeetingsService
 		$this->meetingsModel->addUsersToMeeting($meetingId, $receiverIds);
 
 		return SimpleJson(false, "Successfully scheduled a meeting.");
+	}
+
+	public function editMeeting(int $meetingId, array|null $receiverIds, string|null $timeStart,
+	string|null $timeEnd,string|null $topic, string|null $where, string|null $when)
+	{
+		$this->meetingsModel->editMeeting($meetingId, $receiverIds, $timeStart, $timeEnd, $topic, $where, $when);
+
+		return SimpleJson(false, "Successfully edited a meeting.");
 	}
 }

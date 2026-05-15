@@ -29,6 +29,7 @@ export default function Index()
 	const { userData } = useAuth();
 
 	const [meetings,   setMeetings]   = useState<MeetingType[]>([]);
+	const [otherNames, setOtherNames] = useState<string[]>([]);
 	const [filterType, setFilterType] = useState<FilterType>({type: "month"});
 
 	const displayedObject =
@@ -36,7 +37,7 @@ export default function Index()
 		(
 			<section className="msp-meetings-calendar-wrapper">
 				<div className="msp-meetings-calendar">
-					<MspCalendar meetings={meetings} />
+					<MspCalendar meetings={meetings} otherNames={otherNames}/>
 				</div>
 			</section>
 		) :
@@ -44,19 +45,19 @@ export default function Index()
 		(
 			<div className="msp-meetings-week-display-wrapper">
 				<div className="msp-meetings-week-display">
-				<MspWeekDisplay meetings={meetings}/>
+				<MspWeekDisplay meetings={meetings} otherNames={otherNames}/>
 				</div>
 			</div>
 		) :
 		filterType.type === "day" ?
 		(
 			<div>
-				<MspDayDisplay meetings={meetings}/>
+				<MspDayDisplay meetings={meetings} otherNames={otherNames}/>
 			</div>
 		) : // type === "list"
 		(
 			<div>
-				<MspListDisplay meetings={meetings}/>
+				<MspListDisplay meetings={meetings} otherNames={otherNames}/>
 			</div>
 		);
 
@@ -77,6 +78,7 @@ export default function Index()
 				if (handled?.type === "success")
 				{
 					setMeetings(handled.data);
+					setOtherNames(handled.data.map((meeting: any) => meeting.other_names));
 				}
 				else
 				{

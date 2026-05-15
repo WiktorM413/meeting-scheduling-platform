@@ -11,67 +11,69 @@ import MspButton from "../Components/MspButton";
 import MspUserPicker from "./MspUserPicker/MspUserPicker";
 
 
-async function Load(userData:     UserData|null,
-					setMeetings:  React.Dispatch<React.SetStateAction<MeetingType[]>>,
-					setUsers:     React.Dispatch<React.SetStateAction<UserData[]>>)
+async function Load(userData:      UserData|null,
+					setMeetings:   React.Dispatch<React.SetStateAction<MeetingType[]>>,
+					setUsers:      React.Dispatch<React.SetStateAction<UserData[]>>,
+					setOtherNames: React.Dispatch<React.SetStateAction<string[]>>)
 {
-		const loadMeetings = async () =>
+	const loadMeetings = async () =>
+	{
+		try
 		{
-			try
-			{
-				if (!userData) {
-					setMeetings([]);
-					return;
-				}
+			if (!userData) {
+				setMeetings([]);
+				return;
+			}
+
+			const response = await ApiGetAllMeetingsForUser(userData.id);
+			const handled = HandleResponse(response);
 	
-				const response = await ApiGetAllMeetingsForUser(userData.id);
-				const handled = HandleResponse(response);
-		
-				if (handled?.type === "success")
-				{
-					setMeetings(handled.data);
-				}
-				else
-				{
-					setMeetings([]);
-				}
-			}
-			catch (error)
+			if (handled?.type === "success")
 			{
-				console.log("Error submitting data: ", error);
+				setMeetings(handled.data);
+				setOtherNames(handled.data.map((meeting: any) => meeting.other_names));
 			}
-		};
-
-		const loadUsers = async () =>
-		{
-			try
+			else
 			{
-				if (!userData)
-				{
-					setUsers([]);
-					return;
-				}
-
-				const response = await ApiGetAllUsers();
-				const handled = HandleResponse(response);
-
-				if (handled.type === "success")
-				{
-					setUsers(handled.data);
-				}
-				else
-				{
-					setUsers([]);
-				}
-			}
-			catch (error)
-			{
-				console.log("Error submitting data: ", error);
+				setMeetings([]);
 			}
 		}
-	
-		loadMeetings();
-		loadUsers();
+		catch (error)
+		{
+			console.log("Error submitting data: ", error);
+		}
+	};
+
+	const loadUsers = async () =>
+	{
+		try
+		{
+			if (!userData)
+			{
+				setUsers([]);
+				return;
+			}
+
+			const response = await ApiGetAllUsers();
+			const handled = HandleResponse(response);
+
+			if (handled.type === "success")
+			{
+				setUsers(handled.data);
+			}
+			else
+			{
+				setUsers([]);
+			}
+		}
+		catch (error)
+		{
+			console.log("Error submitting data: ", error);
+		}
+	}
+
+	loadMeetings();
+	loadUsers();
 }
 
 export default function Schedule()
@@ -89,10 +91,11 @@ export default function Schedule()
 	const [endTime,      setEndTime]      = useState("");
 	const [message,      setMessage]      = useState("");
 	const [responseType, setResponseType] = useState("error");
+	const [otherNames,   setOtherNames]   = useState<string[]>([]);
 
 	useEffect(() =>
 	{
-		Load(userData, setMeetings, setUsers);
+		Load(userData, setMeetings, setUsers, setOtherNames);
 	}, [userData, setMeetings, setUsers]);
 	
 	const createMeeting = async () =>
@@ -115,7 +118,7 @@ export default function Schedule()
 
 				if (handled.type === "success")
 				{
-					await Load(userData, setMeetings, setUsers);
+					await Load(userData, setMeetings, setUsers, setOtherNames);
 				}
 			}
 		}
@@ -130,7 +133,7 @@ export default function Schedule()
 			<div className="msp-schedule-form">
 				<section className="msp-meetings-calendar-wrapper">
 					<div className="msp-meetings-calendar">
-						<MspCalendar label="Choose a day" meetings={meetings} externalSelectedDateSetter={setSelectedDate}/>
+						<MspCalendar label="Choose a day" meetings={meetings} externalSelectedDateSetter={setSelectedDate} otherNames={otherNames}/>
 					</div>
 				</section>
 				<MspUserPicker receiverIds={receiverIds} users={users} setReceiverIds={setReceiverIds}/>

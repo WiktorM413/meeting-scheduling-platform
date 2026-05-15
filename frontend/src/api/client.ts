@@ -53,6 +53,17 @@ export async function ApiGetAllMeetings(): Promise<AxiosResponse<any, any, {}>>
 	return response;
 }
 
+export async function ApiGetMeetingById(meetingId: number): Promise<AxiosResponse<any, any, {}>>
+{
+	const response = await api.post("/getMeetingById",
+		{
+			"unique_id": meetingId
+		}
+	)
+
+	return response;
+}
+
 export async function ApiGetAllMeetingsForUser(userId: number): Promise<AxiosResponse<any, any, {}>>
 {
 	const response = await api.post("/meetingsForUser",
@@ -93,6 +104,24 @@ export async function ApiCreateMeeting(providerId: number, receiverIds: number[]
 			"where":        where,
 			"time_start":   timeStart,
 			"time_end":     timeEnd
+		}
+	)
+
+	return response;
+}
+
+export async function ApiEditMeeting(meetingId: number, newReceiverIds?: number[], newTimeStart?: string,
+newTimeEnd?: string, newTopic?: string, newWhere?: string, newWhen?: string)
+{
+	const response = await api.post("/editMeeting",
+		{
+			"unique_id":    meetingId,
+			"receiver_ids": newReceiverIds,
+			"time_start":   newTimeStart,
+			"time_end":     newTimeEnd,
+			"topic":        newTopic,
+			"where":        newWhere,
+			"when":         newWhen
 		}
 	)
 

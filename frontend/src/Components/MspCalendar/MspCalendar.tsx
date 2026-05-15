@@ -1,10 +1,10 @@
 import "./style.scss";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { DayCell } from "./DayCell";
 import MspButton from "../MspButton";
 import type { MeetingType } from "../../api/MeetingType";
 import { popup } from "../MspPopup/PopupManager";
-import { FormatTime } from "../../utils/time";
+import MspMeetingsListPopup from "../MspPopup/MspMeetingsListPopup";
 
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
@@ -71,10 +71,12 @@ type MspCalendarProps =
 {
 	label?:                      string;
 	meetings?:                   MeetingType[];
-	externalSelectedDateSetter?: React.Dispatch<React.SetStateAction<string>>
+	externalSelectedDateSetter?: React.Dispatch<React.SetStateAction<string>>;
+	selectedDate?:                number;
+	otherNames?:                  string[];
 }
 
-export default function MspCalendar({ label, meetings, externalSelectedDateSetter }: MspCalendarProps)
+export default function MspCalendar({ label, meetings, externalSelectedDateSetter, selectedDate, otherNames }: MspCalendarProps)
 {
 	const now = new Date();
 	const [year,  setYear]  = useState(now.getFullYear());
@@ -82,6 +84,17 @@ export default function MspCalendar({ label, meetings, externalSelectedDateSette
 	const [selectedDay, setSelectedDay] = useState<number|null>(null);
 
 	const days = useMemo(() => BuildMonth(year, month, meetings), [year, month, meetings]);
+
+	useEffect(() =>
+	{
+		if (!selectedDate)
+		{
+			setSelectedDay(null);
+			return;
+		}
+
+		setSelectedDay(selectedDate);
+	}, [selectedDate]);
 
 	const prevMonth = () =>
 	{
@@ -157,22 +170,14 @@ export default function MspCalendar({ label, meetings, externalSelectedDateSette
 							{cell.hasEvents && <span className="msp-calendar-cell-dot"
 								onClick={() =>
 								{
+									if (! meetings)
+									{
+										return;
+									}
 									const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(cell.date).padStart(2, '0')}`;
 									
 									popup.Open(
-										<>
-											<h1>{dateString}</h1>
-											{meetings?.map((meeting, i) =>
-												meeting.when === dateString ?
-												(
-													<div key={i}>
-														{meeting.other_names}&nbsp;
-														({FormatTime(meeting.time_start)} - {FormatTime(meeting.time_end)}):&nbsp;
-														{meeting.topic}
-													</div>
-												) : null
-											)}
-										</>
+										<MspMeetingsListPopup date={dateString} meetings={meetings} otherNames={otherNames ? otherNames : []}/>
 									);
 								}
 							}/>}
