@@ -13,18 +13,23 @@ type UserPickerProps =
 
 export default function MspUserPicker({ className, receiverIds, users, setReceiverIds }: UserPickerProps)
 {
+	console.log("receiver_ids:", receiverIds);
+
 	const [userSearch,   setUserSearch]   = useState<string>("");
 
 	const filteredUsers = users.filter((user) =>
 	{
 		const fullname = `${user.first_name} ${user.last_name}`.toLowerCase();
 
-		return fullname.includes(userSearch.toLowerCase()) && !receiverIds.includes(user.id);
+		return fullname.includes(userSearch.toLowerCase()) && !receiverIds.includes(Number(user.id));
 	})
 
 	function AddReceiver(id: number)
 	{
-		setReceiverIds(ids => [...ids, id]);
+		if (! receiverIds.find(receiverId => receiverId === id))
+		{
+			setReceiverIds(ids => [...ids, id]);
+		}
 	}
 
 	function RemoveReceiver(id: number)
@@ -40,7 +45,7 @@ export default function MspUserPicker({ className, receiverIds, users, setReceiv
 				{
 					receiverIds.map((id) =>
 					{
-						const user = users.find(u => u.id === id);
+						const user = users.find(u => u.id == id);
 
 						if (!user)
 							return null;
@@ -89,7 +94,7 @@ export default function MspUserPicker({ className, receiverIds, users, setReceiv
 								<div
 									key={user.id}
 									className="msp-user-picker-user-result"
-									onClick={() => AddReceiver(user.id)}
+									onClick={() => AddReceiver(Number(user.id))}
 								>
 									{user.first_name} {user.last_name}
 								</div>

@@ -1,5 +1,5 @@
 import "./style.scss";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { DayCell } from "./DayCell";
 import MspButton from "../MspButton";
 import type { MeetingType } from "../../api/MeetingType";
@@ -71,10 +71,11 @@ type MspCalendarProps =
 {
 	label?:                      string;
 	meetings?:                   MeetingType[];
-	externalSelectedDateSetter?: React.Dispatch<React.SetStateAction<string>>
+	externalSelectedDateSetter?: React.Dispatch<React.SetStateAction<string>>;
+	selectedDate?:                number;
 }
 
-export default function MspCalendar({ label, meetings, externalSelectedDateSetter }: MspCalendarProps)
+export default function MspCalendar({ label, meetings, externalSelectedDateSetter, selectedDate }: MspCalendarProps)
 {
 	const now = new Date();
 	const [year,  setYear]  = useState(now.getFullYear());
@@ -82,6 +83,17 @@ export default function MspCalendar({ label, meetings, externalSelectedDateSette
 	const [selectedDay, setSelectedDay] = useState<number|null>(null);
 
 	const days = useMemo(() => BuildMonth(year, month, meetings), [year, month, meetings]);
+
+	useEffect(() =>
+	{
+		if (!selectedDate)
+		{
+			setSelectedDay(null);
+			return;
+		}
+
+		setSelectedDay(selectedDate);
+	}, [selectedDate]);
 
 	const prevMonth = () =>
 	{
