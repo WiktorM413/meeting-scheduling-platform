@@ -25,6 +25,7 @@ class MeetingsModel extends Model
 				m.time_end,
 				m.topic,
 				m.when,
+				m.where,
 				GROUP_CONCAT(CONCAT(mp.user_id) SEPARATOR ',') AS receiver_ids
 			FROM meetings m
 			LEFT JOIN meeting_participants mp
