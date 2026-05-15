@@ -7,4 +7,5 @@ export type MeetingType =
 	time_start:  string,
 	topic:       string,
 	when:        string,
+	where:       string
 }
