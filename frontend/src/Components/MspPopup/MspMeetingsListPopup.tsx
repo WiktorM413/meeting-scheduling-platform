@@ -1,3 +1,4 @@
+import "./style.scss";
 import type { MeetingType } from "../../api/MeetingType";
 import { useAuth } from "../../context/AuthContext";
 import { FormatTime } from "../../utils/time";
@@ -27,7 +28,7 @@ export default function MspMeetingsListPopup({date, meetings, otherNames}: MspMe
 						{otherNames[i]}&nbsp;
 						({FormatTime(meeting.time_start)} - {FormatTime(meeting.time_end)}):&nbsp;
 						{meeting.topic}&nbsp;
-						{meeting.provider_id === userData?.id ? <MspButton label="Edit" onClick={() =>{
+						{meeting.provider_id === userData?.id ? <MspButton className="msp-meetings-list-popup-edit-button" label="Edit" onClick={() =>{
 							popup.Open(<MspEditMeetingForm meetingId={meeting.unique_id}/>);
 						}}/> : <></>}
 					</div>

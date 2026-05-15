@@ -51,10 +51,18 @@
 	overflow-y: auto;
 }
 
-.msp-popup-button-close {
+.msp-popup-button-close
+{
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	align-self: flex-end;
 	width: 2rem;
+}
+
+.msp-meetings-list-popup-edit-button
+{
+	width: 9rem;
+	padding: 0.9rem;
+	margin-left: 1rem;
 }
