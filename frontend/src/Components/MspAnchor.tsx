@@ -8,13 +8,15 @@ type AnchorProps =
 	label:             string;
 	className?:        string;
 	navigatorOptions?: NavigateOptions;
+	children?:         React.ReactNode;
 };
 
-export default function MspAnchor({navigator, to, label, className, navigatorOptions} : AnchorProps)
+export default function MspAnchor({navigator, to, label, className, navigatorOptions, children} : AnchorProps)
 {
 	return (
-		<div className={"msp-anchor " + className}>
-			<a onClick={() => navigator(to, navigatorOptions)}>{label}</a>
+		<div className={"msp-anchor " + className} onClick={() => navigator(to, navigatorOptions)}>
+			<a >{label}</a>
+			{children ? children : ""}
 		</div>
 	)
 }
