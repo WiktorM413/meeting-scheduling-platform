@@ -47,6 +47,7 @@ export function AuthProvider({ children }: { children: ReactNode })
 					last_name:  sessionData.lastname,
 					email:      sessionData.email,
 					user_group: ToUserGroup(sessionData.user_group),
+					profile_pic: undefined
 				}
 		
 			);
