@@ -13,7 +13,6 @@ export default function AccountButtons({ isAuthenticated }: AccountButtonsProps)
 {
 	const navigate     = useNavigate();
 	const { userData } = useAuth();
-	console.log(defaultProfilePic);
 
 	return (
 		<div className="msp-account-buttons">
