@@ -73,9 +73,10 @@ type MspCalendarProps =
 	meetings?:                   MeetingType[];
 	externalSelectedDateSetter?: React.Dispatch<React.SetStateAction<string>>;
 	selectedDate?:                number;
+	otherNames?:                  string[];
 }
 
-export default function MspCalendar({ label, meetings, externalSelectedDateSetter, selectedDate }: MspCalendarProps)
+export default function MspCalendar({ label, meetings, externalSelectedDateSetter, selectedDate, otherNames }: MspCalendarProps)
 {
 	const now = new Date();
 	const [year,  setYear]  = useState(now.getFullYear());
@@ -176,7 +177,7 @@ export default function MspCalendar({ label, meetings, externalSelectedDateSette
 									const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(cell.date).padStart(2, '0')}`;
 									
 									popup.Open(
-										<MspMeetingsListPopup date={dateString} meetings={meetings}/>
+										<MspMeetingsListPopup date={dateString} meetings={meetings} otherNames={otherNames ? otherNames : []}/>
 									);
 								}
 							}/>}

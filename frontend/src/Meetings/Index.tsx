@@ -37,7 +37,7 @@ export default function Index()
 		(
 			<section className="msp-meetings-calendar-wrapper">
 				<div className="msp-meetings-calendar">
-					<MspCalendar meetings={meetings} />
+					<MspCalendar meetings={meetings} otherNames={otherNames}/>
 				</div>
 			</section>
 		) :
@@ -45,7 +45,7 @@ export default function Index()
 		(
 			<div className="msp-meetings-week-display-wrapper">
 				<div className="msp-meetings-week-display">
-				<MspWeekDisplay meetings={meetings}/>
+				<MspWeekDisplay meetings={meetings} otherNames={otherNames}/>
 				</div>
 			</div>
 		) :
