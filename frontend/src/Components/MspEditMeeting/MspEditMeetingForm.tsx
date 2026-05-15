@@ -24,6 +24,7 @@ export default function MspEditMeetingForm({meetingId}: MspEditMeetingFormProps)
 	const [endTime,      setEndTime]      = useState("");
 	const [receiverIds,  setReceiverIds]  = useState<number[]>([]);
 	const [users,        setUsers]        = useState<UserData[]>([]);
+	const [responseType, setResponseType] = useState("");
 	
 	useEffect(() =>
 	{
@@ -107,9 +108,24 @@ export default function MspEditMeetingForm({meetingId}: MspEditMeetingFormProps)
 						const finalEndTime:      string|undefined   = endTime            === "" ? undefined : FormatTime(endTime);
 						const finalReceiverIds:  number[]|undefined = receiverIds.length === 0  ? undefined : receiverIds;
 
-						await ApiEditMeeting(meetingId, finalReceiverIds, finalStartTime, finalEndTime, finalTopic, finalWhere, finalSelectedDate);
+						const response = await ApiEditMeeting(meetingId, finalReceiverIds, finalStartTime, finalEndTime, finalTopic, finalWhere, finalSelectedDate);
+						const handled = HandleResponse(response);
+
+						setResponseType(handled.type);
 					}}/>
 				</div>
+
+				{responseType === "success" &&
+					<div className="msp-small-text msp-edit-meeting-form-message">
+						<p className="msp-success">Successfully edited a meeting</p>
+					</div>
+				}
+				{
+					responseType === "error" &&
+					<div className="msp-small-text msp-edit-meeting-form-message">
+						<p className="msp-error">Could not edit a meeting for some reason</p>
+					</div>
+				}
 			</div>
 		</div>
 	)
