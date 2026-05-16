@@ -3,10 +3,11 @@ import { useParams } from "react-router-dom"
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import type { UserData } from "../api/UserType";
-import { ApiGetUpcomingMeetings, ApiGetUserById } from "../api/client";
+import { ApiGetUpcomingMeetings, ApiGetUserById, ApiGetUserStats } from "../api/client";
 import HandleResponse from "../api/HandleResponse";
 import MspUserProfilePic from "../Components/MspUserProfilePic";
 import type { MeetingType } from "../api/MeetingType";
+import type { UserStatsType } from "../api/UserStatsType";
 
 export default function UserProfile()
 {
@@ -22,9 +23,10 @@ export default function UserProfile()
 		)
 	}
 
-	const [user,          setUser]          = useState<UserData|null>(null);
-	const [isCurrentUser, setIsCurrentUser] = useState(false);
+	const [user,             setUser]             = useState<UserData|null>(null);
+	const [isCurrentUser,    setIsCurrentUser]    = useState(false);
 	const [upcomingMeetings, setUpcomingMeetings] = useState<MeetingType[]|null>(null);
+	const [userStats,        setUserStats]        = useState<UserStatsType|null>(null);
 
 	useEffect(() =>
 	{
@@ -34,6 +36,8 @@ export default function UserProfile()
 			{
 				setUser(userData);
 				setIsCurrentUser(true);
+
+				return userData;
 			}
 			else
 			{
@@ -46,6 +50,8 @@ export default function UserProfile()
 					{
 						setUser(handled.data);
 						setIsCurrentUser(false);
+						
+						return handled.data;
 					}
 				}
 				catch (error)
@@ -55,16 +61,11 @@ export default function UserProfile()
 			}
 		}
 
-		const loadUpcomingMeetings = async () =>
+		const loadUpcomingMeetings = async (resolvedUser: UserData) =>
 		{
 			try
 			{
-				if (! user)
-				{
-					return;
-				}
-
-				const response = await ApiGetUpcomingMeetings(user.id);
+				const response = await ApiGetUpcomingMeetings(resolvedUser.id);
 				const handled  = HandleResponse(response);
 
 				if (handled.type === "success")
@@ -78,14 +79,40 @@ export default function UserProfile()
 			}
 		}
 
+		const loadUserStats = async (resolvedUser: UserData) =>
+		{
+			try
+			{
+				const response = await ApiGetUserStats(resolvedUser.id);
+				const handled = HandleResponse(response);
+
+				if (handled.type === "success")
+				{
+					setUserStats(handled.data);
+				}
+			}
+			catch (error)
+			{
+				console.log("Error while retrieving user stats:", error);
+			}
+		}
+
 		async function Load()
 		{
-			await loadUser();
-			await loadUpcomingMeetings();
+			const resolvedUser = await loadUser();
+			if (! resolvedUser)
+			{
+				return;
+			}
+
+			await loadUpcomingMeetings(resolvedUser);
+			await loadUserStats(resolvedUser);
 		}
 
 		Load();
-	}, [userId, userData, upcomingMeetings]);
+	}, [userId, userData]);
+
+	console.log(userStats);
 	
 	return (
 		<div className="msp-user-profile">
@@ -101,7 +128,11 @@ export default function UserProfile()
 			<div className="msp-user-profile-info">
 				<div className="msp-user-profile-info-box">
 					<h4>Upcoming</h4>
-					<p>{upcomingMeetings?.length}</p>
+					<p>{upcomingMeetings?.length === 0 ? "None" : upcomingMeetings?.length}</p>
+				</div>
+				<div className="msp-user-profile-info-box">
+					<h4>Hosted</h4>
+					<p>{!userStats || userStats?.meetings_hosted === 0 ? "None" : userStats?.meetings_hosted}</p>
 				</div>
 			</div>
 		</div>
