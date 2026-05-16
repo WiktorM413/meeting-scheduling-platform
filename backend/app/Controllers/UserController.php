@@ -6,20 +6,23 @@ use App\Validation\UserValidationRules;
 
 class UserController extends BaseController
 {
+	/** @var \App\Services\UserService $userService */
+	protected $userService;
+
+	public function __construct()
+	{
+		$this->userService = service('userService');
+	}
+
 	public function getAllUsers()
 	{
-		/** @var \App\Services\UserService $userService */
-		$userService = service('userService');
-
-		$response = $userService->getAllUsers();
+		$response = $this->userService->getAllUsers();
 
 		return $this->response->setJSON($response);
 	}
 
 	public function getUserById()
 	{
-		/** @var \App\Services\UserService $userService */
-		$userService = service('userService');
 		$data = $this->request->getJSON(true);
 
 		if (! $this->validateData($data, UserValidationRules::userId))
@@ -29,7 +32,23 @@ class UserController extends BaseController
 
 		$userId = $data['user_id'];
 
-		$response = $userService->getUserById($userId);
+		$response = $this->userService->getUserById($userId);
+
+		return $this->response->setJSON($response);
+	}
+
+	public function getUserStats()
+	{
+		$data = $this->request->getJSON(true);
+
+		if (! $this->validateData($data, UserValidationRules::userId))
+		{
+			return $this->response->setJSON(UserValidationRules::validationErrorsToJSON($this->validator->getErrors()));
+		}
+
+		$userId = $data['user_id'];
+
+		$response = $this->userService->getUserStats($userId);
 
 		return $this->response->setJSON($response);
 	}
