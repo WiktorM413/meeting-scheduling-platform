@@ -2,7 +2,7 @@ import "./style.scss"
 import { useNavigate } from "react-router-dom";
 import MspAnchor from "../../Components/MspAnchor";
 import { useAuth } from "../../context/AuthContext";
-import defaultProfilePic from "../../assets/default-profile-pic.svg";
+import MspUserProfilePic from "../../Components/MspUserProfilePic";
 
 type AccountButtonsProps =
 {
@@ -21,7 +21,7 @@ export default function AccountButtons({ isAuthenticated }: AccountButtonsProps)
 				<>
 					<div>
 						<MspAnchor label="" navigator={navigate} to={`userProfile/${userData?.id}`}>
-							<img className="msp-account-buttons-profile-pic" src={defaultProfilePic} alt="Profile"/>
+							<MspUserProfilePic className="msp-account-buttons-profile-pic"/>
 						</MspAnchor>
 					</div>
 					<MspAnchor label="Log out" navigator={navigate} to="logout" className="msp-accout-logout"/>
