@@ -96,6 +96,52 @@ class MeetingsModel extends Model
 		return $result->getResultArray();
 	}
 
+	public function getUpcomingMeetings(int $userId)
+	{
+		$result = $this->db->query("
+			SELECT
+				m.*,
+				CASE 
+					WHEN m.provider_id = :user_id: THEN
+						GROUP_CONCAT(CONCAT(u.first_name, ' ', u.last_name) SEPARATOR ', ')
+					ELSE
+						CONCAT(p.first_name, ' ', p.last_name)
+				END AS other_names
+			FROM meetings m
+			LEFT JOIN meeting_participants mp
+				ON mp.meeting_id = m.unique_id
+			
+			LEFT JOIN users u
+				ON mp.user_id = u.id
+
+			LEFT JOIN users p
+				ON p.id = m.provider_id
+
+			WHERE
+				(
+					m.provider_id = :user_id:
+					OR mp.user_id = :user_id:
+				) AND
+				m.when >= CURDATE()
+
+			GROUP BY 
+				m.unique_id,
+				m.provider_id,
+				m.time_start,
+				m.time_end,
+				m.topic,
+				m.when,
+				p.first_name,
+				p.last_name
+
+			ORDER BY 
+				m.time_start ASC,
+				m.time_end ASC;
+		");
+
+		return $result->getResultArray();
+	}
+
 	public function createMeeting(int $providerId, string $topic, string $when, string $where, string $timeStart, string $timeEnd)
 	{
 		$params =

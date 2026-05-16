@@ -53,6 +53,22 @@ class MeetingsController extends BaseController
 		return $this->response->setJSON($response);
 	}
 
+	public function getUpcomingMeetings()
+	{
+		$data = $this->request->getJSON(true);
+
+		if (! $this->validateData($data, MeetingsValidationRules::userId))
+		{
+			return $this->response->setJSON(MeetingsValidationRules::validationErrorsToJSON($this->validator->getErrors()));
+		}
+
+		$userId = $data['user_id'];
+
+		$response = $this->meetingsService->getUpcomingMeetings($userId);
+
+		return $this->response->setJSON($response);
+	}
+
 	public function createMeeting()
 	{
 		$data = $this->request->getJSON(true);
