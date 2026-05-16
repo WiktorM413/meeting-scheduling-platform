@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use CodeIgniter\Model;
-
-class UserModel extends Model
+class UserModel extends BaseModel
 {
 	public function getAllUsers()
 	{
@@ -23,7 +21,7 @@ class UserModel extends Model
 			LIMIT 1
 		", [$userId]);
 
-		return $result->getResultArray()[0];
+		return $this->FirstOrNull($result->getResultArray());
 	}
 
 	public function getUserStats($userId)
@@ -34,6 +32,8 @@ class UserModel extends Model
 			LIMIT 1
 		", [$userId]);
 
-		return $result->getResultArray()[0];
+		$resultArr = $result->getResultArray();
+
+		return $this->FirstOrNull($result->getResultArray());
 	}
 }

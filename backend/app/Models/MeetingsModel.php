@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class MeetingsModel extends Model
+class MeetingsModel extends BaseModel
 {
 	public function getAllMeetings()
 	{
@@ -44,7 +44,7 @@ class MeetingsModel extends Model
 			LIMIT 1
 		", ['unique_id' => $uniqueId]);
 
-		return $result->getResultArray()[0];
+		return $this->FirstOrNull($result->getResultArray());
 	}
 
 	public function getAllMeetingsForUser(int $userId)
