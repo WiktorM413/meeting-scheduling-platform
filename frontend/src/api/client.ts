@@ -138,3 +138,14 @@ export async function ApiGetUpcomingMeetings(userId: number)
 
 	return response;
 }
+
+export async function ApiGetUserStats(userId: number)
+{
+	const response = await api.post("/getUserStats",
+		{
+			"user_id": userId
+		}
+	)
+
+	return response;
+}
