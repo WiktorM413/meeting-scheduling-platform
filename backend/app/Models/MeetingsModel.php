@@ -137,7 +137,7 @@ class MeetingsModel extends Model
 			ORDER BY 
 				m.time_start ASC,
 				m.time_end ASC;
-		");
+		", ['user_id' => $userId]);
 
 		return $result->getResultArray();
 	}
