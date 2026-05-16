@@ -1,0 +1,36 @@
+.msp-user-profile
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+
+	.msp-user-profile-header
+	{
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		
+		.msp-user-profile-header-profile-pic
+		{
+			float: right;
+			
+			img
+			{
+				width: 5rem;
+			}
+		}
+
+		.msp-user-profile-header-user-info
+		{
+			display: flex;
+			flex-direction: column;
+			gap: 0.3rem;
+
+			h2, p
+			{
+				margin: 0;
+			}
+		}
+	}
+}

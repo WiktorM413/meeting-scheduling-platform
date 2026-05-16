@@ -1,9 +1,11 @@
+import "./style.scss";
 import { useParams } from "react-router-dom"
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import type { UserData } from "../api/UserType";
 import { ApiGetUserById } from "../api/client";
 import HandleResponse from "../api/HandleResponse";
+import MspUserProfilePic from "../Components/MspUserProfilePic";
 
 export default function UserProfile()
 {
@@ -52,12 +54,21 @@ export default function UserProfile()
 		}
 
 		loadUser();
-	}, [userId]);
+	}, [userId, userData]);
 	
+	console.log()
+
 	return (
 		<div className="msp-user-profile">
-			<h1 className="msp-user-profile-header">{isCurrentUser ? "Hello" : "Meet"} {user?.first_name} {user?.last_name}.</h1>
-			
+			<div className="msp-user-profile-header">
+				<div className="msp-user-profile-header-profile-pic">
+					<MspUserProfilePic />
+				</div>
+				<div className="msp-user-profile-header-user-info">
+					<h2>{isCurrentUser ? "Hello," : "Meet"} {user?.first_name} {user?.last_name}.</h2>
+					<p className="msp-small-text">{user?.email}</p>
+				</div>
+			</div>
 		</div>
 	)
 }
