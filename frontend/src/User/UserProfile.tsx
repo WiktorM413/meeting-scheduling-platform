@@ -85,7 +85,7 @@ export default function UserProfile()
 		}
 
 		Load();
-	}, [userId, userData]);
+	}, [userId, userData, upcomingMeetings]);
 	
 	return (
 		<div className="msp-user-profile">
@@ -99,7 +99,10 @@ export default function UserProfile()
 				</div>
 			</div>
 			<div className="msp-user-profile-info">
-
+				<div className="msp-user-profile-info-box">
+					<h4>Upcoming</h4>
+					<p>{upcomingMeetings?.length}</p>
+				</div>
 			</div>
 		</div>
 	)
