@@ -23,3 +23,17 @@ export function FormatDate(date: string): string
 
 	return date;
 }
+
+export function GetWeekDayString(date: string): string
+{
+	const weekday = new Date(date + "T00:00:00").toLocaleDateString(undefined, { weekday: "long" });
+
+	return weekday;
+}
+
+export function GetFullDateString(date: string): string
+{
+	const day = new Date(date + "T00:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+
+	return day;
+}
