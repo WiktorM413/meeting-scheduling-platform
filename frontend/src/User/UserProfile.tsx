@@ -1,5 +1,5 @@
 import "./style.scss";
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import type { UserData } from "../api/UserType";
@@ -10,6 +10,8 @@ import type { MeetingType } from "../api/MeetingType";
 import type { UserStatsType } from "../api/UserStatsType";
 import { FormatDate } from "../utils/dateUtils";
 import { FormatTime } from "../utils/time";
+import MspAnchor from "../Components/MspAnchor";
+import SettingsIcon from "../assets/settings-icon.svg";
 
 export default function UserProfile()
 {
@@ -29,6 +31,8 @@ export default function UserProfile()
 	const [isCurrentUser,    setIsCurrentUser]    = useState(false);
 	const [upcomingMeetings, setUpcomingMeetings] = useState<MeetingType[]|null>(null);
 	const [userStats,        setUserStats]        = useState<UserStatsType|null>(null);
+
+	const navigate = useNavigate();
 
 	useEffect(() =>
 	{
@@ -123,6 +127,11 @@ export default function UserProfile()
 				<div className="msp-user-profile-header-user-info">
 					<h2>{isCurrentUser ? "Hello," : "Meet"} {user?.first_name} {user?.last_name}.</h2>
 					<p className="msp-small-text">{user?.email}</p>
+				</div>
+				<div className="msp-user-profile-header-settings">
+					<MspAnchor label="" navigator={navigate} to={`/editUser/${user?.id}`}>
+						<img src={SettingsIcon}/>
+					</MspAnchor>
 				</div>
 			</div>
 			<div className="msp-user-profile-info">

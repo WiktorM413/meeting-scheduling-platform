@@ -5,6 +5,7 @@
 	align-items: center;
 	flex-direction: column;
 	gap: 1.5rem;
+	animation: fadeUp 0.4s ease;
 
 	.msp-user-profile-header
 	{
@@ -31,6 +32,15 @@
 			h2, p
 			{
 				margin: 0;
+			}
+		}
+
+		.msp-user-profile-header-settings
+		{
+			align-self: flex-start;
+			img
+			{
+				width: 1.8rem;
 			}
 		}
 	}
