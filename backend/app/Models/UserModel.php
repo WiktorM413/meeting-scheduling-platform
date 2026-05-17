@@ -24,7 +24,7 @@ class UserModel extends BaseModel
 		return $this->FirstOrNull($result->getResultArray());
 	}
 
-	public function getUserStats($userId)
+	public function getUserStats(int $userId)
 	{
 		$result = $this->db->query("
 			SELECT * FROM user_stats
