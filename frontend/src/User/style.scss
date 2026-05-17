@@ -68,3 +68,72 @@
 		}
 	}
 }
+
+.msp-user-profile-upcoming
+{
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	width: 40rem;
+
+	.msp-user-profile-upcoming-meeting
+	{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 0.63rem 0.75rem;
+		border: 1px solid #e0e0e0;
+		border-radius: 0.5rem;
+
+		div:first-child
+		{
+			display: flex;
+			flex-direction: column;
+			gap: 0.15rem;
+			overflow: hidden;
+
+			h3
+			{
+				margin: 0;
+				font-size: 1.2rem;
+				font-weight: 500;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+
+			p
+			{
+				margin: 0;
+				font-size: 0.9rem;
+				color: #888;
+			}
+		}
+
+		.msp-user-profile-upcoming-meeting-type
+		{
+			flex-shrink: 0;
+
+			p
+			{
+				margin: 0;
+				font-size: 0.9rem;
+				padding: 0.2rem 0.63rem;
+				border-radius: 0.4rem;
+			}
+
+			.msp-user-profile-upcoming-meeting-type-host
+			{
+				background-color: #eeedfe;
+				color: #893434;
+			}
+
+			.msp-user-profile-upcoming-meeting-type-invited
+			{
+				background-color: #f5f5f5;
+				color: #888;
+			}
+		}
+	}
+}

@@ -8,6 +8,8 @@ import HandleResponse from "../api/HandleResponse";
 import MspUserProfilePic from "../Components/MspUserProfilePic";
 import type { MeetingType } from "../api/MeetingType";
 import type { UserStatsType } from "../api/UserStatsType";
+import { FormatDate } from "../utils/dateUtils";
+import { FormatTime } from "../utils/time";
 
 export default function UserProfile()
 {
@@ -111,8 +113,6 @@ export default function UserProfile()
 
 		Load();
 	}, [userId, userData]);
-
-	console.log(userStats);
 	
 	return (
 		<div className="msp-user-profile">
@@ -134,6 +134,28 @@ export default function UserProfile()
 					<h4>Hosted</h4>
 					<p>{!userStats || userStats?.meetings_hosted === 0 ? "None" : userStats?.meetings_hosted}</p>
 				</div>
+			</div>
+			<div className="msp-user-profile-upcoming">
+				{upcomingMeetings?.slice(0, 3).map((meeting, id) =>
+				(
+					<div className="msp-user-profile-upcoming-meeting" key={id}>
+						<div>
+							<h3>{meeting.topic}</h3>
+							<p>{FormatDate(meeting.when)} ({FormatTime(meeting.time_start)} - {FormatTime(meeting.time_end)})</p>
+						</div>
+						<div className="msp-user-profile-upcoming-meeting-type">
+							{meeting.provider_id == user?.id ?
+							(
+								<p className="msp-user-profile-upcoming-meeting-type-host">Host</p>
+							)
+							:
+							(
+								<p className="msp-user-profile-upcoming-meeting-type-invited">Invited</p>
+							)
+							}
+						</div>
+					</div>
+				))}
 			</div>
 		</div>
 	)
