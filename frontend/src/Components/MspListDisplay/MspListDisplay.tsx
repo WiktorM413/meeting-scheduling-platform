@@ -1,11 +1,16 @@
 import "./style.scss";
 import type { MeetingType } from "../../api/MeetingType"
 import { FormatTime } from "../../utils/time";
+import MspButton from "../MspButton";
+import MspEditMeetingForm from "../MspEditMeeting/MspEditMeetingForm";
+import { popup } from "../MspPopup/PopupManager";
+import { useAuth } from "../../context/AuthContext";
 
 type MspListDisplayProps =
 {
-	meetings?:   MeetingType[];
-	otherNames?: string[];
+	meetings?:        MeetingType[];
+	otherNames?:      string[];
+	onMeetingUpdate?: () => void;
 }
 
 function MapMeetings(meetings: MeetingType[]): Map<string, MeetingType[]>
@@ -27,7 +32,7 @@ function MapMeetings(meetings: MeetingType[]): Map<string, MeetingType[]>
 	return mappedMeetings;
 }
 
-export default function MspListDisplay({meetings, otherNames}: MspListDisplayProps)
+export default function MspListDisplay({meetings, otherNames, onMeetingUpdate}: MspListDisplayProps)
 {
 	if (! meetings)
 	{
@@ -39,7 +44,8 @@ export default function MspListDisplay({meetings, otherNames}: MspListDisplayPro
 	}
 
 	const mappedMeetings = MapMeetings(meetings);
-	console.log(mappedMeetings);
+	const { userData }   = useAuth();
+
 	return (
 		<div className="msp-list-display">
 			<div className="msp-list-display-list">
@@ -49,19 +55,32 @@ export default function MspListDisplay({meetings, otherNames}: MspListDisplayPro
 						<div className="msp-list-display-meetings">
 						{meetings.map((meeting, i) => (
 							<div className="msp-list-display-meeting-card">
-								<div className="msp-list-display-meeting-time">
-									{FormatTime(meeting.time_start)} - {FormatTime(meeting.time_end)}
-								</div>
-
-								<div className="msp-list-display-meeting-main">
-									<div className="msp-list-display-meeting-topic">
-										{meeting.topic}
+								<div>
+									<div className="msp-list-display-meeting-time">
+										{FormatTime(meeting.time_start)} - {FormatTime(meeting.time_end)}
 									</div>
 
-									<div className="msp-list-display-meeting-people">
-										{otherNames ? otherNames[i] : <></>}
+									<div className="msp-list-display-meeting-main">
+										<div className="msp-list-display-meeting-topic">
+											{meeting.topic}
+										</div>
+
+										<div className="msp-list-display-meeting-people">
+											{otherNames ? otherNames[i] : <></>}
+										</div>
 									</div>
 								</div>
+								{meeting.provider_id == userData?.id &&
+									<div className="msp-day-display-meeting-edit">
+										<MspButton label="Edit" onClick={() =>
+											{
+												popup.Open(
+													<MspEditMeetingForm meetingId={meeting.unique_id} onSuccess={onMeetingUpdate}/>
+												);
+											}
+										}/>
+									</div>
+								}
 							</div>
 						))}
 						</div>

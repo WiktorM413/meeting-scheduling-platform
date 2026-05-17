@@ -12,10 +12,11 @@ import { FormatTime } from "../../utils/time";
 
 type MspEditMeetingFormProps =
 {
-	meetingId: number;
+	meetingId:  number;
+	onSuccess?: () => void;
 }
 
-export default function MspEditMeetingForm({meetingId}: MspEditMeetingFormProps)
+export default function MspEditMeetingForm({meetingId, onSuccess}: MspEditMeetingFormProps)
 {
 	const [selectedDate, setSelectedDate] = useState("");
 	const [topic,        setTopic]        = useState("");
@@ -112,6 +113,11 @@ export default function MspEditMeetingForm({meetingId}: MspEditMeetingFormProps)
 						const handled = HandleResponse(response);
 
 						setResponseType(handled.type);
+
+						if (handled.type === "success")
+						{
+							onSuccess?.();
+						}
 					}}/>
 				</div>
 

@@ -58,6 +58,7 @@
 .msp-day-display-meeting-card
 {
 	display: flex;
+	justify-content: space-between;
 	align-items: flex-start;
 	gap: 14px;
 
@@ -154,4 +155,13 @@
 .msp-day-display-message
 {
 	text-align: center;
+}
+
+.msp-day-display-meeting-edit
+{
+	button
+	{
+		width: 8rem;
+		
+	}
 }
