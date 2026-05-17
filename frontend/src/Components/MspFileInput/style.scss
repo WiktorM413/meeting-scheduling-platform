@@ -1,0 +1,37 @@
+.msp-file-input
+{
+	display: flex;
+	align-items: center;
+	gap: 12px;
+
+	.msp-file-input-button
+	{
+		padding: 0.6rem 1.4rem;
+		white-space: nowrap;
+	}
+
+	.msp-file-input-label
+	{
+		color: #898989;
+		font-size: 1rem;
+	}
+
+	.msp-file-input-label-chosen
+	{
+		color: #c8c8c8;
+		font-weight: 500;
+	}
+
+	.msp-file-input-clear
+	{
+		background: none;
+		color: #898989;
+		padding: 0;
+		transition: color 0.2s ease;
+		
+		&:hover
+		{
+			color: #c8c8c8;
+		}
+	}
+}
