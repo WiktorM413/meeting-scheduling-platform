@@ -19,13 +19,7 @@ class MeetingsModel extends BaseModel
 	{
 		$result = $this->db->query("
 			SELECT
-				m.unique_id AS unique_id,
-				m.provider_id,
-				m.time_start,
-				m.time_end,
-				m.topic,
-				m.when,
-				m.where,
+				m.*,
 				GROUP_CONCAT(CONCAT(mp.user_id) SEPARATOR ',') AS receiver_ids
 			FROM meetings m
 			LEFT JOIN meeting_participants mp
@@ -51,13 +45,7 @@ class MeetingsModel extends BaseModel
 	{
 		$result = $this->db->query("
 			SELECT 
-				m.unique_id AS unique_id,
-				m.provider_id,
-				m.time_start,
-				m.time_end,
-				m.topic,
-				m.when,
-
+				m.*,
 				CASE 
 					WHEN m.provider_id = :user_id: THEN
 						GROUP_CONCAT(CONCAT(u.first_name, ' ', u.last_name) SEPARATOR ', ')
