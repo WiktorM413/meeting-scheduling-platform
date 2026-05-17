@@ -20,9 +20,6 @@ export default function MspMeetingsListPopup({date, meetings, otherNames, onMeet
 	const { userData } = useAuth();
 	const dayMeetings = meetings.filter(m => m.when === date);
 
-	console.log(meetings);
-	console.log(otherNames);
-
 	return (
 		<div className="msp-meetings-list-popup">
 			<div className="msp-meetings-list-popup-header">
