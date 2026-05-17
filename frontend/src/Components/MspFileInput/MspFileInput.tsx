@@ -19,12 +19,14 @@ export default function MspFileInput({valueSetter, onChange, accept, className}:
 	{
 		const f = e.target.files?.[0] ?? null;
 		setFile(f);
+		valueSetter(f);
 		onChange?.(f);
 	}
 
 	const handleClear = () =>
 	{
 		setFile(null);
+		valueSetter(null);
 		if (inputRef.current)
 		{
 			inputRef.current.value = "";
