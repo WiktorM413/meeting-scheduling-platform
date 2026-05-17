@@ -63,12 +63,13 @@ function BuildWeek(year: number, month: number, startDay: number, meetings?: Mee
 
 type MspWeekDisplayProps =
 {
-	meetings?:    MeetingType[];
-	startDayNum?: number;
-	otherNames?:  string[];
+	meetings?:        MeetingType[];
+	startDayNum?:     number;
+	otherNames?:      string[];
+	onMeetingUpdate?: () => void;
 }
 
-export default function MspWeekDisplay({ meetings, startDayNum = 1, otherNames }: MspWeekDisplayProps)
+export default function MspWeekDisplay({ meetings, startDayNum = 1, otherNames, onMeetingUpdate }: MspWeekDisplayProps)
 {
 	const now = new Date();
 	const [year,  setYear]              = useState(now.getFullYear());
@@ -179,7 +180,7 @@ export default function MspWeekDisplay({ meetings, startDayNum = 1, otherNames }
 									const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day.date).padStart(2, '0')}`;
 									
 									popup.Open(
-										<MspMeetingsListPopup date={dateString} meetings={meetings} otherNames={otherNames ? otherNames : []}/>
+										<MspMeetingsListPopup date={dateString} meetings={meetings} otherNames={otherNames ? otherNames : []} onMeetingUpdate={onMeetingUpdate}/>
 									);
 								}
 							}/>}

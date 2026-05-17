@@ -9,12 +9,13 @@ import MspEditMeetingForm from "../MspEditMeeting/MspEditMeetingForm";
 
 type DayObjPorps =
 {
-	date:         string;
-	meetings?:    MeetingType[];
-	otherNames?: string[];
+	date:             string;
+	meetings?:        MeetingType[];
+	otherNames?:      string[];
+	onMeetingUpdate?: () => void;
 }
 
-function DayObj({date, meetings, otherNames}: DayObjPorps)
+function DayObj({date, meetings, otherNames, onMeetingUpdate}: DayObjPorps)
 {
 	const matchingMeetings = meetings?.filter((meeting) => meeting.when === date) ?? [];
 	const { userData }    = useAuth();
@@ -47,7 +48,7 @@ function DayObj({date, meetings, otherNames}: DayObjPorps)
 									<MspButton label="Edit" onClick={() =>
 										{
 											popup.Open(
-												<MspEditMeetingForm meetingId={meeting.unique_id}/>
+												<MspEditMeetingForm meetingId={meeting.unique_id} onSuccess={onMeetingUpdate}/>
 											);
 										}
 									}/>
@@ -68,11 +69,12 @@ function DayObj({date, meetings, otherNames}: DayObjPorps)
 
 type MspDayDisplayProps =
 {
-	meetings?:   MeetingType[];
-	otherNames?: string[];
+	meetings?:        MeetingType[];
+	otherNames?:      string[];
+	onMeetingUpdate?: () => void;
 }
 
-export default function MspDayDisplay({meetings, otherNames}: MspDayDisplayProps)
+export default function MspDayDisplay({meetings, otherNames, onMeetingUpdate}: MspDayDisplayProps)
 {
 	const now = new Date();
 	const today =
@@ -88,7 +90,7 @@ export default function MspDayDisplay({meetings, otherNames}: MspDayDisplayProps
 			</div>
 
 			{meetings ?
-				<DayObj date={date} meetings={meetings} otherNames={otherNames}/>
+				<DayObj date={date} meetings={meetings} otherNames={otherNames} onMeetingUpdate={onMeetingUpdate}/>
 			:
 				<p>No meetings on {date}</p>
 			}

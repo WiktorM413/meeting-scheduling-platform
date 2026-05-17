@@ -10,10 +10,11 @@ type MspMeetingsListPopupProps =
 {
 	date:     string;
 	meetings: MeetingType[];
-	otherNames: string[]
+	otherNames: string[];
+	onMeetingUpdate?: () => void;
 }
 
-export default function MspMeetingsListPopup({date, meetings, otherNames}: MspMeetingsListPopupProps)
+export default function MspMeetingsListPopup({date, meetings, otherNames, onMeetingUpdate}: MspMeetingsListPopupProps)
 {
 	const { userData } = useAuth();
 
@@ -29,7 +30,7 @@ export default function MspMeetingsListPopup({date, meetings, otherNames}: MspMe
 						({FormatTime(meeting.time_start)} - {FormatTime(meeting.time_end)}):&nbsp;
 						{meeting.topic}&nbsp;
 						{meeting.provider_id === userData?.id ? <MspButton className="msp-meetings-list-popup-edit-button" label="Edit" onClick={() =>{
-							popup.Open(<MspEditMeetingForm meetingId={meeting.unique_id}/>);
+							popup.Open(<MspEditMeetingForm meetingId={meeting.unique_id} onSuccess={onMeetingUpdate}/>);
 						}}/> : <></>}
 					</div>
 				) : null

@@ -8,8 +8,9 @@ import { useAuth } from "../../context/AuthContext";
 
 type MspListDisplayProps =
 {
-	meetings?:   MeetingType[];
-	otherNames?: string[];
+	meetings?:        MeetingType[];
+	otherNames?:      string[];
+	onMeetingUpdate?: () => void;
 }
 
 function MapMeetings(meetings: MeetingType[]): Map<string, MeetingType[]>
@@ -31,7 +32,7 @@ function MapMeetings(meetings: MeetingType[]): Map<string, MeetingType[]>
 	return mappedMeetings;
 }
 
-export default function MspListDisplay({meetings, otherNames}: MspListDisplayProps)
+export default function MspListDisplay({meetings, otherNames, onMeetingUpdate}: MspListDisplayProps)
 {
 	if (! meetings)
 	{
@@ -74,7 +75,7 @@ export default function MspListDisplay({meetings, otherNames}: MspListDisplayPro
 										<MspButton label="Edit" onClick={() =>
 											{
 												popup.Open(
-													<MspEditMeetingForm meetingId={meeting.unique_id}/>
+													<MspEditMeetingForm meetingId={meeting.unique_id} onSuccess={onMeetingUpdate}/>
 												);
 											}
 										}/>

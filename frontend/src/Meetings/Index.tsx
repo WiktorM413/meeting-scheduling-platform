@@ -28,16 +28,17 @@ export default function Index()
 {
 	const { userData } = useAuth();
 
-	const [meetings,   setMeetings]   = useState<MeetingType[]>([]);
-	const [otherNames, setOtherNames] = useState<string[]>([]);
-	const [filterType, setFilterType] = useState<FilterType>({type: "month"});
+	const [meetings,       setMeetings]       = useState<MeetingType[]>([]);
+	const [otherNames,     setOtherNames]     = useState<string[]>([]);
+	const [filterType,     setFilterType]     = useState<FilterType>({type: "month"});
+	const [refreshTrigger, setRefreshTrigger] = useState(0);
 
 	const displayedObject =
 		filterType.type === "month" ?
 		(
 			<section className="msp-meetings-calendar-wrapper">
 				<div className="msp-meetings-calendar">
-					<MspCalendar meetings={meetings} otherNames={otherNames}/>
+					<MspCalendar meetings={meetings} otherNames={otherNames} onMeetingUpdate={() => setRefreshTrigger(trigger => trigger + 1)}/>
 				</div>
 			</section>
 		) :
@@ -45,19 +46,19 @@ export default function Index()
 		(
 			<div className="msp-meetings-week-display-wrapper">
 				<div className="msp-meetings-week-display">
-				<MspWeekDisplay meetings={meetings} otherNames={otherNames}/>
+				<MspWeekDisplay meetings={meetings} otherNames={otherNames} onMeetingUpdate={() => setRefreshTrigger(trigger => trigger + 1)}/>
 				</div>
 			</div>
 		) :
 		filterType.type === "day" ?
 		(
 			<div>
-				<MspDayDisplay meetings={meetings} otherNames={otherNames}/>
+				<MspDayDisplay meetings={meetings} otherNames={otherNames} onMeetingUpdate={() => setRefreshTrigger(trigger => trigger + 1)}/>
 			</div>
 		) : // type === "list"
 		(
 			<div>
-				<MspListDisplay meetings={meetings} otherNames={otherNames}/>
+				<MspListDisplay meetings={meetings} otherNames={otherNames} onMeetingUpdate={() => setRefreshTrigger(trigger => trigger + 1)}/>
 			</div>
 		);
 
@@ -92,7 +93,7 @@ export default function Index()
 		};
 
 		loadMeetings();
-	}, [userData, meetings]);
+	}, [userData, refreshTrigger]);
 
 	return (
 		<div className="msp-meetings">
