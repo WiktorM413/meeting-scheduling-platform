@@ -92,7 +92,7 @@ export default function Index()
 		};
 
 		loadMeetings();
-	}, [userData]);
+	}, [userData, meetings]);
 
 	return (
 		<div className="msp-meetings">
