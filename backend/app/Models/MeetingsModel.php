@@ -135,8 +135,9 @@ class MeetingsModel extends BaseModel
 				p.last_name
 
 			ORDER BY 
+				m.when       ASC,
 				m.time_start ASC,
-				m.time_end ASC;
+				m.time_end   ASC;
 		", ['user_id' => $userId]);
 
 		return $result->getResultArray();
