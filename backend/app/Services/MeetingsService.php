@@ -35,6 +35,13 @@ class MeetingsService
 		return DataJson(false, "Successfully retrieved meetings", $meetings);
 	}
 
+	public function getUpcomingMeetings(int $userId)
+	{
+		$meetings = $this->meetingsModel->getUpcomingMeetings($userId);
+
+		return DataJson(false, "Successfully retrieved meetings", $meetings);
+	}
+
 	public function createMeeting(int $providerId, array $receiverIds, string $topic, string $when, string $where, string $timeStart, string $timeEnd)
 	{
 		$meetingId = $this->meetingsModel->createMeeting($providerId, $topic, $when, $where, $timeStart, $timeEnd);

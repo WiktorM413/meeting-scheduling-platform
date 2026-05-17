@@ -127,3 +127,25 @@ newTimeEnd?: string, newTopic?: string, newWhere?: string, newWhen?: string)
 
 	return response;
 }
+
+export async function ApiGetUpcomingMeetings(userId: number)
+{
+	const response = await api.post("/getUpcomingMeetings",
+		{
+			"user_id": userId
+		}
+	)
+
+	return response;
+}
+
+export async function ApiGetUserStats(userId: number)
+{
+	const response = await api.post("/getUserStats",
+		{
+			"user_id": userId
+		}
+	)
+
+	return response;
+}

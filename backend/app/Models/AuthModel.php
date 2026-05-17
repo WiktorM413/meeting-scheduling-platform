@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use CodeIgniter\Model;
 
-class AuthModel extends Model
+class AuthModel extends BaseModel
 {
 	public function createUser($firstname, $lastname, $email, $password, $userGroup)
 	{
@@ -34,6 +33,6 @@ class AuthModel extends Model
 			LIMIT 1
 		", [$email]);
 
-		return count($result->getResultArray()) > 0 ? $result->getResultArray()[0] : null;
+		return $this->FirstOrNull($result->getResultArray());
 	}
 }
