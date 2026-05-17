@@ -1,6 +1,6 @@
 import type { RouteObject } from "react-router-dom";
 import UserProfile from "../User/UserProfile";
-import EditUser from "../User/EditUser";
+import UserSettings from "../User/UserSettings";
 
 const UserRoutes: RouteObject[] =
 [
@@ -10,7 +10,7 @@ const UserRoutes: RouteObject[] =
 	},
 	{
 		path:    "/editUser/:userId",
-		element: <EditUser />
+		element: <UserSettings />
 	}
 ]
 
