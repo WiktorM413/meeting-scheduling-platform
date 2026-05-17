@@ -13,8 +13,6 @@ type UserPickerProps =
 
 export default function MspUserPicker({ className, receiverIds, users, setReceiverIds }: UserPickerProps)
 {
-	console.log("receiver_ids:", receiverIds);
-
 	const [userSearch,   setUserSearch]   = useState<string>("");
 
 	const filteredUsers = users.filter((user) =>
