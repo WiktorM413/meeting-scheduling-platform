@@ -60,9 +60,177 @@
 	width: 2rem;
 }
 
-.msp-meetings-list-popup-edit-button
+.msp-meetings-list-popup
 {
-	width: 9rem;
-	padding: 0.9rem;
-	margin-left: 1rem;
+	background-color: #2a2a2a;
+	color: #ddd;
+	border-radius: 20px;
+	border: 1px solid rgba(255, 255, 255, 0.04);
+	box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+	min-width: 30rem;
+	max-width: 42rem;
+	overflow: hidden;
+	animation: fadeUp 0.4s ease;
+
+	.msp-meetings-list-popup-header
+	{
+		background-color: #222;
+		padding: 1.4rem 1.8rem 1.2rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+		border-radius: 1px solid rgba(255, 255, 255, 0.05);
+
+		.msp-meetings-list-popup-weekday
+		{
+			font-size: 0.7rem;
+			font-weight: 600;
+			letter-spacing: 0.1rem;
+			color: #e8834a;
+		}
+
+		.msp-meetings-list-popup-day
+		{
+			font-size: 1.3rem;
+			font-weight: 500;
+			color: #eee;
+			margin: 0;
+		}
+
+		.msp-meetings-list-popup-count
+		{
+			font-size: 0.75rem;
+			color: #777;
+			margin-top: 0.2rem;
+		}
+	}
+
+	.msp-meetings-list-popup-body
+	{
+		padding: 0.75rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		max-height: 24rem;
+		overflow-y: auto;
+
+		.msp-meetings-list-popup-empty
+		{
+			padding: 2rem;
+			text-align: center;
+			color: #666;
+			font-size: 0.85rem;
+		}
+
+		.msp-meetings-list-popup-item
+		{
+			display: flex;
+			align-items: stretch;
+			gap: 0.9rem;
+			padding: 0.75rem 0.9rem;
+			border-radius: 12px;
+			border: 1px solid transparent;
+			animation: fadeUp 0.25s ease both;
+			transition: background-color 0.15s ease border-color 0.15s ease;
+
+			&:hover
+			{
+				background-color: rgba(255, 255, 255, 0.04);
+				border-color: rgba(255, 255, 255, 0.07);
+			}
+
+			.msp-meetings-list-popup-item-owner
+			{
+				border-left: 2px solid #e8834a;
+				padding-left: calc(0.9rem - 1px);
+			}
+		}
+
+		.msp-meetings-list-popup-time
+		{
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			flex-shrink: 0;
+			width: 3rem;
+			gap: 3px;
+			padding-top: 2px;
+
+			span
+			{
+				font-size: 0.65rem;
+				font-weight: 600;
+				color: #888;
+				white-space: nowrap;
+
+				&:last-child
+				{
+					font-weight: 400;
+					color: #555;
+				}
+			}
+
+			.msp-meetings-list-popup-time-line
+			{
+				flex: 1;
+				width: 1px;
+				background: linear-gradient(to bottom, #444, transparent);
+			}
+		}
+
+		.msp-meetings-list-popup-content
+		{
+			flex: 1;
+			min-width: 0;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			gap: 0.3rem;
+
+			.msp-meetings-list-popup-content-topic
+			{
+				font-size: 0.85rem;
+				font-weight: 600;
+				color: #eee;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+
+			.msp-meetings-list-popup-content-other
+			{
+				font-size: 0.75rem;
+				color: #888;
+			}
+
+			.msp-meetings-list-popup-content-where
+			{
+				font-size: 0.7rem;
+				color: #666;
+			}
+		}
+
+		.msp-meetings-list-popup-edit-button
+		{
+			width: 9rem;
+			padding: 1rem;
+			flex-shrink: 0;
+		}
+		
+		&::-webkit-scrollbar
+		{
+			width: 4px;
+		}
+
+		&::-webkit-scrollbar-track
+		{
+			background: transparent;
+		}
+
+		&::-webkit-scrollbar-thumb
+		{
+			background-color: #444;
+			border-radius: 2px;
+		}
+	}
 }
