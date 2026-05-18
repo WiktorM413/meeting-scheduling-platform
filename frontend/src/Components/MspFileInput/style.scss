@@ -4,6 +4,11 @@
 	align-items: center;
 	gap: 12px;
 
+	.msp-file-input-real-input
+	{
+		display: none;
+	}
+
 	.msp-file-input-button
 	{
 		padding: 0.6rem 1.4rem;

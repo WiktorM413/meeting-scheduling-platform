@@ -8,9 +8,10 @@ type MspFileInputProps =
 	onChange?:   (file: File|null) => void;
 	accept?:     string;
 	className?:  string;
+	label?:      string;
 }
 
-export default function MspFileInput({valueSetter, onChange, accept, className}: MspFileInputProps)
+export default function MspFileInput({valueSetter, onChange, accept, className, label}: MspFileInputProps)
 {
 	const [file, setFile] = useState<File|null>(null);
 	const inputRef        = useRef<HTMLInputElement>(null);
@@ -37,12 +38,13 @@ export default function MspFileInput({valueSetter, onChange, accept, className}:
 	return (
 		<div className={`msp-file-input ${className}`}>
 			<input
+				className="msp-file-input-real-input"
 				ref={inputRef}
 				type="file"
 				accept={accept}
 				onChange={handleChange}
 			/>
-			<MspButton className="msp-file-input-button" label="Choose a file" onClick={() => inputRef.current?.click()}/>
+			<MspButton className="msp-file-input-button" label={label ? label : "Choose a file"} onClick={() => inputRef.current?.click()}/>
 			<span className={`msp-file-input-label ${file ? "msp-file-input-label-chosen" : ""}`}>
 				{file ? file.name : "No file chosen"}
 			</span>
