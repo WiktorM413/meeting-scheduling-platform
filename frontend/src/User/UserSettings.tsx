@@ -5,6 +5,9 @@ import LockIcon from "../assets/lock.svg"
 import GearIcon from "../assets/settings-icon.svg"
 import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
+import ProfileSettingObj from "./SettingsObj/ProfileSettingObj";
+import PrivacySettingObj from "./SettingsObj/PrivacySettingObj";
+import AccountSettingObj from "./SettingsObj/AccountSettingObj";
 
 type ActiveTabType = 
 {
@@ -17,13 +20,27 @@ type ActiveTabType =
 	type: "account"
 }
 
-function SettingsObj()
+type SettingsObjProps =
 {
-	return (
-		<div>
-			Settings object
-		</div>
-	)
+	activeTab: ActiveTabType;
+}
+
+function SettingsObj({activeTab}: SettingsObjProps)
+{
+	switch (activeTab.type)
+	{
+		case "profile":
+			return <ProfileSettingObj />;
+		
+		case "privacy":
+			return <PrivacySettingObj />;
+
+		case "account":
+			return <AccountSettingObj />;
+
+		default:
+			return <p>Wrong settings!</p>;
+	}
 }
 
 export default function UserSettings()
@@ -73,7 +90,7 @@ export default function UserSettings()
 				</div>
 				
 				<div className="msp-user-settings-main">
-					<SettingsObj />
+					<SettingsObj activeTab={activeTab}/>
 				</div>
 			</div>
 		</div>
