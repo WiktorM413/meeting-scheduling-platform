@@ -27,4 +27,5 @@ $routes->group('api', function ($routes) {
 	$routes->get ('getAllUsers',  [UserController::class, 'getAllUsers']);
 	$routes->post('getUserById',  [UserController::class, 'getUserById']);
 	$routes->post('getUserStats', [UserController::class, 'getUserStats']);
+	$routes->post('updateUser',   [UserController::class, 'updateUser']);
 });

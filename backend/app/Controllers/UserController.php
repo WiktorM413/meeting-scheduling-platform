@@ -52,4 +52,23 @@ class UserController extends BaseController
 
 		return $this->response->setJSON($response);
 	}
+
+	public function updateUser()
+	{
+		$data = $this->request->getJSON(true);
+
+		if (! $this->validateData($data, UserValidationRules::updateUser))
+		{
+			return $this->response->setJSON(UserValidationRules::validationErrorsToJSON($this->validator->getErrors()));
+		}
+
+		$profilePic = isset($data['profile_pic']) ? base64_decode($data['profile_pic']) : null;
+		$firstname  = $data['first_name'];
+		$lastname   = $data['last_name'];
+		$email      = $data['email'];
+
+		$response = $this->userService->updateUser($profilePic, $firstname, $lastname, $email);
+
+		return $this->response->setJSON($response);
+	}
 }

@@ -34,4 +34,9 @@ class UserService
 
 		return DataJson(false, 'Successflly retrieved user stats', $stats);
 	}
+
+	public function updateUser($profilePic, string $firstname, string $lastname, string $email)
+	{
+		
+	}
 }
