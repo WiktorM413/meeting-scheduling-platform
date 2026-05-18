@@ -1,0 +1,26 @@
+.msp-profile-setting-obj
+{
+	display: flex;
+	flex-direction: column;
+	
+	&-header
+	{
+
+	}
+
+	&-profile-pic
+	{
+		display: flex;
+		gap: 2rem;
+		img
+		{
+			width: 4rem;
+		}
+
+		&-options
+		{
+			display: flex;
+			gap: 1.5rem;
+		}
+	}
+}
