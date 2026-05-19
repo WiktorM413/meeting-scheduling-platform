@@ -5,21 +5,20 @@ namespace App\Models;
 
 class AuthModel extends BaseModel
 {
-	public function createUser($firstname, $lastname, $email, $password, $userGroup)
+	public function createUser($firstname, $lastname, $email, $password)
 	{
 		$params = [
 			"first_name" => $firstname,
 			"last_name"  => $lastname,
 			"email"      => $email,
 			"password"   => $password,
-			"user_group" => $userGroup
 		];
 
 		$this->db->query("
 			INSERT INTO `users`
-				(`first_name`, `last_name`, `email`, `password`, `user_group`)
+				(`first_name`, `last_name`, `email`, `password`, `profile_pic`)
 				VALUES
-				(:first_name:, :last_name:, :email:, :password:, :user_group:)
+				(:first_name:, :last_name:, :email:, :password:, NULL)
 		", $params);
 
 		return $this->getUserByEmail($email)['id'];

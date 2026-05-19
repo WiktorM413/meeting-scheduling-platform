@@ -63,11 +63,11 @@ class UserController extends BaseController
 		}
 
 		$userId           = $data['user_id'];
-		$profilePic       = $data['profile_pic'] ?? null;
-		$firstname        = $data['first_name']  ?? null;
-		$lastname         = $data['last_name']   ?? null;
-		$email            = $data['email']       ?? null;
-		$removeProfilePic = $data['remove_profile_pic'];
+		$profilePic       = $data['profile_pic']        ?? null;
+		$firstname        = $data['first_name']         ?? null;
+		$lastname         = $data['last_name']          ?? null;
+		$email            = $data['email']              ?? null;
+		$removeProfilePic = $data['remove_profile_pic'] ?? null;
 
 		$response = $this->userService->updateUser($userId, $profilePic, $firstname, $lastname, $email, $removeProfilePic);
 
@@ -76,7 +76,9 @@ class UserController extends BaseController
 
 		$session = $authService->getSession();
 
-		$authService->setSession($userId, $firstname ?? $session['firstname'], $lastname ?? $session['lastname'], $email ?? $session['email'], $profilePic);
+		$newProfilePic = $removeProfilePic ? null : ($profilePic ?? $session['profile_pic']);
+
+		$authService->setSession($userId, $firstname ?? $session['firstname'], $lastname ?? $session['lastname'], $email ?? $session['email'], $newProfilePic);
 
 		return $this->response->setJSON($response);
 	}

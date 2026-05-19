@@ -14,16 +14,16 @@ class AuthService
 		helper('response');
 	}
 
-	public function register($firstname, $lastname, $email, $password, $userGroup = 0)
+	public function register($firstname, $lastname, $email, $password)
 	{
 		if ($this->userExists($email))
 		{
 			return SimpleJson(true, 'User already exists');
 		}
 
-		$userId = $this->authModel->createUser($firstname, $lastname, $email, $password, $userGroup);
+		$userId = $this->authModel->createUser($firstname, $lastname, $email, $password);
 
-		$this->setSession($userId, $firstname, $lastname, $email, $userGroup);
+		$this->setSession($userId, $firstname, $lastname, $email, null);
 
 		return SimpleJson(false, 'Successfully registered');
 	}
@@ -42,7 +42,7 @@ class AuthService
 			return SimpleJson(true, 'Wrong password');
 		}
 
-		$this->setSession($user['id'], $user['first_name'], $user['last_name'], $user['email'], $user['user_group']);
+		$this->setSession($user['id'], $user['first_name'], $user['last_name'], $user['email'], $user['profile_pic']);
 
 		return SimpleJson(false, 'Successfully logged in.');
 	}

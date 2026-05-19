@@ -43,7 +43,7 @@ class UserModel extends BaseModel
 			'first_name'         => $firstname,
 			'last_name'          => $lastname,
 			'email'              => $email,
-			'profile_pi'        => $profilePic,
+			'profile_pic'        => $profilePic,
 			'remove_profile_pic' => $removeProfilePic
 		];
 
@@ -56,7 +56,7 @@ class UserModel extends BaseModel
 					CASE
 						WHEN :remove_profile_pic: = 1 THEN NULL
 						ELSE COALESCE(:profile_pic:, `profile_pic`)
-					END,
+					END
 			WHERE id = :user_id:
 		", $params);
 	}
