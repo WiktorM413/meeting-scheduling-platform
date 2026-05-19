@@ -91,9 +91,7 @@ export default function ProfileSettingObj()
 				<MspButton label="Save changes" onClick={async () =>
 					{
 						await SaveChanges(userData.id, profilePic, firstname, lastname, email);
-						console.log("Saving:", firstname, lastname, email);
 						await refreshUser(firstname, lastname, email);
-						console.log("Done relaoding");
 					}}
 				/>
 			</div>
