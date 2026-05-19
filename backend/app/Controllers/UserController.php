@@ -73,7 +73,9 @@ class UserController extends BaseController
 		/** @var \App\Services\AuthService $authService */
 		$authService = service('authService');
 
-		$authService->setSession($userId, $firstname, $lastname, $email, 0);
+		$session = $authService->getSession();
+
+		$authService->setSession($userId, $firstname ?? $session['firstname'], $lastname ?? $session['lastname'], $email ?? $session['email'], 0);
 
 		return $this->response->setJSON($response);
 	}
