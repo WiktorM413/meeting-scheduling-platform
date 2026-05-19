@@ -39,7 +39,7 @@ export function AuthProvider({ children }: { children: ReactNode })
 		try
 		{
 			const sessionData = await GetCurrentUser();
-			console.log(firstname);
+			
 			setUserData(
 				{
 					id:         sessionData.user_id,
