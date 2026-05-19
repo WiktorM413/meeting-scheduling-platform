@@ -35,7 +35,7 @@ class UserService
 		return DataJson(false, 'Successflly retrieved user stats', $stats);
 	}
 
-	public function updateUser(string|null $profilePic, string|null $firstname, string|null $lastname, string|null $email)
+	public function updateUser(string|null $profilePic = null, string|null $firstname = null, string|null $lastname = null, string|null $email = null)
 	{
 		$this->userModel->updateUser($profilePic, $firstname, $lastname, $email);
 
