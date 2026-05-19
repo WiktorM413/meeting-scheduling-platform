@@ -66,18 +66,18 @@ class AuthService
 		return isset($user);
 	}
 
-	public function setSession($userId, $firstname, $lastname, $email, $userGroup)
+	public function setSession($userId, $firstname, $lastname, $email, $profilePic)
 	{
 		$session = session();
 
 		$session->set
 		([
-			'user_id'    => $userId,
-			'firstname'  => $firstname,
-			'lastname'   => $lastname,
-			'email'      => $email,
-			'user_group' => $userGroup,
-			'logged_in'  => true
+			'user_id'     => $userId,
+			'firstname'   => $firstname,
+			'lastname'    => $lastname,
+			'email'       => $email,
+			'profile_pic' => $profilePic,
+			'logged_in'   => true
 		]);
 	}
 

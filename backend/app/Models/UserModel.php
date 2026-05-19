@@ -35,15 +35,16 @@ class UserModel extends BaseModel
 		return $this->FirstOrNull($result->getResultArray());
 	}
 
-	public function updateUser(int $userId, string|null $profilePic, string|null $firstname, string|null $lastname, string|null $email)
+	public function updateUser(int $userId, string|null $profilePic, string|null $firstname, string|null $lastname, string|null $email, bool $removeProfilePic)
 	{
 		$params =
 		[
-			"user_id"     => $userId,
-			"first_name"  => $firstname,
-			"last_name"   => $lastname,
-			"email"       => $email,
-			"profile_pic" => $profilePic
+			'user_id'            => $userId,
+			'first_name'         => $firstname,
+			'last_name'          => $lastname,
+			'email'              => $email,
+			'profile_pi'        => $profilePic,
+			'remove_profile_pic' => $removeProfilePic
 		];
 
 		$this->db->query("
@@ -51,7 +52,11 @@ class UserModel extends BaseModel
 				`first_name`  = COALESCE(:first_name:, `first_name`),
 				`last_name`   = COALESCE(:last_name:,  `last_name`),
 				`email`       = COALESCE(:email:,      `email`),
-				`profile_pic` = :profile_pic:
+				`profile_pic` =
+					CASE
+						WHEN :remove_profile_pic: = 1 THEN NULL
+						ELSE COALESCE(:profile_pic:, `profile_pic`)
+					END,
 			WHERE id = :user_id:
 		", $params);
 	}

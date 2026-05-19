@@ -35,9 +35,9 @@ class UserService
 		return DataJson(false, 'Successflly retrieved user stats', $stats);
 	}
 
-	public function updateUser(int $userId, string|null $profilePic = null, string|null $firstname = null, string|null $lastname = null, string|null $email = null)
+	public function updateUser(int $userId, string|null $profilePic = null, string|null $firstname = null, string|null $lastname = null, string|null $email = null, bool $removeProfilePic)
 	{
-		$this->userModel->updateUser($userId, $profilePic, $firstname, $lastname, $email);
+		$this->userModel->updateUser($userId, $profilePic, $firstname, $lastname, $email, $removeProfilePic);
 
 		return SimpleJson(false, "Successfully updated a user");
 	}

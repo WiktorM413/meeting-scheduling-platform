@@ -150,15 +150,16 @@ export async function ApiGetUserStats(userId: number)
 	return response;
 }
 
-export async function ApiUpdateUser(userId: number, firstname?: string, lastname?: string, email?: string, profilePic?: string)
+export async function ApiUpdateUser(userId: number, firstname?: string, lastname?: string, email?: string, profilePic?: string, removeProfilePic: boolean = true)
 {
 	const response = await api.post("/updateUser",
 		{
-			"user_id":     userId     ?? null,
-			"first_name":  firstname  ?? null,
-			"last_name":   lastname   ?? null,
-			"email":       email      ?? null,
-			"profile_pic": profilePic ?? null
+			"user_id":            userId     ?? null,
+			"first_name":         firstname  ?? null,
+			"last_name":          lastname   ?? null,
+			"email":              email      ?? null,
+			"profile_pic":        profilePic ?? null,
+			"remove_profile_pic": removeProfilePic
 		}
 	)
 
