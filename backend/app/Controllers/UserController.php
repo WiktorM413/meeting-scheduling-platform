@@ -63,9 +63,9 @@ class UserController extends BaseController
 		}
 
 		$profilePic = isset($data['profile_pic']) ? base64_decode($data['profile_pic']) : null;
-		$firstname  = $data['first_name'];
-		$lastname   = $data['last_name'];
-		$email      = $data['email'];
+		$firstname  = $data['first_name'] ?? null;
+		$lastname   = $data['last_name']  ?? null;
+		$email      = $data['email']      ?? null;
 
 		$response = $this->userService->updateUser($profilePic, $firstname, $lastname, $email);
 

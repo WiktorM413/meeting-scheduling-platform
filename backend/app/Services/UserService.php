@@ -35,8 +35,10 @@ class UserService
 		return DataJson(false, 'Successflly retrieved user stats', $stats);
 	}
 
-	public function updateUser($profilePic, string $firstname, string $lastname, string $email)
+	public function updateUser(string|null $profilePic, string|null $firstname, string|null $lastname, string|null $email)
 	{
-		
+		$this->userModel->updateUser($profilePic, $firstname, $lastname, $email);
+
+		return SimpleJson(false, "Successfully updated a user");
 	}
 }

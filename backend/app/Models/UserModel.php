@@ -32,8 +32,25 @@ class UserModel extends BaseModel
 			LIMIT 1
 		", [$userId]);
 
-		$resultArr = $result->getResultArray();
-
 		return $this->FirstOrNull($result->getResultArray());
+	}
+
+	public function updateUser($profilePic, $firstname, $lastname, $email)
+	{
+		$params =
+		[
+			"first_name"  => $firstname,
+			"last_name"   => $lastname,
+			"email"       => $email,
+			"profile_pic" => $profilePic
+		];
+
+		$this->db->query("
+			UPDATE users SET
+				`first_name`  = COALESCE(:first_name:, `first_name`),
+				`last_name`   = COALESCE(:last_name:,  `last_name`),
+				`email`       = COALESCE(:email:,      `email`),
+				`profile_pic` = :profile_pic:
+		", $params);
 	}
 }
