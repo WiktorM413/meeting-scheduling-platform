@@ -13,6 +13,9 @@ class UserValidationRules extends BaseValidationRules
 	];
 
 	public const updateUser = [
+		'user_id' => [
+			'rules' => 'required|integer|is_not_unique[users.id]'
+		],
 		'first_name' => [
 			'rules' => 'permit_empty|string|min_length[2]'
 		],

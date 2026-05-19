@@ -5,9 +5,10 @@ import MspFileInput from "../../Components/MspFileInput/MspFileInput";
 import MspUserProfilePic from "../../Components/MspUserProfilePic";
 import { useAuth } from "../../context/AuthContext";
 import MspFormField from "../../Components/MspFormField";
+import { ApiUpdateUser } from "../../api/client";
 
 
-async function SaveChanges(profilePic: File|null, firstname: string, lastname: string, email: string)
+async function SaveChanges(userId: number, profilePic: File|null, firstname: string, lastname: string, email: string)
 {
 	const imageAsBytes = async (): Promise<string|null> =>
 	{
@@ -24,8 +25,14 @@ async function SaveChanges(profilePic: File|null, firstname: string, lastname: s
 	
 	const profilePicString: string|null = await imageAsBytes();
 
-	
-	
+	try
+	{
+		await ApiUpdateUser(userId, firstname, lastname, email, profilePicString ?? undefined);
+	}
+	catch (error)
+	{
+		console.log("Error updating user", error);
+	}
 }
 
 export default function ProfileSettingObj()
@@ -80,7 +87,7 @@ export default function ProfileSettingObj()
 				</div>
 			</div>
 			<div className="msp-profile-setting-obj-save-button">
-				<MspButton label="Save changes" onClick={() => SaveChanges(profilePic, firstname, lastname, email)}/>
+				<MspButton label="Save changes" onClick={() => SaveChanges(userData.id, profilePic, firstname, lastname, email)}/>
 			</div>
 		</div>
 	);

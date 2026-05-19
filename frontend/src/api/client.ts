@@ -150,10 +150,11 @@ export async function ApiGetUserStats(userId: number)
 	return response;
 }
 
-export async function ApiUpdateUser(firstname?: string, lastname?: string, email?: string, profilePic?: string)
+export async function ApiUpdateUser(userId: number, firstname?: string, lastname?: string, email?: string, profilePic?: string)
 {
 	const response = await api.post("/updateUser",
 		{
+			"user_id":     userId     ?? null,
 			"first_name":  firstname  ?? null,
 			"last_name":   lastname   ?? null,
 			"email":       email      ?? null,

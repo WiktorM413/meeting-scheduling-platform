@@ -35,10 +35,11 @@ class UserModel extends BaseModel
 		return $this->FirstOrNull($result->getResultArray());
 	}
 
-	public function updateUser($profilePic, $firstname, $lastname, $email)
+	public function updateUser(int $userId, string|null $profilePic, string|null $firstname, string|null $lastname, string|null $email)
 	{
 		$params =
 		[
+			"user_id"     => $userId,
 			"first_name"  => $firstname,
 			"last_name"   => $lastname,
 			"email"       => $email,
@@ -51,6 +52,7 @@ class UserModel extends BaseModel
 				`last_name`   = COALESCE(:last_name:,  `last_name`),
 				`email`       = COALESCE(:email:,      `email`),
 				`profile_pic` = :profile_pic:
+			WHERE id = :user_id:
 		", $params);
 	}
 }
