@@ -48,6 +48,8 @@ export default function UserSettings()
 	const { userId } = useParams();
 	const { userData } = useAuth();
 
+	const [activeTab, setActiveTab] = useState<ActiveTabType>({type: "profile"});
+
 	if (! userId || userData?.id != Number(userId))
 	{
 		return (
@@ -56,8 +58,6 @@ export default function UserSettings()
 			</div>
 		);
 	}
-
-	const [activeTab, setActiveTab] = useState<ActiveTabType>({type: "profile"});
 	
 	return (
 		<div className="msp-user-settings">

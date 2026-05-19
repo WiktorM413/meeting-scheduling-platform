@@ -37,7 +37,7 @@ async function SaveChanges(userId: number, profilePic: File|null, firstname: str
 
 export default function ProfileSettingObj()
 {
-	const { userData } = useAuth();
+	const { userData, refreshUser } = useAuth();
 
 	if (! userData)
 	{
@@ -46,9 +46,9 @@ export default function ProfileSettingObj()
 
 	const [profilePic,    setProfilePic]    = useState<File|null>(null);
 	const [profilePicURL, setProfilePicURL] = useState<string|null>(null);
-	const [firstname,     setFirstname]     = useState<string>(userData.first_name);
-	const [lastname,      setLastname]      = useState<string>(userData.last_name);
-	const [email,         setEmail]         = useState<string>(userData.email);
+	const [firstname,     setFirstname]     = useState<string>(userData.first_name ?? "");
+	const [lastname,      setLastname]      = useState<string>(userData.last_name  ?? "");
+	const [email,         setEmail]         = useState<string>(userData.email      ?? "");
 
 
 	const handleProfilePicChange = (file: File | null) =>
@@ -87,7 +87,12 @@ export default function ProfileSettingObj()
 				</div>
 			</div>
 			<div className="msp-profile-setting-obj-save-button">
-				<MspButton label="Save changes" onClick={() => SaveChanges(userData.id, profilePic, firstname, lastname, email)}/>
+				<MspButton label="Save changes" onClick={async () =>
+					{
+						await SaveChanges(userData.id, profilePic, firstname, lastname, email);
+						await refreshUser();
+					}}
+				/>
 			</div>
 		</div>
 	);
