@@ -29,7 +29,7 @@ class UserValidationRules extends BaseValidationRules
 			'rules' => 'permit_empty|string|regex_match[/^[A-Za-z0-9+\/]*={0,2}$/]|max_length[2097152]'
 		],
 		'remove_profile_pic' => [
-			'rules' => 'in_list[0,1]'
+			'rules' => 'permit_empty|in_list[0,1]'
 		]
 	];
 }

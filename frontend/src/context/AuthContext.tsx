@@ -33,7 +33,7 @@ export function AuthProvider({ children }: { children: ReactNode })
 	const [loggedIn,   setLoggedIn] = useState(false);
 	const [loading, setLoading] = useState(true);
 
-	const refreshUser = async (firstname?: string, lastname?: string, email?: string, profilePic?: string) =>
+	const refreshUser = async (firstname?: string, lastname?: string, email?: string) =>
 	{
 		try
 		{
@@ -45,7 +45,6 @@ export function AuthProvider({ children }: { children: ReactNode })
 					first_name:  firstname ? firstname   : sessionData.firstname,
 					last_name:   lastname  ? lastname    : sessionData.lastname,
 					email:       email     ? email       : sessionData.email,
-					profile_pic: profilePic ? profilePic : sessionData.profile_pic
 				}
 		
 			);

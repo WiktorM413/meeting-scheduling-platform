@@ -45,7 +45,7 @@ export default function ProfileSettingObj()
 		try
 		{
 			await ApiUpdateUser(userData.id, firstname, lastname, email, profilePicString ?? undefined, removeProfilePic);
-			await refreshUser(firstname, lastname, email, profilePicString ?? undefined);
+			await refreshUser();
 		}
 		catch (error)
 		{
@@ -73,7 +73,7 @@ export default function ProfileSettingObj()
 				<p className="msp-small-text">Update your personal information and public-facing details.</p>
 			</div>
 			<div className="msp-profile-setting-obj-profile-pic">
-				<MspUserProfilePic setImage={profilePicURL ?? userData.profile_pic}/>
+				<MspUserProfilePic setImage={profilePicURL ?? undefined}/>
 				<div className="msp-profile-setting-obj-profile-pic-options">
 					<p>Profile photo</p>
 					<MspFileInput label="Upload new" valueSetter={setProfilePic} onChange={handleProfilePicChange}/>

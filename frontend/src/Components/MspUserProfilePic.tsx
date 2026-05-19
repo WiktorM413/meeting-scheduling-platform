@@ -31,18 +31,8 @@ function GetImageExtension(base64Img: string): string
 export default function MspUserProfilePic({className, setImage}: MspUserProfileProps)
 {
 	const { userData } = useAuth();
-	
-	if (! setImage)
-	{
-		setImage = userData?.profile_pic;
-	}
 
-	let src = defaultProfilePic;
-	console.log(userData);
-	if (setImage)
-	{
-		src = `data:${GetImageExtension(setImage)};base64,${setImage}`;
-	}
+	const src = setImage ?? defaultProfilePic;
 	
 	console.log(src);
 	
