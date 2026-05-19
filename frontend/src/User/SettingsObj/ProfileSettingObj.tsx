@@ -38,17 +38,18 @@ async function SaveChanges(userId: number, profilePic: File|null, firstname: str
 export default function ProfileSettingObj()
 {
 	const { userData, refreshUser } = useAuth();
+	
+	const [profilePic,    setProfilePic]    = useState<File|null>(null);
+	const [profilePicURL, setProfilePicURL] = useState<string|null>(null);
+	const [firstname,     setFirstname]     = useState<string>(userData?.first_name ?? "");
+	const [lastname,      setLastname]      = useState<string>(userData?.last_name  ?? "");
+	const [email,         setEmail]         = useState<string>(userData?.email      ?? "");
 
 	if (! userData)
 	{
 		return <div className="msp-profile-setting-obj">Your user doesn't exist!</div>
 	}
 
-	const [profilePic,    setProfilePic]    = useState<File|null>(null);
-	const [profilePicURL, setProfilePicURL] = useState<string|null>(null);
-	const [firstname,     setFirstname]     = useState<string>(userData.first_name ?? "");
-	const [lastname,      setLastname]      = useState<string>(userData.last_name  ?? "");
-	const [email,         setEmail]         = useState<string>(userData.email      ?? "");
 
 
 	const handleProfilePicChange = (file: File | null) =>
@@ -90,7 +91,9 @@ export default function ProfileSettingObj()
 				<MspButton label="Save changes" onClick={async () =>
 					{
 						await SaveChanges(userData.id, profilePic, firstname, lastname, email);
-						await refreshUser();
+						console.log("Saving:", firstname, lastname, email);
+						await refreshUser(firstname, lastname, email);
+						console.log("Done relaoding");
 					}}
 				/>
 			</div>

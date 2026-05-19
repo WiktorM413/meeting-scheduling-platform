@@ -70,6 +70,11 @@ class UserController extends BaseController
 
 		$response = $this->userService->updateUser($userId, $profilePic, $firstname, $lastname, $email);
 
+		/** @var \App\Services\AuthService $authService */
+		$authService = service('authService');
+
+		$authService->setSession($userId, $firstname, $lastname, $email, 0);
+
 		return $this->response->setJSON($response);
 	}
 }
