@@ -38,10 +38,10 @@ export default function MspUserProfilePic({className, setImage}: MspUserProfileP
 	}
 
 	let src = defaultProfilePic;
-
-	if (userData?.profile_pic)
+	console.log(userData);
+	if (setImage)
 	{
-		src = `data:${GetImageExtension(userData.profile_pic)};base64,${userData.profile_pic}`;
+		src = `data:${GetImageExtension(setImage)};base64,${setImage}`;
 	}
 	
 	console.log(src);

@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { ApiMe } from "../api/client";
-import { ToUserGroup } from "../api/UserGroup";
 import { type UserData } from "../api/UserType";
 
 interface AuthContextType
@@ -8,7 +7,7 @@ interface AuthContextType
 	userData:        UserData|null;
 	loading:         boolean;
 	isAuthenticated: boolean;
-	refreshUser:     (firstname?: string, lastname?: string, email?: string) => Promise<void>;
+	refreshUser:     (firstname?: string, lastname?: string, email?: string, profilePic?: string) => Promise<void>;
 	clearAuthState:  () => void;
 }
 
@@ -34,7 +33,7 @@ export function AuthProvider({ children }: { children: ReactNode })
 	const [loggedIn,   setLoggedIn] = useState(false);
 	const [loading, setLoading] = useState(true);
 
-	const refreshUser = async (firstname?: string, lastname?: string, email?: string) =>
+	const refreshUser = async (firstname?: string, lastname?: string, email?: string, profilePic?: string) =>
 	{
 		try
 		{
@@ -42,12 +41,11 @@ export function AuthProvider({ children }: { children: ReactNode })
 			
 			setUserData(
 				{
-					id:         sessionData.user_id,
-					first_name: firstname ? firstname : sessionData.firstname,
-					last_name:  lastname  ? lastname  : sessionData.lastname,
-					email:      email     ? email     : sessionData.email,
-					user_group: ToUserGroup(sessionData.user_group),
-					profile_pic: sessionData.profile_pic
+					id:          sessionData.user_id,
+					first_name:  firstname ? firstname   : sessionData.firstname,
+					last_name:   lastname  ? lastname    : sessionData.lastname,
+					email:       email     ? email       : sessionData.email,
+					profile_pic: profilePic ? profilePic : sessionData.profile_pic
 				}
 		
 			);

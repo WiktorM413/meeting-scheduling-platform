@@ -8,53 +8,55 @@ import MspFormField from "../../Components/MspFormField";
 import { ApiUpdateUser } from "../../api/client";
 
 
-async function SaveChanges(userId: number, profilePic: File|null, firstname: string, lastname: string, email: string)
-{
-	const imageAsBytes = async (): Promise<string|null> =>
-	{
-		if (! profilePic)
-		{
-			return null;
-		}
-
-		const buffer = await profilePic.arrayBuffer();
-		const bytes = new Uint8Array(buffer);
-
-		return bytes.toString();
-	}
-	
-	const profilePicString: string|null = await imageAsBytes();
-
-	try
-	{
-		await ApiUpdateUser(userId, firstname, lastname, email, profilePicString ?? undefined);
-	}
-	catch (error)
-	{
-		console.log("Error updating user", error);
-	}
-}
-
 export default function ProfileSettingObj()
 {
 	const { userData, refreshUser } = useAuth();
 	
-	const [profilePic,    setProfilePic]    = useState<File|null>(null);
-	const [profilePicURL, setProfilePicURL] = useState<string|null>(null);
-	const [firstname,     setFirstname]     = useState<string>(userData?.first_name ?? "");
-	const [lastname,      setLastname]      = useState<string>(userData?.last_name  ?? "");
-	const [email,         setEmail]         = useState<string>(userData?.email      ?? "");
+	const [profilePic,       setProfilePic]       = useState<File|null>(null);
+	const [profilePicURL,    setProfilePicURL]    = useState<string|null>(null);
+	const [firstname,        setFirstname]        = useState<string>(userData?.first_name ?? "");
+	const [lastname,         setLastname]         = useState<string>(userData?.last_name  ?? "");
+	const [email,            setEmail]            = useState<string>(userData?.email      ?? "");
+	const [removeProfilePic, setRemoveProfilePic] = useState<boolean>(false);
 
 	if (! userData)
 	{
 		return <div className="msp-profile-setting-obj">Your user doesn't exist!</div>
 	}
 
+	const saveChanges = async () =>
+	{
+		const imageAsBase64 = async (): Promise<string|null> =>
+		{
+			if (! profilePic)
+			{
+				return null;
+			}
 
+			const buffer = await profilePic.arrayBuffer();
+			const bytes  = new Uint8Array(buffer);
+			const binary = bytes.reduce((acc, byte) => acc + String.fromCharCode(byte), '');
 
-	const handleProfilePicChange = (file: File | null) =>
+			return btoa(binary);
+		}
+		
+		const profilePicString: string|null = await imageAsBase64();
+
+		try
+		{
+			await ApiUpdateUser(userData.id, firstname, lastname, email, profilePicString ?? undefined, removeProfilePic);
+			await refreshUser(firstname, lastname, email, profilePicString ?? undefined);
+		}
+		catch (error)
+		{
+			console.log("Error updating user", error);
+		}
+	}
+
+	const handleProfilePicChange = (file: File | null, removeProfilePic: boolean = false) =>
 	{
 		setProfilePic(file);
+		setRemoveProfilePic(removeProfilePic);
 
 		if (profilePicURL)
 		{
@@ -75,7 +77,7 @@ export default function ProfileSettingObj()
 				<div className="msp-profile-setting-obj-profile-pic-options">
 					<p>Profile photo</p>
 					<MspFileInput label="Upload new" valueSetter={setProfilePic} onChange={handleProfilePicChange}/>
-					<MspButton label="Remove" onClick={() => handleProfilePicChange(null)}/>
+					<MspButton label="Remove" onClick={() => handleProfilePicChange(null, true)}/>
 				</div>
 			</div>
 			<div className="msp-profile-setting-obj-credentials">
@@ -90,7 +92,7 @@ export default function ProfileSettingObj()
 			<div className="msp-profile-setting-obj-save-button">
 				<MspButton label="Save changes" onClick={async () =>
 					{
-						await SaveChanges(userData.id, profilePic, firstname, lastname, email);
+						await saveChanges();
 						await refreshUser(firstname, lastname, email);
 					}}
 				/>
