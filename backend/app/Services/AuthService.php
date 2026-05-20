@@ -76,7 +76,6 @@ class AuthService
 			'firstname'   => $firstname,
 			'lastname'    => $lastname,
 			'email'       => $email,
-			// 'profile_pic' => $profilePic,
 			'logged_in'   => true
 		]);
 	}
