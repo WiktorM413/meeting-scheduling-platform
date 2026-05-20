@@ -7,7 +7,7 @@ import HandleResponse from "../api/HandleResponse";
 type MspUserProfileProps =
 {
 	className?: string;
-	setImage?:  string;
+	setImage?:  string|null;
 }
 
 function GetImageExtension(base64Img: string): string
@@ -69,9 +69,9 @@ export default function MspUserProfilePic({className, setImage}: MspUserProfileP
 	
 	let src: string;
 
-	if (setImage)
+	if (setImage !== undefined)
 	{
-		src = setImage;
+		src = setImage ?? defaultProfilePic;
 	}
 	else if (profilePic)
 	{

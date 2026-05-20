@@ -32,7 +32,6 @@ export default function MspFileInput({valueSetter, onChange, accept, className, 
 		{
 			inputRef.current.value = "";
 		}
-		onChange?.(null);
 	}
 
 	return (
