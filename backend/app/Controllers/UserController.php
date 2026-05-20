@@ -53,6 +53,20 @@ class UserController extends BaseController
 		return $this->response->setJSON($response);
 	}
 
+	public function getProfilePic()
+	{
+		$data = $this->request->getJSON(true);
+
+		if (! $this->validateData($data, UserValidationRules::userId))
+		{
+			return $this->response->setJSON(UserValidationRules::validationErrorsToJSON($this->validator->getErrors()));
+		}
+
+		$userId = $data['user_id'];
+
+		$response = $this->userService->getProfilePic($userId);
+	}
+
 	public function updateUser()
 	{
 		$data = $this->request->getJSON(true);
@@ -76,10 +90,7 @@ class UserController extends BaseController
 
 		$session = $authService->getSession();
 
-		return $this->response->setJSON($session);
-		$newProfilePic = $removeProfilePic ? null : (!empty($profilePic) ? trim($profilePic) : $session['profile_pic']);
-
-		$authService->setSession($userId, $firstname ?? $session['firstname'], $lastname ?? $session['lastname'], $email ?? $session['email'], $newProfilePic);
+		$authService->setSession($userId, $firstname ?? $session['firstname'], $lastname ?? $session['lastname'], $email ?? $session['email']);
 
 		return $this->response->setJSON($response);
 	}

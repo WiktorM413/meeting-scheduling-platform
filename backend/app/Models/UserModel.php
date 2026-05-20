@@ -35,6 +35,17 @@ class UserModel extends BaseModel
 		return $this->FirstOrNull($result->getResultArray());
 	}
 
+	public function getProfilePic(int $userId)
+	{
+		$result = $this->db->query("
+			SELECT `profile_pic` FROM `users`
+			WHERE id = ?
+			LIMIT 1
+		", [$userId]);
+
+		return $this->FirstOrNull($result->getResultArray());
+	}
+	
 	public function updateUser(int $userId, string|null $profilePic, string|null $firstname, string|null $lastname, string|null $email, bool $removeProfilePic)
 	{
 		$params =
