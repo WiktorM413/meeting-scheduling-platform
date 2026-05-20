@@ -165,3 +165,14 @@ export async function ApiUpdateUser(userId: number, firstname?: string, lastname
 
 	return response;
 }
+
+export async function ApigetProfilePic(userId:number)
+{
+	const response = await api.post("/getProfilePic",
+		{
+			"user_id": userId
+		}
+	)
+	
+	return response;
+}

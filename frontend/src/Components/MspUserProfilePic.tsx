@@ -1,5 +1,8 @@
+import { useEffect, useState } from "react";
 import defaultProfilePic from "../assets/default-profile-pic.svg";
 import { useAuth } from "../context/AuthContext";
+import { ApigetProfilePic } from "../api/client";
+import HandleResponse from "../api/HandleResponse";
 
 type MspUserProfileProps =
 {
@@ -31,8 +34,52 @@ function GetImageExtension(base64Img: string): string
 export default function MspUserProfilePic({className, setImage}: MspUserProfileProps)
 {
 	const { userData } = useAuth();
+	const [profilePic, setProfilePic] = useState<string|null>(null);
 
-	const src = setImage ?? defaultProfilePic;
+	const getProfilePicInBase64 = async () =>
+	{
+		try
+		{
+			if (! userData)
+			{
+				console.log("User is not logged in");
+				return;
+			}
+
+			const response = await ApigetProfilePic(userData.id);
+			const handled  = HandleResponse(response);
+
+			if (handled.type === "success")
+			{
+				setProfilePic(handled.data.profile_pic);
+			}
+		}
+		catch (error)
+		{
+			console.log("Error while retrieving profile pic:", error);
+		}
+	}
+
+	useEffect(() =>
+	{
+		getProfilePicInBase64();
+	}, [userData]);
+
+	
+	
+	let src: string;
+	if (setImage)
+	{
+		src = setImage;
+	}
+	else if (profilePic)
+	{
+		src = `data:${GetImageExtension(profilePic)};base64,${profilePic}`;
+	}
+	else
+	{
+		src = defaultProfilePic;
+	}
 	
 	console.log(src);
 	

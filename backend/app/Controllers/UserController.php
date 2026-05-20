@@ -65,6 +65,8 @@ class UserController extends BaseController
 		$userId = $data['user_id'];
 
 		$response = $this->userService->getProfilePic($userId);
+
+		return $this->response->setJSON($response);
 	}
 
 	public function updateUser()
