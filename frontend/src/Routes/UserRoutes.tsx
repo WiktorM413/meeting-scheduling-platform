@@ -9,7 +9,7 @@ const UserRoutes: RouteObject[] =
 		element: <UserProfile />
 	},
 	{
-		path:    "/editUser/:userId",
+		path:    "/userSettings/:userId",
 		element: <UserSettings />
 	}
 ]

@@ -129,7 +129,7 @@ export default function UserProfile()
 					<p className="msp-small-text">{user?.email}</p>
 				</div>
 				<div className="msp-user-profile-header-settings">
-					<MspAnchor label="" navigator={navigate} to={`/editUser/${user?.id}`}>
+					<MspAnchor label="" navigator={navigate} to={`/userSettings/${user?.id}`}>
 						<img src={SettingsIcon}/>
 					</MspAnchor>
 				</div>
