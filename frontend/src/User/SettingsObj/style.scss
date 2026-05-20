@@ -1,0 +1,118 @@
+@import "../../variables.scss";
+@import "../../animations.scss";
+
+.msp-profile-setting-obj
+{
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	animation: fadeUp 0.4s ease;
+
+	&-header
+	{
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+
+		h2
+		{
+			margin: 0;
+			font-size: 1.4rem;
+			font-weight: 500;
+			color: #ddd;
+		}
+
+		p
+		{
+			margin: 0;
+			font-size: 1rem;
+			color: #898989;
+		}
+	}
+
+	&-profile-pic
+	{
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+
+		img
+		{
+			width: 4rem;
+		}
+
+		&-options
+		{
+			display: flex;
+			flex-direction: column;
+			gap: 0.6rem;
+
+			p
+			{
+				margin: 0;
+				font-size: 1rem;
+				color: #898989;
+			}
+			
+			.msp-button
+			{
+				width: auto;
+				padding: 0.6rem 1.2rem;
+				font-size: 0.95rem;
+				background-color: transparent;
+				border: 1px solid #3a3a3a;
+				color: #ddd;
+				box-shadow: none;
+
+				&:hover
+				{
+					background-color: #2a2a2a;
+					box-shadow: none;
+					transform: translateY(-1px);
+				}
+			}
+		}
+	}
+
+	&-credentials
+	{
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+
+		&-name
+		{
+			display: flex;
+			gap: 2.5rem;
+
+			.msp-form-field input
+			{
+				width: 100%;
+			}
+		}
+
+		&-email
+		{
+			.msp-form-field input
+			{
+				width: 100%;
+			}
+		}
+	}
+
+	&-save-button
+	{
+		display: flex;
+		justify-content: flex-end;
+		padding-top: 0.5rem;
+		border-top: 1px solid #2a2a2a;
+	}
+}
+
+@media (prefers-reduced-motion: reduce)
+{
+	.msp-profile-setting-obj
+	{
+		animation: none;
+	}
+}

@@ -52,4 +52,48 @@ class UserController extends BaseController
 
 		return $this->response->setJSON($response);
 	}
+
+	public function getProfilePic()
+	{
+		$data = $this->request->getJSON(true);
+
+		if (! $this->validateData($data, UserValidationRules::userId))
+		{
+			return $this->response->setJSON(UserValidationRules::validationErrorsToJSON($this->validator->getErrors()));
+		}
+
+		$userId = $data['user_id'];
+
+		$response = $this->userService->getProfilePic($userId);
+
+		return $this->response->setJSON($response);
+	}
+
+	public function updateUser()
+	{
+		$data = $this->request->getJSON(true);
+
+		if (! $this->validateData($data, UserValidationRules::updateUser))
+		{
+			return $this->response->setJSON(UserValidationRules::validationErrorsToJSON($this->validator->getErrors()));
+		}
+
+		$userId           = $data['user_id'];
+		$profilePic       = $data['profile_pic']        ?? null;
+		$firstname        = $data['first_name']         ?? null;
+		$lastname         = $data['last_name']          ?? null;
+		$email            = $data['email']              ?? null;
+		$removeProfilePic = $data['remove_profile_pic'] ?? false;
+
+		$response = $this->userService->updateUser($userId, $profilePic, $firstname, $lastname, $email, $removeProfilePic);
+
+		/** @var \App\Services\AuthService $authService */
+		$authService = service('authService');
+
+		$session = $authService->getSession();
+
+		$authService->setSession($userId, $firstname ?? $session['firstname'], $lastname ?? $session['lastname'], $email ?? $session['email']);
+
+		return $this->response->setJSON($response);
+	}
 }
