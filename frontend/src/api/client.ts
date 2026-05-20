@@ -159,7 +159,7 @@ export async function ApiUpdateUser(userId: number, firstname?: string, lastname
 			"last_name":          lastname   ?? null,
 			"email":              email      ?? null,
 			"profile_pic":        profilePic ?? null,
-			"remove_profile_pic": removeProfilePic
+			"remove_profile_pic": removeProfilePic ? 1 : 0
 		}
 	)
 

@@ -68,6 +68,7 @@ export default function MspUserProfilePic({className, setImage}: MspUserProfileP
 	
 	
 	let src: string;
+
 	if (setImage)
 	{
 		src = setImage;
@@ -80,9 +81,7 @@ export default function MspUserProfilePic({className, setImage}: MspUserProfileP
 	{
 		src = defaultProfilePic;
 	}
-	
-	console.log(src);
-	
+		
 	return (
 		<img className={`msp-user-profile-pic ${className ? className : ""}`} src={src} alt="Profile"/>
 	);
