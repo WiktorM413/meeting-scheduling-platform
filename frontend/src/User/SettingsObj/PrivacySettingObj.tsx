@@ -1,16 +1,53 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MspSwitchInput from "../../Components/MspSwitchInput";
 import MspButton from "../../Components/MspButton";
+import { useAuth } from "../../context/AuthContext";
+import { ApiGetUserSettings } from "../../api/client";
+import HandleResponse from "../../api/HandleResponse";
+import { type UserSettingsType } from "../../api/UserSettingsType";
 
 export default function PrivacySettingObj()
 {
+	const { userData } = useAuth();
+
+	const [userSettings,  setUserSettings]  = useState<UserSettingsType|null>(null);
 	const [publicProfile, setPublicProfile] = useState(1);
 	const [showEmail,     setShowEmail]     = useState(1);
 
+	if (! userData)
+	{
+		return <div className="msp-privacy-setting-obj">Your user doesn't exist</div>
+	}
+	
 	const saveChanges = async () =>
 	{
 
 	}
+
+	useEffect(() =>
+	{
+		const loadUserSettings = async () =>
+		{
+			try
+			{
+				const response = await ApiGetUserSettings(userData.id);
+				const handled  = HandleResponse(response);
+
+				if (handled.type === "success")
+				{
+					setUserSettings(handled.data);
+					setPublicProfile(handled.data.public_profile);
+					setShowEmail(handled.data.show_email);
+				}
+			}
+			catch (error)
+			{
+				console.log("Error retrieving user settings:", error);
+			}
+		}
+
+		loadUserSettings();
+	}, []);
 	
 	return (
 		<div className="msp-privacy-setting-obj">
