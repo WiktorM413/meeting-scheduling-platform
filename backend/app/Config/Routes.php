@@ -24,9 +24,10 @@ $routes->group('api', function ($routes) {
 	$routes->post('createMeeting',       [MeetingsController::class, 'createMeeting']);
 	$routes->post('editMeeting',         [MeetingsController::class, 'editMeeting']);
 
-	$routes->get ('getAllUsers',   [UserController::class, 'getAllUsers']);
-	$routes->post('getUserById',   [UserController::class, 'getUserById']);
-	$routes->post('getUserStats',  [UserController::class, 'getUserStats']);
-	$routes->post("getProfilePic", [UserController::class, 'getProfilePic']);
-	$routes->post('updateUser',    [UserController::class, 'updateUser']);
+	$routes->get ('getAllUsers',     [UserController::class, 'getAllUsers']);
+	$routes->post('getUserById',     [UserController::class, 'getUserById']);
+	$routes->post('getUserStats',    [UserController::class, 'getUserStats']);
+	$routes->post("getProfilePic",   [UserController::class, 'getProfilePic']);
+	$routes->post('getUserSettings', [UserController::class, 'getUserSettings']);
+	$routes->post('updateUser',      [UserController::class, 'updateUser']);
 });

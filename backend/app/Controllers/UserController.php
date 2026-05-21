@@ -68,6 +68,22 @@ class UserController extends BaseController
 
 		return $this->response->setJSON($response);
 	}
+	
+	public function getUserSettings()
+	{
+		$data = $this->request->getJSON(true);
+
+		if (! $this->validateData($data, UserValidationRules::userId))
+		{
+			return $this->response->setJSON(UserValidationRules::validationErrorsToJSON($this->validator->getErrors()));
+		}
+
+		$userId = $data['user_id'];
+
+		$response = $this->userService->getUserSettings($userId);
+
+		return $this->response->setJSON($response);
+	}
 
 	public function updateUser()
 	{
