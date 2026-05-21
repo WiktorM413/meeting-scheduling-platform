@@ -47,10 +47,24 @@ class UserService
 		return DataJson(false, "Successfully retrieved user profile pic", $profilePic);
 	}
 
+	public function getUserSettings(int $userId)
+	{
+		$userSettings = $this->userModel->getUserSettings($userId);
+
+		return DataJson(false, "Successflly retrieved user settings", $userSettings);
+	}
+	
 	public function updateUser(int $userId, string|null $profilePic = null, string|null $firstname = null, string|null $lastname = null, string|null $email = null, bool $removeProfilePic)
 	{
 		$this->userModel->updateUser($userId, $profilePic, $firstname, $lastname, $email, $removeProfilePic);
 
 		return SimpleJson(false, "Successfully updated a user");
+	}
+
+	public function updateUserSettings(int $userId, int|null $publicProfile = null, int|null $showEmail = null)
+	{
+		$this->userModel->updateUserSettings($userId, $publicProfile, $showEmail);
+
+		return SimpleJson(false, "Successfully updated user settings");
 	}
 }

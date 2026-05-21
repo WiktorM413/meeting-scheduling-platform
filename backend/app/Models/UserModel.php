@@ -46,6 +46,17 @@ class UserModel extends BaseModel
 		return $this->FirstOrNull($result->getResultArray());
 	}
 	
+	public function getUserSettings(int $userId)
+	{
+		$result = $this->db->query("
+			SELECT * FROM `user_settings`
+			WHERE `user_id` = :user_id:
+			LIMIT 1
+		", ["user_id" => $userId]);
+
+		return $this->FirstOrNull($result->getResultArray());
+	}
+	
 	public function updateUser(int $userId, string|null $profilePic, string|null $firstname, string|null $lastname, string|null $email, bool $removeProfilePic)
 	{
 		$params =
@@ -69,6 +80,23 @@ class UserModel extends BaseModel
 						ELSE COALESCE(:profile_pic:, `profile_pic`)
 					END
 			WHERE id = :user_id:
+		", $params);
+	}
+
+	public function updateUserSettings(int $userId, int|null $publicProfile, int|null $showEmail)
+	{
+		$params =
+		[
+			"public_profile" => $publicProfile,
+			"show_email"     => $showEmail,
+			"user_id"        => $userId
+		];
+		
+		$this->db->query("
+			UPDATE `user_settings` SET
+				`public_profile` = COALESCE(:public_profile:, `public_profile`),
+				`show_email`     = COALESCE(:show_email:,     `show_email`)
+			WHERE user_id = :user_id:
 		", $params);
 	}
 }

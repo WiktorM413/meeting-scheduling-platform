@@ -32,4 +32,16 @@ class UserValidationRules extends BaseValidationRules
 			'rules' => 'permit_empty|in_list[0,1]'
 		]
 	];
+
+	public const updateUserSettings = [
+		'user_id' => [
+			'rules' => 'required|integer|is_not_unique[users.id]'
+		],
+		'public_profile' => [
+			'rules' => 'permit_empty|in_list[0,1]'
+		],
+		'show_email' => [
+			'rules' => 'permit_empty|in_list[0,1]'
+		]
+	];
 }

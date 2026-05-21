@@ -21,7 +21,16 @@ class AuthModel extends BaseModel
 				(:first_name:, :last_name:, :email:, :password:, NULL)
 		", $params);
 
-		return $this->getUserByEmail($email)['id'];
+		$userId = $this->db->insertID();
+		
+		$this->db->query("
+			INSERT INTO `user_settings`
+				(user_id)
+				VALUES
+				(:user_id:)
+		", ["user_id" => $userId]);
+
+		return $userId;
 	}
 
 	public function getUserByEmail($email)

@@ -68,6 +68,22 @@ class UserController extends BaseController
 
 		return $this->response->setJSON($response);
 	}
+	
+	public function getUserSettings()
+	{
+		$data = $this->request->getJSON(true);
+
+		if (! $this->validateData($data, UserValidationRules::userId))
+		{
+			return $this->response->setJSON(UserValidationRules::validationErrorsToJSON($this->validator->getErrors()));
+		}
+
+		$userId = $data['user_id'];
+
+		$response = $this->userService->getUserSettings($userId);
+
+		return $this->response->setJSON($response);
+	}
 
 	public function updateUser()
 	{
@@ -93,6 +109,24 @@ class UserController extends BaseController
 		$session = $authService->getSession();
 
 		$authService->setSession($userId, $firstname ?? $session['firstname'], $lastname ?? $session['lastname'], $email ?? $session['email']);
+
+		return $this->response->setJSON($response);
+	}
+
+	public function updateUserSettings()
+	{
+		$data = $this->request->getJSON(true);
+
+		if (! $this->validateData($data, UserValidationRules::updateUserSettings))
+		{
+			return $this->response->setJSON(UserValidationRules::validationErrorsToJSON($this->validator->getErrors()));
+		}
+
+		$userId =        $data['user_id'];
+		$publicProfile = $data['public_profile'] ?? null;
+		$showEmail =     $data['show_email']     ?? null;
+
+		$response = $this->userService->updateUserSettings($userId, $publicProfile, $showEmail);
 
 		return $this->response->setJSON($response);
 	}

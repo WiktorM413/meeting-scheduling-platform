@@ -13,7 +13,7 @@ export default function ProfileSettingObj()
 	const { userData, refreshUser } = useAuth();
 	
 	const [profilePic,       setProfilePic]       = useState<File|null>(null);
-	const [profilePicURL,    setProfilePicURL]    = useState<string|null>(null);
+	const [profilePicURL,    setProfilePicURL]    = useState<string|null|undefined>(undefined);
 	const [firstname,        setFirstname]        = useState<string>(userData?.first_name ?? "");
 	const [lastname,         setLastname]         = useState<string>(userData?.last_name  ?? "");
 	const [email,            setEmail]            = useState<string>(userData?.email      ?? "");
