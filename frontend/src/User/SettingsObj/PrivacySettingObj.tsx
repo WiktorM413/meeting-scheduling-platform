@@ -1,3 +1,4 @@
+import "./style.scss";
 import { useEffect, useState } from "react";
 import MspSwitchInput from "../../Components/MspSwitchInput";
 import MspButton from "../../Components/MspButton";
