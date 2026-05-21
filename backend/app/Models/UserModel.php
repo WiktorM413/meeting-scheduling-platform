@@ -82,4 +82,21 @@ class UserModel extends BaseModel
 			WHERE id = :user_id:
 		", $params);
 	}
+
+	public function updateUserSettings(int $userId, int $publicProfile, int $showEmail)
+	{
+		$params =
+		[
+			"public_profile" => $publicProfile,
+			"show_email"     => $showEmail,
+			"user_id"        => $userId
+		];
+		
+		$this->db->query("
+			UPDATE `user_settings` SET
+				`public_profile` = COALESCE(:public_profile:, `public_profile`),
+				`show_email`     = COALESCE(:show_email:,     `show_email)
+			WHERE user_id = :user_id:
+		", $params);
+	}
 }

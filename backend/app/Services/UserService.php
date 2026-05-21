@@ -60,4 +60,11 @@ class UserService
 
 		return SimpleJson(false, "Successfully updated a user");
 	}
+
+	public function updateUserSettings(int $userId, int $publicProfile, int $showEmail)
+	{
+		$this->userModel->updateUserSettings($userId, $publicProfile, $showEmail);
+
+		return SimpleJson(false, "Successfully updated user settings");
+	}
 }
