@@ -187,3 +187,16 @@ export async function ApiGetUserSettings(userId: number)
 
 	return response;
 }
+
+export async function ApiUpdateUserSettings(userId: number, publicProfile?: number, showEmail?: number)
+{
+	const response = await api.post("/updateUserSettings",
+		{
+			"user_id":        userId,
+			"public_profile": publicProfile ?? null,
+			"show_email":     showEmail ?? null
+		}
+	)
+
+	return response;
+}
