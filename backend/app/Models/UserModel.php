@@ -83,7 +83,7 @@ class UserModel extends BaseModel
 		", $params);
 	}
 
-	public function updateUserSettings(int $userId, int $publicProfile, int $showEmail)
+	public function updateUserSettings(int $userId, int|null $publicProfile, int|null $showEmail)
 	{
 		$params =
 		[
@@ -95,7 +95,7 @@ class UserModel extends BaseModel
 		$this->db->query("
 			UPDATE `user_settings` SET
 				`public_profile` = COALESCE(:public_profile:, `public_profile`),
-				`show_email`     = COALESCE(:show_email:,     `show_email)
+				`show_email`     = COALESCE(:show_email:,     `show_email`)
 			WHERE user_id = :user_id:
 		", $params);
 	}
