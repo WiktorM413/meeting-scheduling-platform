@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import type { UserData } from "../api/UserType";
-import { ApiGetUpcomingMeetings, ApiGetUserById, ApiGetUserStats } from "../api/client";
+import { ApiGetUpcomingMeetings, ApiGetUserById, ApiGetUserSettings, ApiGetUserStats } from "../api/client";
 import HandleResponse from "../api/HandleResponse";
 import MspUserProfilePic from "../Components/MspUserProfilePic";
 import type { MeetingType } from "../api/MeetingType";
@@ -12,6 +12,7 @@ import { FormatDate } from "../utils/dateUtils";
 import { FormatTime } from "../utils/time";
 import MspAnchor from "../Components/MspAnchor";
 import SettingsIcon from "../assets/settings-icon.svg";
+import { type UserSettingsType } from "../api/UserSettingsType";
 
 export default function UserProfile()
 {
@@ -31,6 +32,7 @@ export default function UserProfile()
 	const [isCurrentUser,    setIsCurrentUser]    = useState(false);
 	const [upcomingMeetings, setUpcomingMeetings] = useState<MeetingType[]|null>(null);
 	const [userStats,        setUserStats]        = useState<UserStatsType|null>(null);
+	const [userSettings,     setUserSettings]     = useState<UserSettingsType|null>(null);
 
 	const navigate = useNavigate();
 
@@ -103,6 +105,24 @@ export default function UserProfile()
 			}
 		}
 
+		const loadUserSettings = async (resolvedUser: UserData) =>
+		{
+			try
+			{
+				const response = await ApiGetUserSettings(resolvedUser.id);
+				const handled  = HandleResponse(response);
+
+				if (handled.type === "success")
+				{
+					setUserSettings(handled.data);
+				}
+			}
+			catch (error)
+			{
+				console.log("Error while retrieving user settings:", error);
+			}
+		}
+
 		async function Load()
 		{
 			const resolvedUser = await loadUser();
@@ -113,11 +133,17 @@ export default function UserProfile()
 
 			await loadUpcomingMeetings(resolvedUser);
 			await loadUserStats(resolvedUser);
+			await loadUserSettings(resolvedUser);
 		}
 
 		Load();
 	}, [userId, userData]);
 	
+	if (! Number(userSettings?.public_profile) && ! isCurrentUser)
+	{
+		return <div className="msp-user-profile">User profile is private.</div>
+	}
+
 	return (
 		<div className="msp-user-profile">
 			<div className="msp-user-profile-header">
@@ -126,7 +152,13 @@ export default function UserProfile()
 				</div>
 				<div className="msp-user-profile-header-user-info">
 					<h2>{isCurrentUser ? "Hello," : "Meet"} {user?.first_name} {user?.last_name}.</h2>
-					<p className="msp-small-text">{user?.email}</p>
+					<p className="msp-small-text">
+						{Number(userSettings?.show_email) || isCurrentUser ?
+							user?.email
+						:
+							""
+						}
+					</p>
 				</div>
 				<div className="msp-user-profile-header-settings">
 					<MspAnchor label="" navigator={navigate} to={`/userSettings/${user?.id}`}>
