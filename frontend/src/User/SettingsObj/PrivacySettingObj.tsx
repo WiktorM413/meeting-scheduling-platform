@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import MspSwitchInput from "../../Components/MspSwitchInput";
 import MspButton from "../../Components/MspButton";
 import { useAuth } from "../../context/AuthContext";
-import { ApiGetUserSettings } from "../../api/client";
+import { ApiGetUserSettings, ApiUpdateUserSettings } from "../../api/client";
 import HandleResponse from "../../api/HandleResponse";
 import { type UserSettingsType } from "../../api/UserSettingsType";
 
@@ -21,7 +21,14 @@ export default function PrivacySettingObj()
 	
 	const saveChanges = async () =>
 	{
-
+		try
+		{
+			await ApiUpdateUserSettings(userData.id, publicProfile, showEmail);
+		}
+		catch (error)
+		{
+			console.log("Error updating the user:", error);
+		}
 	}
 
 	useEffect(() =>
