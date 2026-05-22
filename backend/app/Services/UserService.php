@@ -81,4 +81,11 @@ class UserService
 
 		return SimpleJson(false, "Successfully updated password");
 	}
+
+	public function deleteUser(int $userId)
+	{
+		$this->userModel->deleteUser($userId);
+
+		return SimpleJson(false, "Successfully deleted user");
+	}
 }

@@ -32,4 +32,5 @@ $routes->group('api', function ($routes) {
 	$routes->post('updateUser',         [UserController::class, 'updateUser']);
 	$routes->post('updateUserSettings', [UserController::class, 'updateUserSettings']);
 	$routes->post('updatePassword',     [UserController::class, 'updatePassword']);
+	$routes->post('deleteUser',         [UserController::class], 'deleteUser');
 });
