@@ -99,4 +99,64 @@ class UserModel extends BaseModel
 			WHERE user_id = :user_id:
 		", $params);
 	}
+
+	public function updatePassword(int $userId, string $newPasswordHash)
+	{
+		$params =
+		[
+			"user_id"      => $userId,
+			"new_password" => $newPasswordHash
+		];
+
+		$this->db->query("
+			UPDATE users SET
+				password = :new_password:
+			WHERE id = :user_id:
+		", $params);
+	}
+
+	public function deleteUser(int $userId)
+	{
+		$params =
+		[
+			"user_id" => $userId
+		];
+
+		$result = $this->db->query("
+			SELECT `unique_id` FROM `meetings` WHERE
+				`provider_id` = :user_id:
+		", $params);
+
+		$meetingsToDelete = $result->getResultArray();
+
+		$ids = array_column($meetingsToDelete, 'unique_id');
+
+		foreach ($ids as $id)
+		{
+			$this->db->query("
+				DELETE FROM meeting_participants WHERE
+					meeting_id = ?
+			", [$id]);
+		}
+
+		$this->db->query("
+			DELETE FROM meetings WHERE
+				provider_id = :user_id:
+		", $params);
+
+		$this->db->query("
+			DELETE FROM user_stats WHERE
+				user_id = :user_id:
+		", $params);
+
+		$this->db->query("
+			DELETE FROM user_settings WHERE
+				user_id = :user_id:
+		", $params);
+
+		$this->db->query("
+			DELETE FROM users WHERE
+				id = :user_id:
+		", $params);
+	}
 }

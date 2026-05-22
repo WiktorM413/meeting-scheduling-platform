@@ -138,6 +138,11 @@ export default function UserProfile()
 
 		Load();
 	}, [userId, userData]);
+
+	if (! user)
+	{
+		return <div className="msp-user-profile">User doesn't exist</div>
+	}
 	
 	if (! Number(userSettings?.public_profile) && ! isCurrentUser)
 	{
@@ -148,7 +153,7 @@ export default function UserProfile()
 		<div className="msp-user-profile">
 			<div className="msp-user-profile-header">
 				<div className="msp-user-profile-header-profile-pic">
-					<MspUserProfilePic />
+					<MspUserProfilePic userId={user.id}/>
 				</div>
 				<div className="msp-user-profile-header-user-info">
 					<h2>{isCurrentUser ? "Hello," : "Meet"} {user?.first_name} {user?.last_name}.</h2>
@@ -160,11 +165,13 @@ export default function UserProfile()
 						}
 					</p>
 				</div>
-				<div className="msp-user-profile-header-settings">
-					<MspAnchor label="" navigator={navigate} to={`/userSettings/${user?.id}`}>
-						<img src={SettingsIcon}/>
-					</MspAnchor>
-				</div>
+				{isCurrentUser &&
+					<div className="msp-user-profile-header-settings">
+						<MspAnchor label="" navigator={navigate} to={`/userSettings/${user?.id}`}>
+							<img src={SettingsIcon}/>
+						</MspAnchor>
+					</div>
+				}
 			</div>
 			<div className="msp-user-profile-info">
 				<div className="msp-user-profile-info-box">

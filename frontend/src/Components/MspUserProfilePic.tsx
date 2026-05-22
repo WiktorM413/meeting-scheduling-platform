@@ -8,6 +8,7 @@ type MspUserProfileProps =
 {
 	className?: string;
 	setImage?:  string|null;
+	userId?:    number;
 }
 
 function GetImageExtension(base64Img: string): string
@@ -31,7 +32,7 @@ function GetImageExtension(base64Img: string): string
 	return 'image/jpeg';
 }
 
-export default function MspUserProfilePic({className, setImage}: MspUserProfileProps)
+export default function MspUserProfilePic({className, setImage, userId}: MspUserProfileProps)
 {
 	const { userData } = useAuth();
 	const [profilePic, setProfilePic] = useState<string|null>(null);
@@ -60,9 +61,33 @@ export default function MspUserProfilePic({className, setImage}: MspUserProfileP
 		}
 	}
 
+	const getUserProfilePic = async () =>
+	{
+		if (! userId)
+		{
+			return;
+		}
+
+		try
+		{
+			let response = await ApigetProfilePic(userId);
+			let handled  = HandleResponse(response);
+
+			if (handled.type === "success")
+			{
+				setProfilePic(handled.data.profile_pic);
+			}
+		}
+		catch (error)
+		{
+			console.log("Error while retrieving profile pic:", error);
+		}
+	}
+
 	useEffect(() =>
 	{
 		getProfilePicInBase64();
+		getUserProfilePic();
 	}, [userData]);
 
 	
