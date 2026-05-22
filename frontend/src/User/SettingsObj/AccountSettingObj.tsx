@@ -5,6 +5,7 @@ import { popup } from "../../Components/MspPopup/PopupManager";
 import { useAuth } from "../../context/AuthContext";
 import { ApiUpdateUserPassword } from "../../api/client";
 import HandleResponse from "../../api/HandleResponse";
+import { useNavigate } from "react-router-dom";
 
 export default function AccountSettingObj()
 {
@@ -19,6 +20,8 @@ export default function AccountSettingObj()
 	{
 		return <div className="msp-account-setting-obj">User is logged out.</div>
 	}
+
+	const navigate = useNavigate();
 
 	const updatePassword = async () =>
 	{
@@ -72,6 +75,7 @@ export default function AccountSettingObj()
 											{
 												await deleteUser();
 												popup.Close();
+												navigate("/logout");
 											}
 										}/>
 										<MspButton label="No"  onClick={() => popup.Close()}/>
