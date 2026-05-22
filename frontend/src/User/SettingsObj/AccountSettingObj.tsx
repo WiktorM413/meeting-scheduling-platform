@@ -3,6 +3,8 @@ import MspFormField from "../../Components/MspFormField";
 import MspButton from "../../Components/MspButton";
 import { popup } from "../../Components/MspPopup/PopupManager";
 import { useAuth } from "../../context/AuthContext";
+import { ApiUpdateUserPassword } from "../../api/client";
+import HandleResponse from "../../api/HandleResponse";
 
 export default function AccountSettingObj()
 {
@@ -11,6 +13,7 @@ export default function AccountSettingObj()
 	const [currentPassword, setCurrentPassword] = useState("");
 	const [newPassword,     setNewPassword]     = useState("");
 	const [repeatPassword,  setRepeatPassword]  = useState("");
+	const [response,        setResponse]        = useState<string|null>(null);
 
 	if (! userData)
 	{
@@ -19,7 +22,17 @@ export default function AccountSettingObj()
 
 	const updatePassword = async () =>
 	{
-		
+		try
+		{
+			const response = await ApiUpdateUserPassword(userData.id, currentPassword, newPassword, repeatPassword);
+			const handled  = HandleResponse(response);
+
+			setResponse(handled.message);
+		}
+		catch (error)
+		{
+			console.log("Error while updating user password:", error);
+		}
 	}
 
 	const deleteUser = async () =>
@@ -43,6 +56,7 @@ export default function AccountSettingObj()
 						await updatePassword();
 					}
 				}/>
+				<div className="msp-account-setting-obj-form-response">{response}</div>
 			</div>
 			<div className="msp-account-setting-obj-delete">
 				<h3>DANGER ZONE</h3>

@@ -70,8 +70,8 @@ class UserService
 
 	public function updatePassword(int $userId, string $currentPassword, string $newPasswordHash)
 	{
-		$user = $this->getUserById($userId);
-
+		$user = $this->userModel->getUserById($userId);
+		
 		if (! password_verify($currentPassword, $user['password']))
 		{
 			return SimpleJson(true, "Your current password is wrong.");
