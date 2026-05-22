@@ -200,3 +200,17 @@ export async function ApiUpdateUserSettings(userId: number, publicProfile?: numb
 
 	return response;
 }
+
+export async function ApiUpdateUserPassword(userId: number, currentPassword: string, newPassword: string, repeatPassword: string)
+{
+	const response = await api.post("/updatePassword",
+		{
+			"user_id":          userId,
+			"current_password": currentPassword,
+			"new_password":     newPassword,
+			"repeat_password":  repeatPassword
+		}
+	)
+
+	return response;
+}
