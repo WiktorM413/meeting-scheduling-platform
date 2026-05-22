@@ -44,4 +44,22 @@ class UserValidationRules extends BaseValidationRules
 			'rules' => 'permit_empty|in_list[0,1]'
 		]
 	];
+
+	public const updatePassword = [
+		'user_id' => [
+			'rules' => 'required|integer|is_not_unique[users.id]'
+		],
+		'current_password' => [
+			'rules'  => 'required'
+		],
+		'new_password' => [
+			'rules' => 'required'
+		],
+		'repeat_password' => [
+			'rules'  => 'required|matches[new_password]',
+			'errors' => [
+				'matches' => 'The repeated password doesn\'t match'
+			]
+		]
+	];
 }

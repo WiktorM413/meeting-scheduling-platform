@@ -67,4 +67,18 @@ class UserService
 
 		return SimpleJson(false, "Successfully updated user settings");
 	}
+
+	public function updatePassword(int $userId, string $currentPassword, string $newPasswordHash)
+	{
+		$user = $this->getUserById($userId);
+
+		if (! password_verify($currentPassword, $user['password']))
+		{
+			return SimpleJson(true, "Your current password is wrong.");
+		}
+
+		$this->userModel->updatePassword($userId, $newPasswordHash);
+
+		return SimpleJson(false, "Successfully updated password");
+	}
 }

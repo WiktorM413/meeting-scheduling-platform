@@ -99,4 +99,19 @@ class UserModel extends BaseModel
 			WHERE user_id = :user_id:
 		", $params);
 	}
+
+	public function updatePassword(int $userId, string $newPasswordHash)
+	{
+		$params =
+		[
+			"user_id"      => $userId,
+			"new_password" => $newPasswordHash
+		];
+
+		$this->db->query("
+			UPDATE users SET
+				password = :new_password:
+			WHERE id = :user_id:
+		", $params);
+	}
 }

@@ -130,4 +130,27 @@ class UserController extends BaseController
 
 		return $this->response->setJSON($response);
 	}
+
+	public function updatePassword()
+	{
+		$data = $this->request->getJSON(true);
+
+		if (! $this->validateData($data, UserValidationRules::updatePassword))
+		{
+			return $this->response->setJSON(UserValidationRules::validationErrorsToJSON($this->validator->getErrors()));
+		}
+
+		$userId          = $data['user_id'];
+		$currentPassword = $data['current_password'];
+		$newPassword     = $data['new_password'];
+
+		/** @var \App\Services\AuthService $authService */
+		$authService = service('authService');
+		
+		$newPassword = $authService->hashPassword($newPassword);
+
+		$response = $this->userService->updatePassword($userId, $currentPassword, $newPassword);
+
+		return $this->response->setJSON($response);
+	}
 }
