@@ -1,19 +1,30 @@
 import { useState } from "react";
 import MspFormField from "../../Components/MspFormField";
 import MspButton from "../../Components/MspButton";
-import { useParams } from "react-router-dom";
+import { popup } from "../../Components/MspPopup/PopupManager";
+import { useAuth } from "../../context/AuthContext";
 
 export default function AccountSettingObj()
 {
-	const { userId } = useParams();
-	
+	const { userData } = useAuth();
+
 	const [currentPassword, setCurrentPassword] = useState("");
 	const [newPassword,     setNewPassword]     = useState("");
 	const [repeatPassword,  setRepeatPassword]  = useState("");
-	
+
+	if (! userData)
+	{
+		return <div className="msp-account-setting-obj">User is logged out.</div>
+	}
+
 	const updatePassword = async () =>
 	{
 		
+	}
+
+	const deleteUser = async () =>
+	{
+
 	}
 	
 	return (
@@ -32,6 +43,30 @@ export default function AccountSettingObj()
 						await updatePassword();
 					}
 				}/>
+			</div>
+			<div className="msp-account-setting-obj-delete">
+				<h3>DANGER ZONE</h3>
+				<div className="msp-account-setting-obj-delete-content">
+					<p>Permanently delete your account and all associated data. This action cannot be undone.</p>
+					<MspButton label="Delete account" onClick={() =>
+						{
+							popup.Open(
+								<div className="msp-account-setting-obj-delete-popup">
+									<h1>Are you sure you want to delete your account?</h1>
+									<div className="msp-account-setting-obj-delete-popup-button-group">
+										<MspButton label="Yes" onClick={async () =>
+											{
+												await deleteUser();
+												popup.Close();
+											}
+										}/>
+										<MspButton label="No"  onClick={() => popup.Close()}/>
+									</div>
+								</div>
+							);
+						}
+					}/>
+				</div>
 			</div>
 		</div>
 	);
