@@ -44,8 +44,8 @@ export default function PrivacySettingObj()
 				if (handled.type === "success")
 				{
 					setUserSettings(handled.data);
-					setPublicProfile(handled.data.public_profile);
-					setShowEmail(handled.data.show_email);
+					setPublicProfile(Number(handled.data.public_profile));
+					setShowEmail(Number(handled.data.show_email));
 				}
 			}
 			catch (error)
