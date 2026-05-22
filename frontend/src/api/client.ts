@@ -214,3 +214,14 @@ export async function ApiUpdateUserPassword(userId: number, currentPassword: str
 
 	return response;
 }
+
+export async function ApiDeleteUser(userId: number)
+{
+	const response = await api.post("/deleteUser",
+		{
+			"user_id": userId
+		}
+	)
+
+	return response;
+}
