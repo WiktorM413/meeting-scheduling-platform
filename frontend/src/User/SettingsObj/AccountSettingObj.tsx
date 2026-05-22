@@ -1,3 +1,4 @@
+import "./style.scss";
 import { useState } from "react";
 import MspFormField from "../../Components/MspFormField";
 import MspButton from "../../Components/MspButton";
