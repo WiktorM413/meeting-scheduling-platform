@@ -160,11 +160,13 @@ export default function UserProfile()
 						}
 					</p>
 				</div>
-				<div className="msp-user-profile-header-settings">
-					<MspAnchor label="" navigator={navigate} to={`/userSettings/${user?.id}`}>
-						<img src={SettingsIcon}/>
-					</MspAnchor>
-				</div>
+				{isCurrentUser &&
+					<div className="msp-user-profile-header-settings">
+						<MspAnchor label="" navigator={navigate} to={`/userSettings/${user?.id}`}>
+							<img src={SettingsIcon}/>
+						</MspAnchor>
+					</div>
+				}
 			</div>
 			<div className="msp-user-profile-info">
 				<div className="msp-user-profile-info-box">
