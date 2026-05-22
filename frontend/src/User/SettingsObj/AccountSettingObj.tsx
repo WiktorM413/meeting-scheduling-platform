@@ -3,7 +3,7 @@ import MspFormField from "../../Components/MspFormField";
 import MspButton from "../../Components/MspButton";
 import { popup } from "../../Components/MspPopup/PopupManager";
 import { useAuth } from "../../context/AuthContext";
-import { ApiUpdateUserPassword } from "../../api/client";
+import { ApiDeleteUser, ApiUpdateUserPassword } from "../../api/client";
 import HandleResponse from "../../api/HandleResponse";
 import { useNavigate } from "react-router-dom";
 
@@ -40,7 +40,14 @@ export default function AccountSettingObj()
 
 	const deleteUser = async () =>
 	{
-
+		try
+		{
+			await ApiDeleteUser(userData.id);
+		}
+		catch (error)
+		{
+			console.log("Error while deleting user:", error);
+		}
 	}
 	
 	return (
