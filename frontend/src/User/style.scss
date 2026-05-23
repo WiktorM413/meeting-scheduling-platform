@@ -256,7 +256,7 @@
 
 	&-header
 	{
-		display: felx;
+		display: flex;
 		flex-direction: column;
 		gap: 0.25rem;
 
@@ -323,7 +323,7 @@
 			background-color: #2a2a2a;
 			color: #ddd;
 			box-shadow: none;
-			transform: translteY(-1px);
+			transform: translateY(-1px);
 		}
 	}
 
