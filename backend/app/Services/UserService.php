@@ -54,7 +54,7 @@ class UserService
 		return DataJson(false, "Successflly retrieved user settings", $userSettings);
 	}
 
-	public function getPublicUsersLike(int $pattern)
+	public function getPublicUsersLike(string $pattern)
 	{
 		$users = $this->userModel->getPublicUsersLike($pattern);
 
