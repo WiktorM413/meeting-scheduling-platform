@@ -97,10 +97,10 @@ export default function Index()
 
 	return (
 		<div className="msp-meetings">
-		<section className="msp-meetings-header">
+		<div className="msp-meetings-header">
 			<h1>Your meetings</h1>
 			<p>Manage and view all your scheduled events</p>
-		</section>
+		</div>
 		<div className="msp-meetings-button-group">
 			<MspButton label="Month" onClick={() => setFilterType({ type: "month" })}/>
 			<MspButton label="Week"  onClick={() => setFilterType({ type: "week" })}/>
