@@ -249,6 +249,8 @@
 
 .msp-user-search
 {
+	width: 60%;
+	margin: 0 auto;
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
@@ -317,6 +319,7 @@
 		border: 1px solid #3a3a3a;
 		color: #898989;
 		box-shadow: none;
+		animation: fadeLeft 0.4s ease;
 
 		&:hover
 		{
@@ -335,6 +338,7 @@
 		border-radius: 15px;
 		overflow: hidden;
 		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+		animation: fadeUp 0.4s ease;
 	}
 
 	&-user-result

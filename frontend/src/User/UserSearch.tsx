@@ -12,6 +12,16 @@ export default function UserSearch()
 	const [userSearch,    setUserSearch]    = useState("");
 	const [filteredUsers, setFilteredUsers] = useState<UserData[]>([]);
 	
+	const handleUserSearchChange = (value: string) =>
+	{
+		setUserSearch(value);
+
+		if (value === "")
+		{
+			setFilteredUsers([]);
+		}
+	}
+	
 	useEffect(() =>
 	{
 		const searchUsers = async () =>
@@ -52,7 +62,7 @@ export default function UserSearch()
 				<input 
 					type="text"
 					value={userSearch}
-					onChange={(e) => setUserSearch(e.target.value)}
+					onChange={(e) => handleUserSearchChange(e.target.value)}
 					placeholder="Browse users..."
 					className="msp-user-search-search"
 				/>
