@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import MspButton from "../Components/MspButton";
 import { type UserData } from "../api/UserType";
+import { ApiGetPublicUsersLike } from "../api/client";
+import HandleResponse from "../api/HandleResponse";
 
 export default function UserSearch()
 {
@@ -11,10 +13,29 @@ export default function UserSearch()
 	{
 		const searchUsers = async () =>
 		{
-			
+			if (! userSearch)
+			{
+				return;
+			}
+
+			try
+			{
+				const response = await ApiGetPublicUsersLike(userSearch);
+				const handled  = HandleResponse(response);
+
+				if (handled.type === "success")
+				{
+					console.log(handled.data);
+					setFilteredUsers(handled.data);
+				}
+			}
+			catch (error)
+			{
+				console.log("Error retrieving users:", error);
+			}
 		}
 		
-		setTimeout(searchUsers, 300);
+		setTimeout(searchUsers, 500);
 	}, [userSearch]);
 	
 	return (
