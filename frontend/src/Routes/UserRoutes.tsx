@@ -1,6 +1,7 @@
 import type { RouteObject } from "react-router-dom";
 import UserProfile from "../User/UserProfile";
 import UserSettings from "../User/UserSettings";
+import UserSearch from "../User/UserSearch";
 
 const UserRoutes: RouteObject[] =
 [
@@ -11,6 +12,10 @@ const UserRoutes: RouteObject[] =
 	{
 		path:    "/userSettings/:userId",
 		element: <UserSettings />
+	},
+	{
+		path:    "/userSearch",
+		element: <UserSearch />
 	}
 ]
 
