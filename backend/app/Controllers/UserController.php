@@ -85,6 +85,22 @@ class UserController extends BaseController
 		return $this->response->setJSON($response);
 	}
 
+	public function getPublicUsersLike()
+	{
+		$data = $this->request->getJSON(true);
+
+		if (! $this->validateData($data, UserValidationRules::pattern))
+		{
+			$this->response->setJSON(UserValidationRules::validationErrorsToJSON($this->validator->getErrors()));
+		}
+
+		$pattern = $data['pattern'];
+
+		$response = $this->userService->getPublicUsersLike($pattern);
+
+		return $this->response->setJSON($response);
+	}
+
 	public function updateUser()
 	{
 		$data = $this->request->getJSON(true);

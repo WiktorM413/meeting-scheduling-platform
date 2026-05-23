@@ -12,6 +12,12 @@ class UserValidationRules extends BaseValidationRules
 		]
 	];
 
+	public const pattern = [
+		'pattern' => [
+			'rules' => 'required|string'
+		]
+	];
+
 	public const updateUser = [
 		'user_id' => [
 			'rules' => 'required|integer|is_not_unique[users.id]'
