@@ -8,12 +8,12 @@ import { useNavigate } from "react-router-dom";
 
 export default function Index()
 {
-	const howItWorksRef = useRef<HTMLButtonElement|null>(null);
+	const howItWorksRef = useRef<HTMLDivElement|null>(null);
 	const navigate    = useNavigate();
 	
 	return (
 		<div className="msp-home">
-			<section className="msp-home-hero">
+			<div className="msp-home-hero">
 				<div className="msp-home-headers">
 					<h1>Scheduling made simple</h1>
 					<h2>Set your availability, let people book time, and keep everything organized across time zones.</h2>
@@ -22,13 +22,13 @@ export default function Index()
 					<MspButton label="Get started"      onClick={() => navigate("/schedule")}/>
 					<MspButton label="See how it works" onClick={() => howItWorksRef.current?.scrollIntoView({behavior: "smooth"})}/>
 				</div>
-			</section>
-			<section className="msp-home-preview">
+			</div>
+			<div className="msp-home-preview">
 				<div className="msp-home-calendar">
 					<MspCalendar />
 				</div>
-			</section>
-			<section className="msp-home-how-it-works" ref={howItWorksRef}>
+			</div>
+			<div className="msp-home-how-it-works" ref={howItWorksRef}>
 				<h2>How it works</h2>
 				<ol>
 					<MspListStep label="Choose a day"/>
@@ -41,7 +41,7 @@ export default function Index()
 					<MspListArrow />
 					<MspListStep label="Set the time"/>
 				</ol>
-			</section>
+			</div>
 		</div>
 	);
 }
