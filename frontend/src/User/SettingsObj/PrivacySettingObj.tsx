@@ -4,7 +4,6 @@ import MspSwitchInput from "../../Components/MspSwitchInput";
 import MspButton from "../../Components/MspButton";
 import { useAuth } from "../../context/AuthContext";
 import { ApiGetUserSettings, ApiUpdateUserSettings } from "../../api/client";
-import HandleResponse from "../../api/HandleResponse";
 import { type UserSettingsType } from "../../api/UserSettingsType";
 
 export default function PrivacySettingObj()
@@ -39,13 +38,12 @@ export default function PrivacySettingObj()
 			try
 			{
 				const response = await ApiGetUserSettings(userData.id);
-				const handled  = HandleResponse(response);
 
-				if (handled.type === "success")
+				if (response.type === "success")
 				{
-					setUserSettings(handled.data);
-					setPublicProfile(Number(handled.data.public_profile));
-					setShowEmail(Number(handled.data.show_email));
+					setUserSettings(response.data);
+					setPublicProfile(Number(response.data.public_profile));
+					setShowEmail(Number(response.data.show_email));
 				}
 			}
 			catch (error)

@@ -4,7 +4,6 @@ import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import type { UserData } from "../api/UserType";
 import { ApiGetUpcomingMeetings, ApiGetUserById, ApiGetUserSettings, ApiGetUserStats } from "../api/client";
-import HandleResponse from "../api/HandleResponse";
 import MspUserProfilePic from "../Components/MspUserProfilePic";
 import type { MeetingType } from "../api/MeetingType";
 import type { UserStatsType } from "../api/UserStatsType";
@@ -52,14 +51,13 @@ export default function UserProfile()
 				try
 				{
 					const response = await ApiGetUserById(Number(userId));
-					const handled  = HandleResponse(response);
 
-					if (handled.type === "success")
+					if (response.type === "success")
 					{
-						setUser(handled.data);
+						setUser(response.data);
 						setIsCurrentUser(false);
 						
-						return handled.data;
+						return response.data;
 					}
 				}
 				catch (error)
@@ -74,11 +72,10 @@ export default function UserProfile()
 			try
 			{
 				const response = await ApiGetUpcomingMeetings(resolvedUser.id);
-				const handled  = HandleResponse(response);
 
-				if (handled.type === "success")
+				if (response.type === "success")
 				{
-					setUpcomingMeetings(handled.data);
+					setUpcomingMeetings(response.data);
 				}
 			}
 			catch (error)
@@ -92,11 +89,10 @@ export default function UserProfile()
 			try
 			{
 				const response = await ApiGetUserStats(resolvedUser.id);
-				const handled = HandleResponse(response);
 
-				if (handled.type === "success")
+				if (response.type === "success")
 				{
-					setUserStats(handled.data);
+					setUserStats(response.data);
 				}
 			}
 			catch (error)
@@ -110,11 +106,10 @@ export default function UserProfile()
 			try
 			{
 				const response = await ApiGetUserSettings(resolvedUser.id);
-				const handled  = HandleResponse(response);
 
-				if (handled.type === "success")
+				if (response.type === "success")
 				{
-					setUserSettings(handled.data);
+					setUserSettings(response.data);
 				}
 			}
 			catch (error)

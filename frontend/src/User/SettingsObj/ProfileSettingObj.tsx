@@ -6,7 +6,6 @@ import MspUserProfilePic from "../../Components/MspUserProfilePic";
 import { useAuth } from "../../context/AuthContext";
 import MspFormField from "../../Components/MspFormField";
 import { ApiUpdateUser } from "../../api/client";
-import HandleResponse from "../../api/HandleResponse";
 
 
 export default function ProfileSettingObj()
@@ -47,10 +46,9 @@ export default function ProfileSettingObj()
 		try
 		{
 			const response = await ApiUpdateUser(userData.id, firstname, lastname, email, profilePicString ?? undefined, removeProfilePic);
-			const handled  = HandleResponse(response);
 			await refreshUser();
 
-			setResponse(handled.message);
+			setResponse(response.message);
 		}
 		catch (error)
 		{

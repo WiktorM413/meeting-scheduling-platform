@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { ResponseType } from "../api/ResponseType";
-import HandleResponse from "../api/HandleResponse";
 import MspFormField from "../Components/MspFormField";
 import MspAnchor from "../Components/MspAnchor";
 import { useAuth } from "../context/AuthContext";
@@ -24,7 +23,7 @@ export default function Login()
 		{
 			const response = await ApiLogin(email, password);
 
-			setResponse(HandleResponse(response));
+			setResponse(response);
 		}
 		catch (error)
 		{

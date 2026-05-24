@@ -1,7 +1,6 @@
 import "./style.scss";
 import { useState, useEffect } from "react";
 import { ApiGetAllMeetingsForUser } from "../api/client";
-import HandleResponse from "../api/HandleResponse";
 import type { MeetingType } from "../api/MeetingType";
 import MspCalendar from "../Components/MspCalendar/MspCalendar";
 import { useAuth } from "../context/AuthContext";
@@ -74,12 +73,11 @@ export default function Index()
 				}
 
 				const response = await ApiGetAllMeetingsForUser(userData.id);
-				const handled = HandleResponse(response);
 
-				if (handled?.type === "success")
+				if (response.type === "success")
 				{
-					setMeetings(handled.data);
-					setOtherNames(handled.data.map((meeting: any) => meeting.other_names));
+					setMeetings(response.data);
+					setOtherNames(response.data.map((meeting: any) => meeting.other_names));
 				}
 				else
 				{

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import defaultProfilePic from "../assets/default-profile-pic.svg";
 import { useAuth } from "../context/AuthContext";
 import { ApigetProfilePic } from "../api/client";
-import HandleResponse from "../api/HandleResponse";
 
 type MspUserProfileProps =
 {
@@ -48,11 +47,10 @@ export default function MspUserProfilePic({className, setImage, userId}: MspUser
 			}
 
 			const response = await ApigetProfilePic(userData.id);
-			const handled  = HandleResponse(response);
 
-			if (handled.type === "success")
+			if (response.type === "success")
 			{
-				setProfilePic(handled.data.profile_pic);
+				setProfilePic(response.data.profile_pic);
 			}
 		}
 		catch (error)
@@ -70,12 +68,11 @@ export default function MspUserProfilePic({className, setImage, userId}: MspUser
 
 		try
 		{
-			let response = await ApigetProfilePic(userId);
-			let handled  = HandleResponse(response);
+			const response = await ApigetProfilePic(userId);
 
-			if (handled.type === "success")
+			if (response.type === "success")
 			{
-				setProfilePic(handled.data.profile_pic);
+				setProfilePic(response.data.profile_pic);
 			}
 		}
 		catch (error)

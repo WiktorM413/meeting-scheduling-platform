@@ -2,7 +2,6 @@ import "./style.scss";
 import { useEffect, useState } from "react";
 import MspFormField from "../Components/MspFormField";
 import MspAnchor from "../Components/MspAnchor";
-import HandleResponse from "../api/HandleResponse";
 import type { ResponseType } from "../api/ResponseType";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -26,7 +25,7 @@ export default function Register()
 		{
 			const response = await ApiRegister(firstname, lastname, email, password);
 
-			setResponse(HandleResponse(response));
+			setResponse(response);
 		}
 		catch (error)
 		{

@@ -1,4 +1,5 @@
-import axios, { type AxiosResponse } from "axios";
+import axios from "axios";
+import HandleResponse from "./HandleResponse";
 
 export const api = axios.create
 ({
@@ -6,7 +7,7 @@ export const api = axios.create
 	withCredentials: true,
 });
 
-export async function ApiRegister(firstname: string, lastname: string, email: string, password: string): Promise<AxiosResponse<any, any, {}>>
+export async function ApiRegister(firstname: string, lastname: string, email: string, password: string)
 {
 	const response = await api.post("/register", 
 		{
@@ -17,10 +18,10 @@ export async function ApiRegister(firstname: string, lastname: string, email: st
 		}
 	);
 
-	return response;
+	return HandleResponse(response);
 }
 
-export async function ApiLogin(email: string, password: string): Promise<AxiosResponse<any, any, {}>>
+export async function ApiLogin(email: string, password: string)
 {
 	const response = await api.post("/login",
 		{
@@ -29,31 +30,31 @@ export async function ApiLogin(email: string, password: string): Promise<AxiosRe
 		}
 	)
 
-	return response;
+	return HandleResponse(response);
 }
 
-export async function ApiMe(): Promise<AxiosResponse<any, any, {}>>
+export async function ApiMe()
 {
 	const response = await api.get("/me");
 
 	return response;
 }
 
-export async function ApiLogout(): Promise<AxiosResponse<any, any, {}>>
+export async function ApiLogout()
 {
 	const response = await api.get("/logout");
 	
-	return response;
+	return HandleResponse(response);
 }
 
-export async function ApiGetAllMeetings(): Promise<AxiosResponse<any, any, {}>>
+export async function ApiGetAllMeetings()
 {
 	const response = await api.get("/meetings");
 
-	return response;
+	return HandleResponse(response);
 }
 
-export async function ApiGetMeetingById(meetingId: number): Promise<AxiosResponse<any, any, {}>>
+export async function ApiGetMeetingById(meetingId: number)
 {
 	const response = await api.post("/getMeetingById",
 		{
@@ -61,10 +62,10 @@ export async function ApiGetMeetingById(meetingId: number): Promise<AxiosRespons
 		}
 	)
 
-	return response;
+	return HandleResponse(response);
 }
 
-export async function ApiGetAllMeetingsForUser(userId: number): Promise<AxiosResponse<any, any, {}>>
+export async function ApiGetAllMeetingsForUser(userId: number)
 {
 	const response = await api.post("/meetingsForUser",
 		{
@@ -72,14 +73,14 @@ export async function ApiGetAllMeetingsForUser(userId: number): Promise<AxiosRes
 		}
 	)
 
-	return response;
+	return HandleResponse(response);
 }
 
 export async function ApiGetAllUsers()
 {
 	const response = await api.get("/getAllUsers");
 
-	return response;
+	return HandleResponse(response);
 }
 
 export async function ApiGetUserById(userId: number)
@@ -90,7 +91,7 @@ export async function ApiGetUserById(userId: number)
 		}
 	)
 
-	return response;
+	return HandleResponse(response);
 }
 
 export async function ApiCreateMeeting(providerId: number, receiverIds: number[], topic: string, when: string, where: string, timeStart: string, timeEnd: string)
@@ -107,7 +108,7 @@ export async function ApiCreateMeeting(providerId: number, receiverIds: number[]
 		}
 	)
 
-	return response;
+	return HandleResponse(response);
 }
 
 export async function ApiEditMeeting(meetingId: number, newReceiverIds?: number[], newTimeStart?: string,
@@ -125,7 +126,7 @@ newTimeEnd?: string, newTopic?: string, newWhere?: string, newWhen?: string)
 		}
 	)
 
-	return response;
+	return HandleResponse(response);
 }
 
 export async function ApiGetUpcomingMeetings(userId: number)
@@ -136,7 +137,7 @@ export async function ApiGetUpcomingMeetings(userId: number)
 		}
 	)
 
-	return response;
+	return HandleResponse(response);
 }
 
 export async function ApiGetUserStats(userId: number)
@@ -147,7 +148,7 @@ export async function ApiGetUserStats(userId: number)
 		}
 	)
 
-	return response;
+	return HandleResponse(response);
 }
 
 export async function ApiUpdateUser(userId: number, firstname?: string, lastname?: string, email?: string, profilePic?: string, removeProfilePic: boolean = true)
@@ -163,7 +164,7 @@ export async function ApiUpdateUser(userId: number, firstname?: string, lastname
 		}
 	)
 
-	return response;
+	return HandleResponse(response);
 }
 
 export async function ApigetProfilePic(userId: number)
@@ -174,7 +175,7 @@ export async function ApigetProfilePic(userId: number)
 		}
 	)
 	
-	return response;
+	return HandleResponse(response);
 }
 
 export async function ApiGetUserSettings(userId: number)
@@ -185,7 +186,7 @@ export async function ApiGetUserSettings(userId: number)
 		}
 	)
 
-	return response;
+	return HandleResponse(response);
 }
 
 export async function ApiUpdateUserSettings(userId: number, publicProfile?: number, showEmail?: number)
@@ -198,7 +199,7 @@ export async function ApiUpdateUserSettings(userId: number, publicProfile?: numb
 		}
 	)
 
-	return response;
+	return HandleResponse(response);
 }
 
 export async function ApiUpdateUserPassword(userId: number, currentPassword: string, newPassword: string, repeatPassword: string)
@@ -212,7 +213,7 @@ export async function ApiUpdateUserPassword(userId: number, currentPassword: str
 		}
 	)
 
-	return response;
+	return HandleResponse(response);
 }
 
 export async function ApiDeleteUser(userId: number)
@@ -223,7 +224,7 @@ export async function ApiDeleteUser(userId: number)
 		}
 	)
 
-	return response;
+	return HandleResponse(response);
 }
 
 export async function ApiGetPublicUsersLike(pattern: string)
@@ -234,5 +235,5 @@ export async function ApiGetPublicUsersLike(pattern: string)
 		}
 	)
 
-	return response;
+	return HandleResponse(response);
 }

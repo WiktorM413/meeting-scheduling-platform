@@ -1,7 +1,6 @@
 import "./style.scss";
 import { useState, useEffect, useRef } from "react";
 import { ApiCreateMeeting, ApiGetAllMeetingsForUser, ApiGetAllUsers } from "../api/client";
-import HandleResponse from "../api/HandleResponse";
 import type { MeetingType } from "../api/MeetingType";
 import MspCalendar from "../Components/MspCalendar/MspCalendar";
 import { useAuth } from "../context/AuthContext";
@@ -26,12 +25,11 @@ async function Load(userData:      UserData|null,
 			}
 
 			const response = await ApiGetAllMeetingsForUser(userData.id);
-			const handled = HandleResponse(response);
 	
-			if (handled?.type === "success")
+			if (response.type === "success")
 			{
-				setMeetings(handled.data);
-				setOtherNames(handled.data.map((meeting: any) => meeting.other_names));
+				setMeetings(response.data);
+				setOtherNames(response.data.map((meeting: any) => meeting.other_names));
 			}
 			else
 			{
@@ -55,11 +53,10 @@ async function Load(userData:      UserData|null,
 			}
 
 			const response = await ApiGetAllUsers();
-			const handled = HandleResponse(response);
 
-			if (handled.type === "success")
+			if (response.type === "success")
 			{
-				setUsers(handled.data);
+				setUsers(response.data);
 			}
 			else
 			{
@@ -118,12 +115,11 @@ export default function Schedule()
 			if (userData)
 			{
 				const response = await ApiCreateMeeting(userData.id, receiverIds, topic, selectedDate, where, startTime, endTime)
-				const handled = HandleResponse(response);
 
-				setMessage(handled.message);
-				setResponseType(handled.type);
+				setMessage(response.message);
+				setResponseType(response.type);
 
-				if (handled.type === "success")
+				if (response.type === "success")
 				{
 					await Load(userData, setMeetings, setUsers, setOtherNames);
 				}
