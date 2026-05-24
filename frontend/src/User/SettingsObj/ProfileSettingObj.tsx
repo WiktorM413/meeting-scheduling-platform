@@ -18,6 +18,7 @@ export default function ProfileSettingObj()
 	const [lastname,         setLastname]         = useState<string>(userData?.last_name  ?? "");
 	const [email,            setEmail]            = useState<string>(userData?.email      ?? "");
 	const [removeProfilePic, setRemoveProfilePic] = useState<boolean>(false);
+	const [response,         setResponse]         = useState<string|null>(null);
 
 	if (! userData)
 	{
@@ -44,8 +45,10 @@ export default function ProfileSettingObj()
 
 		try
 		{
-			await ApiUpdateUser(userData.id, firstname, lastname, email, profilePicString ?? undefined, removeProfilePic);
+			const response = await ApiUpdateUser(userData.id, firstname, lastname, email, profilePicString ?? undefined, removeProfilePic);
 			await refreshUser();
+
+			setResponse(response.message);
 		}
 		catch (error)
 		{
@@ -96,6 +99,11 @@ export default function ProfileSettingObj()
 						await refreshUser(firstname, lastname, email);
 					}}
 				/>
+			</div>
+			<div className="msp-small-text">
+				{response &&
+					<p className="msp-small-text">{response}</p>
+				}
 			</div>
 		</div>
 	);

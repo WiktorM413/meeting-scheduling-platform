@@ -46,6 +46,15 @@ export default function MspListDisplay({meetings, otherNames, onMeetingUpdate}: 
 	const mappedMeetings = MapMeetings(meetings);
 	const { userData }   = useAuth();
 
+	if (mappedMeetings.size === 0)
+	{
+		return (
+			<div className="msp-list-display">
+				<p>There are no meetings</p>
+			</div>
+		);
+	}
+
 	return (
 		<div className="msp-list-display">
 			<div className="msp-list-display-list">

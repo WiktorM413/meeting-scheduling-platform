@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import MspButton from "../Components/MspButton";
 import { type UserData } from "../api/UserType";
 import { ApiGetPublicUsersLike } from "../api/client";
-import HandleResponse from "../api/HandleResponse";
 import { useNavigate } from "react-router-dom";
 
 export default function UserSearch()
@@ -35,12 +34,11 @@ export default function UserSearch()
 			try
 			{
 				const response = await ApiGetPublicUsersLike(userSearch);
-				const handled  = HandleResponse(response);
 
-				if (handled.type === "success")
+				if (response.type === "success")
 				{
-					console.log(handled.data);
-					setFilteredUsers(handled.data);
+					console.log(response.data);
+					setFilteredUsers(response.data);
 				}
 			}
 			catch (error)

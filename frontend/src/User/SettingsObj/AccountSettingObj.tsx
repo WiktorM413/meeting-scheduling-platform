@@ -5,7 +5,6 @@ import MspButton from "../../Components/MspButton";
 import { popup } from "../../Components/MspPopup/PopupManager";
 import { useAuth } from "../../context/AuthContext";
 import { ApiDeleteUser, ApiUpdateUserPassword } from "../../api/client";
-import HandleResponse from "../../api/HandleResponse";
 import { useNavigate } from "react-router-dom";
 
 export default function AccountSettingObj()
@@ -29,9 +28,8 @@ export default function AccountSettingObj()
 		try
 		{
 			const response = await ApiUpdateUserPassword(userData.id, currentPassword, newPassword, repeatPassword);
-			const handled  = HandleResponse(response);
 
-			setResponse(handled.message);
+			setResponse(response.message);
 		}
 		catch (error)
 		{

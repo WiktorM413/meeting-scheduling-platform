@@ -1,5 +1,14 @@
 @import "../../animations.scss";
 
+.msp-list-display
+{
+	display: flex;
+	flex-direction: column;
+	gap: 13px;
+	text-align: center;
+	animation: fadeUp 0.3s ease;
+}
+
 .msp-list-display-list
 {
 	display: flex;

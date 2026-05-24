@@ -6,7 +6,6 @@ import MspCalendar from "../MspCalendar/MspCalendar";
 import MspFormField from "../MspFormField";
 import type { UserData } from "../../api/UserType";
 import { ApiEditMeeting, ApiGetAllUsers, ApiGetMeetingById } from "../../api/client";
-import HandleResponse from "../../api/HandleResponse";
 import type { MeetingType } from "../../api/MeetingType";
 import { FormatTime } from "../../utils/time";
 
@@ -34,11 +33,10 @@ export default function MspEditMeetingForm({meetingId, onSuccess}: MspEditMeetin
 			try
 			{
 				const response = await ApiGetAllUsers();
-				const handled = HandleResponse(response);
 
-				if (handled.type === "success")
+				if (response.type === "success")
 				{
-					return handled.data;
+					return response.data;
 				}
 			}
 			catch (error)
@@ -54,12 +52,11 @@ export default function MspEditMeetingForm({meetingId, onSuccess}: MspEditMeetin
 			try
 			{
 				const response = await ApiGetMeetingById(meetingId);
-				const handled = HandleResponse(response);
 
-				if (handled.type === "success")
+				if (response.type === "success")
 				{
-					setReceiverIds(handled.data.receiver_ids.split(",").map((id: string) => Number(id)))
-					return handled.data;
+					setReceiverIds(response.data.receiver_ids.split(",").map((id: string) => Number(id)))
+					return response.data;
 				}
 			}
 			catch (error)
@@ -110,11 +107,10 @@ export default function MspEditMeetingForm({meetingId, onSuccess}: MspEditMeetin
 						const finalReceiverIds:  number[]|undefined = receiverIds.length === 0  ? undefined : receiverIds;
 
 						const response = await ApiEditMeeting(meetingId, finalReceiverIds, finalStartTime, finalEndTime, finalTopic, finalWhere, finalSelectedDate);
-						const handled = HandleResponse(response);
 
-						setResponseType(handled.type);
+						setResponseType(response.type);
 
-						if (handled.type === "success")
+						if (response.type === "success")
 						{
 							onSuccess?.();
 						}
