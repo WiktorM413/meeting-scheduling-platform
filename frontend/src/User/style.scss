@@ -344,11 +344,12 @@
 	&-user-result
 	{
 		display: flex;
-		flex-direction: column;
-		gap: 0.2rem;
+		flex-direction: row;
+		gap: 1rem;
 		padding: 1rem 1.5rem;
 		border-bottom: 1px solid #333;
 		cursor: pointer;
+		text-align: center;
 		transition: background-color 0.15s ease, padding-left 0.15s ease;
 
 		&:last-child
@@ -367,19 +368,27 @@
 			background-color: #3a3a3a;
 		}
 
-		h4
+		&-profile-pic
 		{
-			margin: 0;
-			font-size: 1rem;
-			font-weight: 500;
-			color: #ddd;
+			width: 2.5rem;
 		}
 
-		p
-		{
-			margin: 0;
-			font-size: 0.9rem;
-			color: #898989;
+		&-content
+		{	
+			h4
+			{
+				margin: 0;
+				font-size: 1rem;
+				font-weight: 500;
+				color: #ddd;
+			}
+	
+			p
+			{
+				margin: 0;
+				font-size: 0.9rem;
+				color: #898989;
+			}
 		}
 	}
 }

@@ -1,8 +1,10 @@
+import "./style.scss";
 import { useEffect, useState } from "react";
 import MspButton from "../Components/MspButton";
 import { type UserData } from "../api/UserType";
 import { ApiGetPublicUsersLike } from "../api/client";
 import { useNavigate } from "react-router-dom";
+import MspUserProfilePic from "../Components/MspUserProfilePic";
 
 export default function UserSearch()
 {
@@ -78,8 +80,11 @@ export default function UserSearch()
 								className="msp-user-search-user-result"
 								onClick={() => navigate(`/userProfile/${user.id}`)}
 							>
-								<h4>{user.email}</h4>
-								<p>{user.first_name} {user.last_name}</p>
+								<MspUserProfilePic userId={user.id} className="msp-user-search-user-result-profile-pic"/>
+								<div className="msp-user-search-user-result-content">
+									<h4>{user.email}</h4>
+									<p>{user.first_name} {user.last_name}</p>
+								</div>
 							</div>
 						))
 					}
