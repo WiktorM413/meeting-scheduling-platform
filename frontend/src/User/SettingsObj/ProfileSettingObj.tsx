@@ -6,6 +6,7 @@ import MspUserProfilePic from "../../Components/MspUserProfilePic";
 import { useAuth } from "../../context/AuthContext";
 import MspFormField from "../../Components/MspFormField";
 import { ApiUpdateUser } from "../../api/client";
+import HandleResponse from "../../api/HandleResponse";
 
 
 export default function ProfileSettingObj()
@@ -18,6 +19,7 @@ export default function ProfileSettingObj()
 	const [lastname,         setLastname]         = useState<string>(userData?.last_name  ?? "");
 	const [email,            setEmail]            = useState<string>(userData?.email      ?? "");
 	const [removeProfilePic, setRemoveProfilePic] = useState<boolean>(false);
+	const [response,         setResponse]         = useState<string|null>(null);
 
 	if (! userData)
 	{
@@ -44,8 +46,11 @@ export default function ProfileSettingObj()
 
 		try
 		{
-			await ApiUpdateUser(userData.id, firstname, lastname, email, profilePicString ?? undefined, removeProfilePic);
+			const response = await ApiUpdateUser(userData.id, firstname, lastname, email, profilePicString ?? undefined, removeProfilePic);
+			const handled  = HandleResponse(response);
 			await refreshUser();
+
+			setResponse(handled.message);
 		}
 		catch (error)
 		{
@@ -96,6 +101,11 @@ export default function ProfileSettingObj()
 						await refreshUser(firstname, lastname, email);
 					}}
 				/>
+			</div>
+			<div className="msp-small-text">
+				{response &&
+					<p className="msp-small-text">{response}</p>
+				}
 			</div>
 		</div>
 	);
