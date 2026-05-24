@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { ApiMe } from "../api/client";
 import { type UserData } from "../api/UserType";
+import { useNavigate } from "react-router-dom";
 
 interface AuthContextType
 {
@@ -29,6 +30,8 @@ const AuthContext = createContext<AuthContextType|undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode })
 {
+	const navigate = useNavigate();
+	
 	const [userData,   setUserData] = useState<UserData|null>(null);
 	const [loggedIn,   setLoggedIn] = useState(false);
 	const [loading, setLoading] = useState(true);
@@ -68,9 +71,38 @@ export function AuthProvider({ children }: { children: ReactNode })
 		setLoading(false);
 	}
 
+	const handleSessionExpxire = () =>
+	{
+		clearAuthState();
+		navigate("/login");
+	}
+
 	useEffect(() =>
 	{
 		refreshUser();
+
+		const interval = setInterval(async () =>
+		{
+			if (document.hidden)
+			{
+				return;
+			}
+
+			try
+			{
+				const sessionData = await GetCurrentUser();
+				if (! sessionData.logged_in)
+				{
+					handleSessionExpxire();
+				}
+			}
+			catch (error)
+			{
+				handleSessionExpxire();
+			}
+		}, 60 * 1000)
+
+		return () => clearInterval(interval);
 	}, []);
 
 	return (
