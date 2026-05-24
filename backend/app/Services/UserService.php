@@ -53,6 +53,13 @@ class UserService
 
 		return DataJson(false, "Successflly retrieved user settings", $userSettings);
 	}
+
+	public function getPublicUsersLike(string $pattern)
+	{
+		$users = $this->userModel->getPublicUsersLike($pattern);
+
+		return DataJson(false, "Successfully retrieved users", $users);
+	}
 	
 	public function updateUser(int $userId, string|null $profilePic = null, string|null $firstname = null, string|null $lastname = null, string|null $email = null, bool $removeProfilePic)
 	{

@@ -225,3 +225,14 @@ export async function ApiDeleteUser(userId: number)
 
 	return response;
 }
+
+export async function ApiGetPublicUsersLike(pattern: string)
+{
+	const response = await api.post("/getPublicUsersLike",
+		{
+			"pattern": pattern
+		}
+	)
+
+	return response;
+}

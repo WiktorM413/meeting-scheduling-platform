@@ -29,6 +29,7 @@ $routes->group('api', function ($routes) {
 	$routes->post('getUserStats',       [UserController::class, 'getUserStats']);
 	$routes->post('getProfilePic',      [UserController::class, 'getProfilePic']);
 	$routes->post('getUserSettings',    [UserController::class, 'getUserSettings']);
+	$routes->post('getPublicUsersLike', [UserController::class, 'getPublicUsersLike']);
 	$routes->post('updateUser',         [UserController::class, 'updateUser']);
 	$routes->post('updateUserSettings', [UserController::class, 'updateUserSettings']);
 	$routes->post('updatePassword',     [UserController::class, 'updatePassword']);

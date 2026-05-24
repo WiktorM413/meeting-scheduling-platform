@@ -100,6 +100,27 @@ class UserModel extends BaseModel
 		", $params);
 	}
 
+	public function getPublicUsersLike(string $pattern)
+	{
+		$pattern = "%$pattern%";
+		
+		$result = $this->db->query("
+				SELECT
+				u.*
+			FROM `users` u
+			LEFT JOIN `user_settings` us
+				ON us.user_id = u.id
+			WHERE
+				(
+					u.first_name LIKE :pattern: OR
+					u.last_name  LIKE :pattern:
+				) AND
+				us.public_profile = 1
+		", ["pattern" => $pattern]);
+
+		return $result->getResultArray();
+	}
+
 	public function updatePassword(int $userId, string $newPasswordHash)
 	{
 		$params =
