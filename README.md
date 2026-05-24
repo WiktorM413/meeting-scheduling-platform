@@ -34,15 +34,36 @@ A web platform for creating and managing meetings with others. Browse user profi
 
 ### Installation
 
-
+```bash
+	cd frontend
+	npm install
+	cd ..
+	cd backend
+	composer install
+```
 
 ### Environment variables
 
-
+As mentioned earlier, the example .env file is for XAMPP.
+It's located in: ` backend/env_example `
+Modify the file to your liking.
+The default database name is msp
 
 ### Running the App
 
+Execute the following commands to run the app:
 
+- In one terminal
+```bash
+	cd frontend
+	npm run dev
+```
+
+- In another terminal
+```bash
+	cd backend
+	php spark serve
+```
 
 ### Project Structure
 
