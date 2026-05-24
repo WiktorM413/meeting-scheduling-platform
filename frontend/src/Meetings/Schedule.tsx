@@ -99,6 +99,11 @@ export default function Schedule()
 
 	useEffect(() =>
 	{
+		if (! selectedDate)
+		{
+			return;
+		}
+		
 		formRef.current?.scrollIntoView({behavior: "smooth"});
 	}, [selectedDate]);
 	
