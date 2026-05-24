@@ -1,3 +1,4 @@
+import "./style.scss";
 import { useEffect, useState } from "react";
 import defaultProfilePic from "../assets/default-profile-pic.svg";
 import { useAuth } from "../context/AuthContext";
