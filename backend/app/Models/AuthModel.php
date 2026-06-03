@@ -25,8 +25,8 @@ class AuthModel extends BaseModel
 			INSERT INTO `user_settings`
 				(user_id)
 				VALUES
-				(:user_id:)
-		", ["user_id" => $userId]);
+				(?)
+		", [$userId]);
 
 		return $userId;
 	}
