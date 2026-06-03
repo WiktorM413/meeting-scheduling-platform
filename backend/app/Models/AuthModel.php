@@ -7,6 +7,8 @@ class AuthModel extends BaseModel
 {
 	public function createUser($firstname, $lastname, $email, $password)
 	{
+		return $this->db;
+		
 		$params = [
 			"first_name" => $firstname,
 			"last_name"  => $lastname,
