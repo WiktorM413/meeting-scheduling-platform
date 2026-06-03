@@ -16,7 +16,7 @@ class AuthController extends BaseController
 		{
 			return $this->response->setJSON(AuthValidationRules::validationErrorsToJSON($this->validator->getErrors()));
 		}
-		return "OK";
+
 		$firstname = $data['firstname'] ?? '';
 		$lastname  = $data['lastname']  ?? '';
 		$email     = $data['email']     ?? '';
@@ -24,7 +24,7 @@ class AuthController extends BaseController
 
 		$password = $authService->hashPassword($password);
 		$response = $authService->register($firstname, $lastname, $email, $password);
-		
+		return "OK";
 		return $this->response->setJSON($response);
 	}
 
