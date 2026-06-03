@@ -7,8 +7,6 @@ class AuthModel extends BaseModel
 {
 	public function createUser($firstname, $lastname, $email, $password)
 	{
-		return $this->db;
-		
 		$params = [
 			"first_name" => $firstname,
 			"last_name"  => $lastname,
@@ -24,7 +22,7 @@ class AuthModel extends BaseModel
 		", $params);
 
 		$userId = $this->db->insertID();
-		
+		return $this->db;
 		$this->db->query("
 			INSERT INTO `user_settings`
 				(user_id)
