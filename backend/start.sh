@@ -11,4 +11,4 @@ database.default.port=${MYSQLPORT}
 database.default.DBDriver=MySQLi
 EOF
 
-php -S 0.0.0.0:${MYSQLPORT} -t public
+php -S 0.0.0.0:${PORT} -t public
