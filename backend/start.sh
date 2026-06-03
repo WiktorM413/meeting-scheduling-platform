@@ -1,6 +1,6 @@
 #!/bin/bash
 cat > .env << EOF
-CI_ENVIRONMENT=development
+CI_ENVIRONMENT=production
 database.default.hostname=${MYSQLHOST}
 database.default.database=${MYSQL_DATABASE}
 database.default.username=${MYSQLUSER}
