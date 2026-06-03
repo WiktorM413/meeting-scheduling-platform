@@ -3,6 +3,10 @@
 use CodeIgniter\Boot;
 use Config\Paths;
 
+defined('CI_ENVIRONMENT') || define('CI_ENVIRONMENT', getenv('CI_ENVIRONMENT') ?: 'production');
+var_dump(getenv('CI_ENVIRONMENT'));
+exit;
+
 /*
  *---------------------------------------------------------------
  * CHECK PHP VERSION
