@@ -9,6 +9,12 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
+
+$routes->options('(:any)', static function ()
+{
+	return service('response')->setStatusCode(200);
+});
+
 $routes->group('api', function ($routes) {
 	$routes->get ('home',     [HomeController::class, 'index']);
 

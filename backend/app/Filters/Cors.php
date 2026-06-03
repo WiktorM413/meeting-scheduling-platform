@@ -15,8 +15,8 @@ class Cors implements FilterInterface
 		$response->setHeader('Access-Control-Allow-Origin', 'https://meeting-scheduling-platform.wiktor-markowski362.workers.dev');
 		$response->setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin');
 		$response->setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+		$response->setHeader('Access-Control-Allow-Credentials', 'true');
 
-		// IMPORTANT: handle preflight immediately
 		if ($request->getMethod() === 'options') {
 			return $response->setStatusCode(200);
 		}
@@ -24,6 +24,9 @@ class Cors implements FilterInterface
 
 	public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
 	{
+		$response->setHeader('Access-Control-Allow-Origin', 'https://meeting-scheduling-platform.wiktor-markowski362.workers.dev');
+		$response->setHeader('Access-Control-Allow-Credentials', 'true');
+
 		return $response;
 	}
 }
