@@ -4,13 +4,11 @@ import MspSwitchInput from "../../Components/MspSwitchInput";
 import MspButton from "../../Components/MspButton";
 import { useAuth } from "../../context/AuthContext";
 import { ApiGetUserSettings, ApiUpdateUserSettings } from "../../api/client";
-import { type UserSettingsType } from "../../api/UserSettingsType";
 
 export default function PrivacySettingObj()
 {
 	const { userData } = useAuth();
 
-	const [userSettings,  setUserSettings]  = useState<UserSettingsType|null>(null);
 	const [publicProfile, setPublicProfile] = useState(1);
 	const [showEmail,     setShowEmail]     = useState(1);
 
@@ -41,7 +39,6 @@ export default function PrivacySettingObj()
 
 				if (response.type === "success")
 				{
-					setUserSettings(response.data);
 					setPublicProfile(Number(response.data.public_profile));
 					setShowEmail(Number(response.data.show_email));
 				}
