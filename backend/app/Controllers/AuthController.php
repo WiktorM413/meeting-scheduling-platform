@@ -8,6 +8,8 @@ class AuthController extends BaseController
 {
 	public function register()
 	{
+		return "Ok";
+		
 		/** @var \App\Services\AuthService $authService */
 		$authService = service('authService');
 		$data = $this->request->getJSON(true);
