@@ -26,17 +26,17 @@ class Database extends Config
      */
 	public array $default = [
 		'DSN'      => '',
-		'hostname' => env('MYSQLHOST'),
-		'username' => env('MYSQLUSER'),
-		'password' => env('MYSQLPASSWORD'),
-		'database' => env('MYSQLDATABASE'),
+		'hostname' => '',
+		'username' => '',
+		'password' => '',
+		'database' => '',
 		'DBDriver' => 'MySQLi',
 		'DBPrefix' => '',
 		'pConnect' => false,
 		'DBDebug'  => true,
 		'charset'  => 'utf8mb4',
 		'DBCollat' => 'utf8mb4_general_ci',
-		'port'     => (int) env('MYSQLPORT'),
+		'port'     => 3306,
 ];
 
     //    /**
@@ -182,6 +182,11 @@ class Database extends Config
     {
         parent::__construct();
 
+		$this->default['hostname'] = env('MYSQLHOST');
+		$this->default['username'] = env('MYSQLUSER');
+		$this->default['password'] = env('MYSQLPASSWORD');
+		$this->default['database'] = env('MYSQLDATABASE');
+		$this->default['port']     = (int) env('MYSQLPORT');
         // Ensure that we always set the database group to 'tests' if
         // we are currently running an automated test suite, so that
         // we don't overwrite live data on accident.
