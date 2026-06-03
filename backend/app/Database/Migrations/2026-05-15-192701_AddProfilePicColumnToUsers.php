@@ -8,13 +8,17 @@ class AddProfilePicColumnToUsers extends Migration
 {
 	public function up()
 	{
-		$this->db->query("
-			ALTER TABLE users
-				ADD COLUMN profile_pic MEDIUMBLOB DEFAULT NULL COMMENT 'Raw binary image'
-		");
+		$this->forge->addColumn('users', [
+			'profile_pic' => [
+				'type'       => 'MEDIUMBLOB',
+				'null'       => true,
+				'comment'    => 'Raw binary image',
+			],
+		]);
 	}
 
 	public function down()
 	{
+		$this->forge->dropColumn('users', 'profile_pic');
 	}
 }

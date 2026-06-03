@@ -8,29 +8,46 @@ class CreateUserTable extends Migration
 {
 	public function up()
 	{
-		$this->db->query("
-			CREATE TABLE `users` (
-				`id`         int          NOT NULL,
-				`first_name` varchar(255) NOT NULL,
-				`last_name`  varchar(255) NOT NULL,
-				`email`      varchar(255) NOT NULL,
-				`password`   text         NOT NULL,
-				`user_group` smallint(2)  NOT NULL
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-		");
+		$this->forge->addField([
+			'id' => [
+				'type'           => 'INT',
+				'constraint'     => 11,
+				'unsigned'       => true,
+				'auto_increment' => true,
+			],
+			'first_name' => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+				'null'       => false,
+			],
+			'last_name' => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+				'null'       => false,
+			],
+			'email' => [
+				'type'       => 'VARCHAR',
+				'constraint' => 255,
+				'null'       => false,
+			],
+			'password' => [
+				'type' => 'TEXT',
+				'null' => false,
+			],
+			'user_group' => [
+				'type'       => 'SMALLINT',
+				'constraint' => 2,
+				'null'       => false,
+			],
+		]);
 
-		$this->db->query("
-			ALTER TABLE `users`
-				ADD PRIMARY KEY (`id`);
-		");
+		$this->forge->addKey('id', true);
 
-		$this->db->query("
-			ALTER TABLE `users`
-				MODIFY `id` int NOT NULL AUTO_INCREMENT;
-		");
+		$this->forge->createTable('users', true);
 	}
 
 	public function down()
 	{
+		$this->forge->dropTable('users', true);
 	}
 }
