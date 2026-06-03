@@ -24,7 +24,7 @@ class AuthController extends BaseController
 
 		$password = $authService->hashPassword($password);
 		$response = $authService->register($firstname, $lastname, $email, $password);
-		return "OK";
+
 		return $this->response->setJSON($response);
 	}
 

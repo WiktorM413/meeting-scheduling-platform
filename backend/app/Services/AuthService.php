@@ -20,6 +20,7 @@ class AuthService
 		{
 			return SimpleJson(true, 'User already exists');
 		}
+		return "OK";
 
 		$userId = $this->authModel->createUser($firstname, $lastname, $email, $password);
 
