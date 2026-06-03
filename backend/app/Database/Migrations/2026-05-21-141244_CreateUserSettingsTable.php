@@ -8,34 +8,45 @@ class CreateUserSettingsTable extends Migration
 {
 	public function up()
 	{
-		$this->db->query("
-			CREATE TABLE `user_settings`
-			(
-				`unique_id`      int        NOT NULL,
-				`user_id`        int        NOT NULL,
-				`public_profile` tinyint(2) NOT NULL DEFAULT 1,
-				`show_email`     tinyint(2) NOT NULL DEFAULT 1
-			) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-		");
+		$this->forge->addField([
+			'unique_id' => [
+				'type'           => 'INT',
+				'constraint'     => 11,
+				'unsigned'       => true,
+				'auto_increment' => true,
+			],
+			'user_id' => [
+				'type'       => 'INT',
+				'constraint' => 11,
+				'unsigned'   => true,
+			],
+			'public_profile' => [
+				'type'       => 'TINYINT',
+				'constraint' => 2,
+				'default'    => 1,
+			],
+			'show_email' => [
+				'type'       => 'TINYINT',
+				'constraint' => 2,
+				'default'    => 1,
+			],
+		]);
+
+		$this->forge->addKey('unique_id', true);
+		$this->forge->addUniqueKey('user_id');
+
+		$this->forge->createTable('user_settings', true);
 
 		$this->db->query("
-			ALTER TABLE `user_settings`
-				ADD PRIMARY KEY (`unique_id`),
-				ADD UNIQUE KEY `uq_user_settings_user_id` (`user_id`);
-		");
-
-		$this->db->query("
-			ALTER TABLE `user_settings`
-  				MODIFY `unique_id` int NOT NULL AUTO_INCREMENT;
-		");
-
-		$this->db->query("
-			ALTER TABLE `user_settings`
-  				ADD CONSTRAINT `fk_user_settings_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+			ALTER TABLE user_settings
+			ADD CONSTRAINT fk_user_settings_user_id
+			FOREIGN KEY (user_id) REFERENCES users(id)
+			ON DELETE CASCADE ON UPDATE CASCADE
 		");
 	}
 
 	public function down()
 	{
+		$this->forge->dropTable('user_settings', true);
 	}
 }
