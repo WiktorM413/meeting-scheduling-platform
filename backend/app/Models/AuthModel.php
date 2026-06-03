@@ -7,22 +7,20 @@ class AuthModel extends BaseModel
 {
 	public function createUser($firstname, $lastname, $email, $password)
 	{
-		$params = [
-			"first_name" => $firstname,
-			"last_name"  => $lastname,
-			"email"      => $email,
-			"password"   => $password,
-		];
-
 		$this->db->query("
-			INSERT INTO `users`
-				(`first_name`, `last_name`, `email`, `password`, `profile_pic`)
-				VALUES
-				(:first_name:, :last_name:, :email:, :password:, NULL)
-		", $params);
+		INSERT INTO users
+			(first_name, last_name, email, password, profile_pic)
+		VALUES
+			(?, ?, ?, ?, NULL)",
+		[
+			$firstname,
+			$lastname,
+			$email,
+			$password
+		]);
 
 		$userId = $this->db->insertID();
-		return $this->db;
+
 		$this->db->query("
 			INSERT INTO `user_settings`
 				(user_id)
