@@ -1,5 +1,2 @@
-[build]
-buildCommand = "composer install --no-dev --optimize-autoloader"
-
 [deploy]
 startCommand = "bash start.sh"
