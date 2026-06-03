@@ -3,7 +3,7 @@ import HandleResponse from "./HandleResponse";
 
 export const api = axios.create
 ({
-	baseURL: "http://localhost:8080/api",
+	baseURL: "meeting-scheduling-platform-production.up.railway.app/api",
 	withCredentials: true,
 });
 
