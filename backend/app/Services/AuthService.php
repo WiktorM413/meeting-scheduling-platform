@@ -23,7 +23,6 @@ class AuthService
 		
 		$userId = $this->authModel->createUser($firstname, $lastname, $email, $password);
 		
-		return "OK";
 		$this->setSession($userId, $firstname, $lastname, $email);
 
 		return SimpleJson(false, 'Successfully registered');
