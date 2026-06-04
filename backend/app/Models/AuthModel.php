@@ -14,23 +14,29 @@ class AuthModel extends BaseModel
 			"password"   => $password,
 		];
 
-		$this->db->query("
-			INSERT INTO `users`
-				(`first_name`, `last_name`, `email`, `password`, `profile_pic`)
-				VALUES
-				(:first_name:, :last_name:, :email:, :password:, NULL)
-		", $params);
+		try {
+			$this->db->query("
+				INSERT INTO `users`
+					(`first_name`, `last_name`, `email`, `password`, `profile_pic`)
+					VALUES
+					(:first_name:, :last_name:, :email:, :password:, NULL)
+			", $params);
 
-		$userId = $this->db->insertID();
+			$userId = $this->db->insertID();
 
-		$this->db->query("
-			INSERT INTO `user_settings`
-				(user_id)
-				VALUES
-				(:user_id:)
-		", ["user_id" => $userId]);
+			$this->db->query("
+				INSERT INTO `user_settings`
+					(user_id)
+					VALUES
+					(:user_id:)
+			", ["user_id" => $userId]);
 
-		return $userId;
+			return $userId;
+
+		} catch (\Exception $e) {
+			log_message('error', 'createUser failed: ' . $e->getMessage());
+			throw $e;
+		}
 	}
 
 	public function getUserByEmail($email)
