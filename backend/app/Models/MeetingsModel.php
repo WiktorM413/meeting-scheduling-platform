@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use Error;
+use Throwable;
 
 class MeetingsModel extends BaseModel
 {
@@ -17,26 +19,33 @@ class MeetingsModel extends BaseModel
 
 	public function getMeetingById(int $uniqueId)
 	{
-		$result = $this->db->query("
-			SELECT
-				m.*,
-				GROUP_CONCAT(CONCAT(mp.user_id) SEPARATOR ',') AS receiver_ids
-			FROM meetings m
-			LEFT JOIN meeting_participants mp
-				ON mp.meeting_id = m.unique_id
-			WHERE
-				m.unique_id = :unique_id:
-			GROUP BY
-				m.unique_id,
-				m.provider_id,
-				m.time_start,
-				m.time_end,
-				m.topic,
-				m.when
-			ORDER BY
-				mp.user_id
-			LIMIT 1
-		", ['unique_id' => $uniqueId]);
+		try
+		{
+			$result = $this->db->query("
+				SELECT
+					m.*,
+					GROUP_CONCAT(CONCAT(mp.user_id) SEPARATOR ',') AS receiver_ids
+				FROM meetings m
+				LEFT JOIN meeting_participants mp
+					ON mp.meeting_id = m.unique_id
+				WHERE
+					m.unique_id = :unique_id:
+				GROUP BY
+					m.unique_id,
+					m.provider_id,
+					m.time_start,
+					m.time_end,
+					m.topic,
+					m.when
+				ORDER BY
+					mp.user_id
+				LIMIT 1
+			", ['unique_id' => $uniqueId]);
+		}
+		catch (Throwable $error)
+		{
+			log_message('error', $error->getMessage());
+		}
 
 		return $this->FirstOrNull($result->getResultArray());
 	}
