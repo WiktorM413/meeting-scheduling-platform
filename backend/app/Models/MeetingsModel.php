@@ -19,33 +19,26 @@ class MeetingsModel extends BaseModel
 
 	public function getMeetingById(int $uniqueId)
 	{
-		try
-		{
-			$result = $this->db->query("
-				SELECT
-					m.*,
-					GROUP_CONCAT(CONCAT(mp.user_id) SEPARATOR ',') AS receiver_ids
-				FROM meetings m
-				LEFT JOIN meeting_participants mp
-					ON mp.meeting_id = m.unique_id
-				WHERE
-					m.unique_id = :unique_id:
-				GROUP BY
-					m.unique_id,
-					m.provider_id,
-					m.time_start,
-					m.time_end,
-					m.topic,
-					m.when
-				LIMIT 1
-			", ['unique_id' => $uniqueId]);
-			return $this->FirstOrNull($result->getResultArray());
-		}
-		catch (Throwable $error)
-		{
-			log_message('error', $error->getMessage());
-			return [];
-		}
+		$result = $this->db->query("
+			SELECT
+				m.*,
+				GROUP_CONCAT(CONCAT(mp.user_id) SEPARATOR ',') AS receiver_ids
+			FROM meetings m
+			LEFT JOIN meeting_participants mp
+				ON mp.meeting_id = m.unique_id
+			WHERE
+				m.unique_id = :unique_id:
+			GROUP BY
+				m.unique_id,
+				m.provider_id,
+				m.time_start,
+				m.time_end,
+				m.topic,
+				m.when
+			LIMIT 1
+		", ['unique_id' => $uniqueId]);
+		
+		return $this->FirstOrNull($result->getResultArray());
 	}
 
 	public function getAllMeetingsForUser(int $userId)
