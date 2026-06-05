@@ -37,17 +37,15 @@ class MeetingsModel extends BaseModel
 					m.time_end,
 					m.topic,
 					m.when
-				ORDER BY
-					mp.user_id
 				LIMIT 1
 			", ['unique_id' => $uniqueId]);
+			return $this->FirstOrNull($result->getResultArray());
 		}
 		catch (Throwable $error)
 		{
 			log_message('error', $error->getMessage());
+			return [];
 		}
-
-		return $this->FirstOrNull($result->getResultArray());
 	}
 
 	public function getAllMeetingsForUser(int $userId)
