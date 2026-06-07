@@ -75,5 +75,9 @@ Execute the following commands to run the app:
 
 ---
 
+## Live demo
+If you want to see the website in action, you can check out the public hosting here:
+https://meeting-scheduling-platform.wiktor-markowski362.workers.dev/
+
 ## License
 MIT License
