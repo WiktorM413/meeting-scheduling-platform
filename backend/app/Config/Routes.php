@@ -11,10 +11,26 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
-$routes->options('(:any)', static function ()
-{
-	return service('response')->setStatusCode(200);
-});
+ $routes->options('(:any)', static function ()
+ {
+	return service('response')
+		->setHeader(
+			'Access-Control-Allow-Origin',
+			'https://meeting-scheduling-platform.wiktor-markowski362.workers.dev'
+		)
+		->setHeader(
+			'Access-Control-Allow-Headers',
+			'Content-Type, Authorization, X-Requested-With, Accept, Origin'
+		)
+		->setHeader(
+			'Access-Control-Allow-Methods',
+			'GET, POST, PUT, PATCH, DELETE, OPTIONS'
+		)
+		->setHeader(
+			'Access-Control-Allow-Credentials',
+			'true'
+		)->setStatusCode(200);
+ });
 
 $routes->group('api', function ($routes) {
 	$routes->get ('home',     [HomeController::class, 'index']);
