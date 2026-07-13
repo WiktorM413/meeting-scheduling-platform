@@ -32,6 +32,13 @@ class AuthController extends BaseController
 		catch (\Exception $e)
 		{
 			error_log($e->getMessage());
+			error_log(print_r([
+    'MYSQLHOST'     => env('MYSQLHOST'),
+    'MYSQLUSER'     => env('MYSQLUSER'),
+    'MYSQLDATABASE' => env('MYSQLDATABASE'),
+    'MYSQLPORT'     => env('MYSQLPORT'),
+    'PASSWORD_SET'  => !empty(env('MYSQLPASSWORD')),
+], true));
 			throw $e;
 		}
 		
