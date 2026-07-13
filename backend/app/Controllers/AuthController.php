@@ -8,8 +8,6 @@ class AuthController extends BaseController
 {
 	public function register()
 	{	
-		error_log("Test error log");
-
 		try
 		{
 			/** @var \App\Services\AuthService $authService */
@@ -33,7 +31,7 @@ class AuthController extends BaseController
 		}
 		catch (\Exception $e)
 		{
-			log_message('error', "Exception: {$e->getMessage()}\n{$e->getTraceAsString()}");
+			error_log($e->getMessage());
 			throw $e;
 		}
 		
