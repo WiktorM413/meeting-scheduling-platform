@@ -8,24 +8,33 @@ class AuthController extends BaseController
 {
 	public function register()
 	{		
-		/** @var \App\Services\AuthService $authService */
-		$authService = service('authService');
-		$data = $this->request->getJSON(true);
-
-		if (! $this->validateData($data, AuthValidationRules::register))
+		try
 		{
-			return $this->response->setJSON(AuthValidationRules::validationErrorsToJSON($this->validator->getErrors()));
+			/** @var \App\Services\AuthService $authService */
+			$authService = service('authService');
+			$data = $this->request->getJSON(true);
+
+			if (! $this->validateData($data, AuthValidationRules::register))
+			{
+				return $this->response->setJSON(AuthValidationRules::validationErrorsToJSON($this->validator->getErrors()));
+			}
+
+			$firstname = $data['firstname'] ?? '';
+			$lastname  = $data['lastname']  ?? '';
+			$email     = $data['email']     ?? '';
+			$password  = $data['password']  ?? '';
+
+			$password = $authService->hashPassword($password);
+			$response = $authService->register($firstname, $lastname, $email, $password);
+
+			return $this->response->setJSON($response);
 		}
-
-		$firstname = $data['firstname'] ?? '';
-		$lastname  = $data['lastname']  ?? '';
-		$email     = $data['email']     ?? '';
-		$password  = $data['password']  ?? '';
-
-		$password = $authService->hashPassword($password);
-		$response = $authService->register($firstname, $lastname, $email, $password);
-
-		return $this->response->setJSON($response);
+		catch (\Exception $e)
+		{
+			log_message('error', "Exception: {$e->getMessage()}\n{$e->getTraceAsString()}");
+			throw $e;
+		}
+		
 	}
 
 	public function login()
