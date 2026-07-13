@@ -3,17 +3,12 @@
 namespace App\Controllers;
 
 use App\Validation\AuthValidationRules;
-use CodeIgniter\Test\TestLogger;
-use Config\Logger;
 
 class AuthController extends BaseController
 {
 	public function register()
 	{	
-		$logger = new TestLogger(new Logger());
-		$logger->log("error", "Test log");
-		$logger->error("Test error");
-		$logger->warning("Test warning");
+		error_log("Test error log");
 
 		try
 		{
