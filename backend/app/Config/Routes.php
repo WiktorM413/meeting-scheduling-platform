@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\AuthController;
+use App\Controllers\DebugController;
 use App\Controllers\HomeController;
 use App\Controllers\MeetingsController;
 use App\Controllers\UserController;
@@ -41,3 +42,5 @@ $routes->group('api', function ($routes) {
 	$routes->post('updatePassword',     [UserController::class, 'updatePassword']);
 	$routes->post('deleteUser',         [UserController::class, 'deleteUser']);
 });
+
+$routes->get('debug/logs', [DebugController::class, 'logs']);
