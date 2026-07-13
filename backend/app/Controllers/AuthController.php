@@ -8,8 +8,7 @@ class AuthController extends BaseController
 {
 	public function register()
 	{	
-		$logger = service('logger');
-		$logger->error("Test log");
+		log_message("error", "Messgae");
 
 		try
 		{
