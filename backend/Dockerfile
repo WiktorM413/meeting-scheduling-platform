@@ -1,18 +1,19 @@
-FROM php:8.2-cli
+FROM php:8.2-apache
 
 RUN apt-get update && apt-get install -y \
-	libicu-dev \
-	unzip \
-	&& docker-php-ext-install intl mysqli pdo pdo_mysql \
-	&& rm -rf /var/lib/apt/lists/*
+    libicu-dev libzip-dev unzip git \
+    && docker-php-ext-install intl mysqli pdo_mysql zip \
+    && a2enmod rewrite
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY . /var/www/html
+WORKDIR /var/www/html
 
-WORKDIR /app
-COPY . .
+RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
+RUN sed -i 's!/var/www/!/var/www/html/public!g' /etc/apache2/apache2.conf
 
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install --no-dev --optimize-autoloader
 
-RUN chmod +x start.sh
+RUN chown -R www-data:www-data /var/www/html/writable
 
-CMD ["bash", "start.sh"]
+EXPOSE 80

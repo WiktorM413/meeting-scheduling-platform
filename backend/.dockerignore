@@ -1,0 +1,6 @@
+.git
+.env
+ssl/
+writable/cache/*
+writable/logs/*
+vendor
