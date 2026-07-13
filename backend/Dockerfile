@@ -5,6 +5,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install intl mysqli pdo_mysql zip \
     && a2enmod rewrite
 
+RUN ln -sf /dev/stderr /var/log/apache2/error.log \
+    && ln -sf /dev/stdout /var/log/apache2/access.log
+
 COPY . /var/www/html
 WORKDIR /var/www/html
 
