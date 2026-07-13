@@ -7,7 +7,9 @@ use App\Validation\AuthValidationRules;
 class AuthController extends BaseController
 {
 	public function register()
-	{		
+	{	
+		log_message('error', 'This is a test log.');
+
 		try
 		{
 			/** @var \App\Services\AuthService $authService */
