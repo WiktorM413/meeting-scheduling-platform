@@ -20,6 +20,15 @@ class AuthService
 		{
 			return SimpleJson(true, 'User already exists');
 		}
+
+		$db = db_connect();
+		
+		log_message('error', 'DB hostname: ' . $db->hostname);
+		log_message('error', 'DB database: ' . $db->database);
+		log_message('error', 'DB username: ' . $db->username);
+		log_message('error', 'DB port: ' . $db->port);
+		log_message('error', 'DB connected: ' . ($db->connID ? 'YES' : 'NO'));
+		log_message('error', 'DB error: ' . print_r($db->error(), true));
 		
 		$userId = $this->authModel->createUser($firstname, $lastname, $email, $password);
 		
