@@ -26,17 +26,18 @@ class Database extends Config
      */
 	public array $default = [
 		'DSN'      => '',
-		'hostname' => '',
-		'username' => '',
-		'password' => '',
-		'database' => '',
-		'DBDriver' => 'MySQLi',
+		'hostname' => env('MYSQLHOST'),
+	    'username' => env('MYSQLUSER'),
+	    'password' => env('MYSQLPASSWORD'),
+	    'database' => env('MYSQLDATABASE'),
+	    'DBDriver' => 'MySQLi',
 		'DBPrefix' => '',
 		'pConnect' => false,
 		'DBDebug'  => true,
 		'charset'  => 'utf8mb4',
 		'DBCollat' => 'utf8mb4_general_ci',
-		'port'     => 3306,
+		'port'     => env('MYSQLPORT'),
+		'ssl_verify' => false,
 ];
 
     //    /**
