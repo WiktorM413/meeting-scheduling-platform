@@ -1,58 +1,60 @@
 # Meeting Scheduling Platform
 
-A web application for scheduling and managing meetings with other users. You can find people on the platform, view their profiles, and arrange a meeting by choosing a topic, location, date, and time.
+A web application that allows users to find other people on the platform and arrange meetings with them. Users can browse profiles, choose a meeting topic, set a location, and pick a date and time.
+
+The project was built with a React frontend and a CodeIgniter 4 backend. It was developed locally using XAMPP for running the server and MySQL database.
 
 ## Features
 
-* Create and schedule meetings
-* View upcoming and previous meetings
-* Browse other users' profiles
-* Search for users
-* Set a meeting topic, location, and time
+* Create and manage meetings
+* View upcoming and past meetings
+* Search for other users
+* View user profiles
+* Schedule meetings with a selected topic, location, date, and time
 
 ## Tech Stack
 
 * **Frontend:** React
 * **Backend:** CodeIgniter 4
+* **Database:** MySQL
 
-## Getting Started
+## Setup
 
 ### Requirements
 
-You will need the following installed:
+Before running the project, make sure you have:
 
-* Node.js / npm
+* Node.js and npm
 * PHP
 * Composer
-* A local web server and MySQL database
+* MySQL
+* A local server environment (XAMPP was used during development)
 
-The project was developed using XAMPP for the local server and database.
+### Installing dependencies
 
-### Installation
-
-Install the frontend dependencies:
+Install the frontend packages:
 
 ```bash
 cd frontend
 npm install
 ```
 
-Then install the backend dependencies:
+Install the backend packages:
 
 ```bash
 cd ../backend
 composer install
 ```
 
-### Database Configuration
+## Database Configuration
 
-An example environment file is included at:
+The backend includes an example environment configuration file:
 
 ```text
 backend/env_example
 ```
 
-The example is configured for a XAMPP setup. Copy or rename it as needed and change the values to match your local environment.
+Copy this file and update the database settings if needed.
 
 The default database name is:
 
@@ -60,40 +62,40 @@ The default database name is:
 msp
 ```
 
-Make sure the database exists before starting the application.
+Make sure the database has been created before starting the application.
 
-### Running the Application
+## Running the Project
 
-Start the React development server:
+Start the React frontend:
 
 ```bash
 cd frontend
 npm run dev
 ```
 
-In a separate terminal, start the CodeIgniter server:
+In another terminal, start the CodeIgniter backend:
 
 ```bash
 cd backend
 php spark serve
 ```
 
-The frontend and backend will then run as separate development servers.
+The frontend and backend run separately and communicate through the backend API.
 
 ## Project Structure
 
 ```text
 /
-├── frontend/       # React frontend
+├── frontend/       # React application
 └── backend/        # CodeIgniter 4 API
 ```
 
 ## Live Demo
 
-A deployed version of the project is available here:
+The deployed version of the project is available here:
 
 https://meeting-scheduling-platform.wiktor-markowski362.workers.dev/
 
 ## License
 
-MIT License.
+This project is licensed under the MIT License.
