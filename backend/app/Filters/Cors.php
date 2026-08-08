@@ -17,7 +17,7 @@ class Cors implements FilterInterface
 		$response->setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
 		$response->setHeader('Access-Control-Allow-Credentials', 'true');
 
-		if ($request->getMethod() === 'options') {
+		if (strtoupper($request->getMethod()) === 'OPTIONS') {
 			return $response->setStatusCode(200);
 		}
 	}
