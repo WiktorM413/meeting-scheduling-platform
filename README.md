@@ -4,6 +4,8 @@ A web application that allows users to find other people on the platform and arr
 
 The project was built with a React frontend and a CodeIgniter 4 backend. It was developed locally using XAMPP for running the server and MySQL database.
 
+![Home page screenshot](screenshot.png)
+
 ## Features
 
 * Create and manage meetings
