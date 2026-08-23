@@ -5,11 +5,13 @@ import MspListArrow from "../Components/MspListArrow";
 import MspListStep from "../Components/MspListStep";
 import "./style.scss";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function Index()
 {
 	const howItWorksRef = useRef<HTMLDivElement|null>(null);
 	const navigate    = useNavigate();
+	const { isAuthenticated } = useAuth();
 	
 	return (
 		<div className="msp-home">
@@ -19,7 +21,7 @@ export default function Index()
 					<h2>Set your availability, let people book time, and keep everything organized across time zones.</h2>
 				</div>
 				<div className="msp-home-button-group">
-					<MspButton label="Get started"      onClick={() => navigate("/schedule")}/>
+					<MspButton label="Get started"      onClick={() => navigate(isAuthenticated ? "/schedule" : "/login")}/>
 					<MspButton label="See how it works" onClick={() => howItWorksRef.current?.scrollIntoView({behavior: "smooth"})}/>
 				</div>
 			</div>

@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { ApiMe } from "../api/client";
 import { type UserData } from "../api/UserType";
 import { useNavigate } from "react-router-dom";
@@ -36,6 +36,16 @@ export function AuthProvider({ children }: { children: ReactNode })
 	const [loggedIn,   setLoggedIn] = useState(false);
 	const [loading, setLoading] = useState(true);
 
+	// Mirror of loggedIn for the polling interval — the interval closure is
+	// created once, so reading the state variable there would always see false.
+	const loggedInRef = useRef(false);
+
+	const updateLoggedIn = (value: boolean) =>
+	{
+		loggedInRef.current = value;
+		setLoggedIn(value);
+	}
+
 	const refreshUser = async (firstname?: string, lastname?: string, email?: string) =>
 	{
 		try
@@ -52,11 +62,12 @@ export function AuthProvider({ children }: { children: ReactNode })
 		
 			);
 
-			setLoggedIn(sessionData.logged_in);
+			updateLoggedIn(!! sessionData.logged_in);
 		}
 		catch
 		{
 			setUserData(null);
+			updateLoggedIn(false);
 		}
 		finally
 		{
@@ -67,7 +78,7 @@ export function AuthProvider({ children }: { children: ReactNode })
 	const clearAuthState = () =>
 	{
 		setUserData(null);
-		setLoggedIn(false);
+		updateLoggedIn(false);
 		setLoading(false);
 	}
 
@@ -83,7 +94,10 @@ export function AuthProvider({ children }: { children: ReactNode })
 
 		const interval = setInterval(async () =>
 		{
-			if (document.hidden)
+			// Only watch for expiry of an existing session — visitors who were
+			// never logged in (e.g. filling the register form) must not be
+			// redirected to /login.
+			if (document.hidden || ! loggedInRef.current)
 			{
 				return;
 			}
