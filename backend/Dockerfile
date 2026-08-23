@@ -2,8 +2,11 @@ FROM php:8.2-apache
 
 RUN apt-get update && apt-get install -y \
     libicu-dev libzip-dev unzip git \
-    && docker-php-ext-install intl mysqli pdo_mysql zip \
-    && a2enmod rewrite
+    && docker-php-ext-install intl mysqli pdo_mysql zip
+
+# apt upgrade of apache2 can enable mpm_event alongside mpm_prefork
+# (mod_php requires prefork); two MPMs make Apache refuse to start.
+RUN a2dismod mpm_event mpm_worker; a2enmod mpm_prefork rewrite
 
 RUN ln -sf /dev/stderr /var/log/apache2/error.log \
     && ln -sf /dev/stdout /var/log/apache2/access.log
@@ -38,3 +41,4 @@ EXPOSE 80
 # Run pending migrations on boot (fresh Railway MySQL starts empty),
 # then hand off to Apache. Migration failure must not block startup,
 # hence ';' instead of '&&'.
+CMD php spark migrate < /dev/null; exec apache2-foreground
