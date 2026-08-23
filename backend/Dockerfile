@@ -6,7 +6,14 @@ RUN apt-get update && apt-get install -y \
 
 # apt upgrade of apache2 can enable mpm_event alongside mpm_prefork
 # (mod_php requires prefork); two MPMs make Apache refuse to start.
-RUN a2dismod mpm_event mpm_worker; a2enmod mpm_prefork rewrite
+# a2dismod prompts for confirmation on MPMs (non-interactive build answers
+# "no"), so remove the symlinks directly instead.
+RUN rm -f /etc/apache2/mods-enabled/mpm_event.load \
+          /etc/apache2/mods-enabled/mpm_event.conf \
+          /etc/apache2/mods-enabled/mpm_worker.load \
+          /etc/apache2/mods-enabled/mpm_worker.conf \
+    && a2enmod mpm_prefork rewrite \
+    && apachectl configtest
 
 RUN ln -sf /dev/stderr /var/log/apache2/error.log \
     && ln -sf /dev/stdout /var/log/apache2/access.log
