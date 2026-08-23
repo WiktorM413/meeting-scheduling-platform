@@ -46,4 +46,6 @@ RUN mkdir -p /var/www/html/writable/logs \
 EXPOSE 80
 
 # Schema is created by hand (see project notes) — no migrate on boot.
-CMD ["apache2-foreground"]
+# Belt and suspenders: also drop stray MPMs at runtime in case a stale
+# image layer ever reintroduces them.
+CMD rm -f /etc/apache2/mods-enabled/mpm_event.* /etc/apache2/mods-enabled/mpm_worker.*; exec apache2-foreground
