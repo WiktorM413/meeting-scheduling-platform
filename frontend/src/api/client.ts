@@ -3,7 +3,7 @@ import HandleResponse from "./HandleResponse";
 
 export const api = axios.create
 ({
-	baseURL: "https://meeting-scheduling-platform.onrender.com/api",
+	baseURL: import.meta.env.VITE_API_URL || "http://localhost:8080/api",
 	withCredentials: true,
 });
 

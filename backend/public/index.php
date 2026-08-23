@@ -3,7 +3,7 @@
 use CodeIgniter\Boot;
 use Config\Paths;
 
-define('CI_ENVIRONMENT', 'development');
+define('CI_ENVIRONMENT', getenv('CI_ENVIRONMENT') ?: 'production');
 
 /*
  *---------------------------------------------------------------

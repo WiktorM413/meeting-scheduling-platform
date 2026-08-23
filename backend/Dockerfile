@@ -34,3 +34,8 @@ RUN mkdir -p /var/www/html/writable/logs \
     && chmod -R 775 /var/www/html/writable
 
 EXPOSE 80
+
+# Run pending migrations on boot (fresh Railway MySQL starts empty),
+# then hand off to Apache. Migration failure must not block startup,
+# hence ';' instead of '&&'.
+CMD php spark migrate < /dev/null; exec apache2-foreground

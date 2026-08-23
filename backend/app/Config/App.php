@@ -6,6 +6,20 @@ use CodeIgniter\Config\BaseConfig;
 
 class App extends BaseConfig
 {
+    public function __construct()
+    {
+        parent::__construct();
+
+        // Railway injects RAILWAY_PUBLIC_DOMAIN for the service's generated domain.
+        $railwayDomain = env('RAILWAY_PUBLIC_DOMAIN');
+
+        if ($railwayDomain)
+        {
+            $this->baseURL          = 'https://' . $railwayDomain . '/';
+            $this->allowedHostnames = [$railwayDomain];
+        }
+    }
+
     /**
      * --------------------------------------------------------------------------
      * Base Site URL
@@ -16,7 +30,7 @@ class App extends BaseConfig
      *
      * E.g., http://example.com/
      */
-    public string $baseURL = 'https://meeting-scheduling-platform.onrender.com/';
+    public string $baseURL = 'http://localhost:8080/';
 
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
@@ -29,7 +43,7 @@ class App extends BaseConfig
      *
      * @var list<string>
      */
-    public array $allowedHostnames = ['meeting-scheduling-platform.onrender.com'];
+    public array $allowedHostnames = [];
 
     /**
      * --------------------------------------------------------------------------
